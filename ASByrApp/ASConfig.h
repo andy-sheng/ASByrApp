@@ -9,6 +9,5 @@
 #ifndef ASConfig_h
 #define ASConfig_h
 
-#define ACCESS_TOKEN @"e18a23c190a58aaca8d9a01ce2fa87b9"
 
 #endif /* ASConfig_h */
