@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface ASTop10Cell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *sectionIcon;
-@property (weak, nonatomic) IBOutlet UILabel *uid;
-@property (weak, nonatomic) IBOutlet UILabel *title;
-@property (weak, nonatomic) IBOutlet UILabel *content;
+
+- (void)setupWithface:(NSString*) faceUrl
+                  uid:(NSString*) uid
+                title:(NSString*) title
+              content:(NSString*) content;
 
 @end

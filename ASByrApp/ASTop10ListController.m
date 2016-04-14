@@ -9,6 +9,7 @@
 #import "ASTop10ListController.h"
 #import "ASConfig.h"
 #import "ASTop10Cell.h"
+#import "ASThreadsController.h"
 #import <ASByrToken.h>
 #import <ASByrWidget.h>
 
@@ -46,7 +47,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.widgerApi = [[ASByrWidget alloc] initWithAccessToken:[[ASByrToken alloc] initFromStorage].accessToken];
+    //NSLog(@"accesstoken:%@", [ASByrToken shareInstance].accessToken);
+    self.widgerApi = [[ASByrWidget alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.widgerApi.responseDelegate = self;
 }
 
@@ -56,11 +58,17 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ASTop10Cell *cell = (ASTop10Cell*)[tableView dequeueReusableCellWithIdentifier:@"test"];
-    cell.title.text = self.top10[indexPath.row][@"title"];
-    cell.content.text = self.top10[indexPath.row][@"content"];
+    [cell setupWithface:self.top10[indexPath.row][@"user"][@"face"]
+                    uid:self.top10[indexPath.row][@"user"][@"uid"]
+                  title:self.top10[indexPath.row][@"title"]
+                content:self.top10[indexPath.row][@"content"]];
+    
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.navigationController pushViewController:[[ASThreadsController alloc] init] animated:YES];
+}
 
 
 
@@ -125,9 +133,11 @@
         NSMutableArray * reformedData = [[NSMutableArray alloc] init];
         for (NSDictionary* article in response.response[@"article"]) {
             NSMutableDictionary * reformedArticle = [[NSMutableDictionary alloc] init];
-            reformedArticle[@"title"] = article[@"title"];
-            reformedArticle[@"aid"]   = article[@"id"];
+            reformedArticle[@"title"]   = article[@"title"];
+            reformedArticle[@"aid"]     = article[@"id"];
             reformedArticle[@"content"] = article[@"content"];
+            reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
+                                            @"uid": article[@"user"][@"id"]};
             [reformedData addObject:reformedArticle];
         }
         response.reformedData = [reformedData copy];

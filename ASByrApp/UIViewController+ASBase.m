@@ -11,20 +11,5 @@
 
 @implementation UIViewController(ASBase)
 
-@dynamic byrToken;
-
-- (ASByrToken*)byrToken {
-    return [[ASByrToken alloc] initFromStorage];
-}
-
-
-
-- (BOOL)loadToken {
-    self.byrToken = [[ASByrToken alloc] initFromStorage];
-    if (self.byrToken.accessToken) {
-        return YES;
-    }
-    return NO;
-}
 
 @end

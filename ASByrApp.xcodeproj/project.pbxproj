@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		69A70CC2CD72454EC7843F71 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4FFF6330EA431E2C06640A /* libPods.a */; };
 		A11E6AE21CBA01270028DB42 /* UIViewController+ASBase.m in Sources */ = {isa = PBXBuildFile; fileRef = A11E6AE11CBA01270028DB42 /* UIViewController+ASBase.m */; };
+		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A16E1A3C1CAD6B9500F7C1FA /* main.m */; };
 		A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A16E1A3F1CAD6B9500F7C1FA /* AppDelegate.m */; };
 		A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16E1A421CAD6B9500F7C1FA /* ViewController.m */; };
@@ -49,6 +50,8 @@
 		421B8D67E827BF51D3568E76 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A11E6AE01CBA01270028DB42 /* UIViewController+ASBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ASBase.h"; sourceTree = "<group>"; };
 		A11E6AE11CBA01270028DB42 /* UIViewController+ASBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ASBase.m"; sourceTree = "<group>"; };
+		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
+		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16E1A381CAD6B9500F7C1FA /* ASByrApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASByrApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A16E1A3C1CAD6B9500F7C1FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A16E1A3E1CAD6B9500F7C1FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
 				A11E6AE01CBA01270028DB42 /* UIViewController+ASBase.h */,
 				A11E6AE11CBA01270028DB42 /* UIViewController+ASBase.m */,
+				A16885CD1CBF469300338353 /* ASThreadsController.h */,
+				A16885CE1CBF469300338353 /* ASThreadsController.m */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -439,6 +444,7 @@
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A11E6AE21CBA01270028DB42 /* UIViewController+ASBase.m in Sources */,
 				A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */,
+				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

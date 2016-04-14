@@ -64,9 +64,9 @@
 
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    ASByrToken * byrToken = [self.oath parseRedirectUri:webView.request.URL.absoluteString];
-    if ([byrToken valid]) {
-        [byrToken saveToken];
+    [self.oath parseRedirectUri:webView.request.URL.absoluteString];
+    if ([[ASByrToken shareInstance] valid]) {
+        //[byrToken saveToken];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

@@ -7,8 +7,25 @@
 //
 
 #import "ASTop10Cell.h"
+#import <UIImageView+AFNetworking.h>
+
+@interface ASTop10Cell()
+
+@property (weak, nonatomic) IBOutlet UIImageView *faceView;
+@property (weak, nonatomic) IBOutlet UILabel *uidLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+
+@property (strong, nonatomic) NSString * faceUrl;
+@property (strong, nonatomic) NSString * uid;
+@property (strong, nonatomic) NSString * title;
+@property (strong, nonatomic) NSString * content;
+
+@end
 
 @implementation ASTop10Cell
+
+#pragma mark - life cycle
 
 - (void)awakeFromNib {
     // Initialization code
@@ -19,5 +36,21 @@
 
     // Configure the view for the selected state
 }
+
+#pragma mark - setup
+
+- (void)setupWithface:(NSString *)faceUrl
+                  uid:(NSString *)uid
+                title:(NSString *)title
+              content:(NSString *)content {
+    [self.faceView setImageWithURL:[NSURL URLWithString:faceUrl]];
+    self.uidLabel.text = uid;
+    self.titleLabel.text = title;
+    self.contentLabel.text = content;
+}
+
+#pragma mark - setter and getter
+
+
 
 @end

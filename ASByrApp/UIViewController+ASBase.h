@@ -11,8 +11,5 @@
 
 @interface UIViewController (ASBase)
 
-@property(nonatomic, strong) ASByrToken* byrToken;
-
-- (BOOL) loadToken;
 
 @end
