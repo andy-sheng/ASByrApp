@@ -43,7 +43,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (![[ASByrToken alloc] initFromStorage].accessToken) {
+    if (![ASByrToken shareInstance].accessToken) {
        [self presentViewController:[[ASLoginController alloc] init] animated:YES completion:nil];
     }
 }
