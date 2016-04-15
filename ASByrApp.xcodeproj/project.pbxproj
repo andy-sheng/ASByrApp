@@ -10,6 +10,12 @@
 		69A70CC2CD72454EC7843F71 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4FFF6330EA431E2C06640A /* libPods.a */; };
 		A11E6AE21CBA01270028DB42 /* UIViewController+ASBase.m in Sources */ = {isa = PBXBuildFile; fileRef = A11E6AE11CBA01270028DB42 /* UIViewController+ASBase.m */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
+		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
+		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
+		A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885DD1CC0D4F900338353 /* ASThreadsBodyCell.m */; };
+		A16885E01CC0D4F900338353 /* ASThreadsBodyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885DE1CC0D4F900338353 /* ASThreadsBodyCell.xib */; };
+		A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885E21CC0D51000338353 /* ASThreadsReplyCell.m */; };
+		A16885E51CC0D51000338353 /* ASThreadsReplyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885E31CC0D51000338353 /* ASThreadsReplyCell.xib */; };
 		A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A16E1A3C1CAD6B9500F7C1FA /* main.m */; };
 		A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A16E1A3F1CAD6B9500F7C1FA /* AppDelegate.m */; };
 		A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16E1A421CAD6B9500F7C1FA /* ViewController.m */; };
@@ -52,6 +58,15 @@
 		A11E6AE11CBA01270028DB42 /* UIViewController+ASBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ASBase.m"; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
+		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
+		A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsTitleCell.m; sourceTree = "<group>"; };
+		A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASThreadsTitleCell.xib; sourceTree = "<group>"; };
+		A16885DC1CC0D4F900338353 /* ASThreadsBodyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsBodyCell.h; sourceTree = "<group>"; };
+		A16885DD1CC0D4F900338353 /* ASThreadsBodyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsBodyCell.m; sourceTree = "<group>"; };
+		A16885DE1CC0D4F900338353 /* ASThreadsBodyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASThreadsBodyCell.xib; sourceTree = "<group>"; };
+		A16885E11CC0D51000338353 /* ASThreadsReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsReplyCell.h; sourceTree = "<group>"; };
+		A16885E21CC0D51000338353 /* ASThreadsReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsReplyCell.m; sourceTree = "<group>"; };
+		A16885E31CC0D51000338353 /* ASThreadsReplyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASThreadsReplyCell.xib; sourceTree = "<group>"; };
 		A16E1A381CAD6B9500F7C1FA /* ASByrApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASByrApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A16E1A3C1CAD6B9500F7C1FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A16E1A3E1CAD6B9500F7C1FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -114,6 +129,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A16885D01CC0D22D00338353 /* threads */ = {
+			isa = PBXGroup;
+			children = (
+				A16885D11CC0D24400338353 /* view */,
+				A16885CD1CBF469300338353 /* ASThreadsController.h */,
+				A16885CE1CBF469300338353 /* ASThreadsController.m */,
+			);
+			name = threads;
+			sourceTree = "<group>";
+		};
+		A16885D11CC0D24400338353 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */,
+				A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */,
+				A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */,
+				A16885DC1CC0D4F900338353 /* ASThreadsBodyCell.h */,
+				A16885DD1CC0D4F900338353 /* ASThreadsBodyCell.m */,
+				A16885DE1CC0D4F900338353 /* ASThreadsBodyCell.xib */,
+				A16885E11CC0D51000338353 /* ASThreadsReplyCell.h */,
+				A16885E21CC0D51000338353 /* ASThreadsReplyCell.m */,
+				A16885E31CC0D51000338353 /* ASThreadsReplyCell.xib */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
 		A16E1A2F1CAD6B9500F7C1FA = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +255,7 @@
 		A16E1A7A1CB246C000F7C1FA /* common */ = {
 			isa = PBXGroup;
 			children = (
+				A16885D01CC0D22D00338353 /* threads */,
 				A16E1A7B1CB24AE600F7C1FA /* ASBasicArticleListController.h */,
 				A16E1A7C1CB24AE600F7C1FA /* ASBasicArticleListController.m */,
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
@@ -221,8 +263,6 @@
 				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
 				A11E6AE01CBA01270028DB42 /* UIViewController+ASBase.h */,
 				A11E6AE11CBA01270028DB42 /* UIViewController+ASBase.m */,
-				A16885CD1CBF469300338353 /* ASThreadsController.h */,
-				A16885CE1CBF469300338353 /* ASThreadsController.m */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -375,9 +415,12 @@
 				A16E1A781CAEBACE00F7C1FA /* top10.png in Resources */,
 				A16E1A791CAEBACE00F7C1FA /* top10@2x.png in Resources */,
 				A16E1A941CB4A40B00F7C1FA /* ASTop10Cell.xib in Resources */,
+				A16885E51CC0D51000338353 /* ASThreadsReplyCell.xib in Resources */,
+				A16885E01CC0D4F900338353 /* ASThreadsBodyCell.xib in Resources */,
 				A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */,
 				A16E1A4B1CAD6B9500F7C1FA /* LaunchScreen.storyboard in Resources */,
 				A16E1A481CAD6B9500F7C1FA /* Assets.xcassets in Resources */,
+				A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,10 +478,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
+				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
+				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
@@ -577,10 +623,13 @@
 			baseConfigurationReference = AC1202C2F4ED3D9C792EC2FC /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -589,10 +638,13 @@
 			baseConfigurationReference = 421B8D67E827BF51D3568E76 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

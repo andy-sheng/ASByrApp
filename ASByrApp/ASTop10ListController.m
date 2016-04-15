@@ -14,6 +14,7 @@
 #import <ASByrWidget.h>
 
 #define END_REFRESHING [self.tableView.mj_header endRefreshing];
+
 @interface ASTop10ListController()<ASByrWidgetResponseDelegate, ASByrWidgetResponseReformer>
 
 @property(nonatomic, strong) ASByrWidget *widgerApi;
@@ -50,6 +51,7 @@
     //NSLog(@"accesstoken:%@", [ASByrToken shareInstance].accessToken);
     self.widgerApi = [[ASByrWidget alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.widgerApi.responseDelegate = self;
+    //self.widgerApi
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -67,7 +69,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController:[[ASThreadsController alloc] init] animated:YES];
+    ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:self.top10[indexPath.row][@"board"]
+                                                                                aid:[self.top10[indexPath.row][@"aid"] integerValue]];
+    [self.navigationController pushViewController:threadsVC animated:YES];
 }
 
 
@@ -136,8 +140,15 @@
             reformedArticle[@"title"]   = article[@"title"];
             reformedArticle[@"aid"]     = article[@"id"];
             reformedArticle[@"content"] = article[@"content"];
-            reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
-                                            @"uid": article[@"user"][@"id"]};
+            reformedArticle[@"board"]   = article[@"board_name"];
+            if ([article objectForKey:@"user"] != nil) {
+                reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
+                                                @"uid": article[@"user"][@"id"]};
+            } else {
+                reformedArticle[@"user"]    = @{@"face": @"",
+                                                @"uid": @"unknown" };
+            }
+            
             [reformedData addObject:reformedArticle];
         }
         response.reformedData = [reformedData copy];
