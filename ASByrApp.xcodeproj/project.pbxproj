@@ -33,6 +33,11 @@
 		A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A7FFCB1CB4E84D00AD6787 /* TestViewController.m */; };
 		A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1E69CF81CB50D34001E9E27 /* Main.storyboard */; };
 		A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E69D281CB7F147001E9E27 /* ASLoginController.m */; };
+		A96462B11CC0A37E0086DEE6 /* BoardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462AE1CC0A37E0086DEE6 /* BoardModel.m */; };
+		A96462B21CC0A37E0086DEE6 /* BoardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B01CC0A37E0086DEE6 /* BoardInfo.m */; };
+		A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */; };
+		A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */; };
+		A96462BC1CC0BB390086DEE6 /* SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462BB1CC0BB390086DEE6 /* SectionModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +104,16 @@
 		A1E69CF81CB50D34001E9E27 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A1E69D271CB7F147001E9E27 /* ASLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASLoginController.h; sourceTree = "<group>"; };
 		A1E69D281CB7F147001E9E27 /* ASLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASLoginController.m; sourceTree = "<group>"; };
+		A96462AD1CC0A37E0086DEE6 /* BoardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardInfo.h; sourceTree = "<group>"; };
+		A96462AE1CC0A37E0086DEE6 /* BoardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardModel.m; sourceTree = "<group>"; };
+		A96462AF1CC0A37E0086DEE6 /* BoardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardModel.h; sourceTree = "<group>"; };
+		A96462B01CC0A37E0086DEE6 /* BoardInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardInfo.m; sourceTree = "<group>"; };
+		A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
+		A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
+		A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		A96462BA1CC0BB390086DEE6 /* SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionModel.h; sourceTree = "<group>"; };
+		A96462BB1CC0BB390086DEE6 /* SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionModel.m; sourceTree = "<group>"; };
 		AC1202C2F4ED3D9C792EC2FC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DC4FFF6330EA431E2C06640A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -183,6 +198,7 @@
 				A1A7FFC91CB4E82E00AD6787 /* test */,
 				A16E1A7A1CB246C000F7C1FA /* common */,
 				A16E1A731CAEB85800F7C1FA /* images */,
+				A96462B31CC0A3B40086DEE6 /* Board(版面) */,
 				A16E1A6F1CAE69B100F7C1FA /* Top10 */,
 				A16E1A6E1CAE5A0000F7C1FA /* AppDelegate */,
 				A16E1A471CAD6B9500F7C1FA /* Assets.xcassets */,
@@ -256,6 +272,10 @@
 			isa = PBXGroup;
 			children = (
 				A16885D01CC0D22D00338353 /* threads */,
+				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
+				A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */,
+				A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */,
+				A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */,
 				A16E1A7B1CB24AE600F7C1FA /* ASBasicArticleListController.h */,
 				A16E1A7C1CB24AE600F7C1FA /* ASBasicArticleListController.m */,
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
@@ -285,6 +305,19 @@
 				A1E69CF81CB50D34001E9E27 /* Main.storyboard */,
 			);
 			name = test;
+			sourceTree = "<group>";
+		};
+		A96462B31CC0A3B40086DEE6 /* Board(版面) */ = {
+			isa = PBXGroup;
+			children = (
+				A96462AD1CC0A37E0086DEE6 /* BoardInfo.h */,
+				A96462AE1CC0A37E0086DEE6 /* BoardModel.m */,
+				A96462AF1CC0A37E0086DEE6 /* BoardModel.h */,
+				A96462B01CC0A37E0086DEE6 /* BoardInfo.m */,
+				A96462BA1CC0BB390086DEE6 /* SectionModel.h */,
+				A96462BB1CC0BB390086DEE6 /* SectionModel.m */,
+			);
+			name = "Board(版面)";
 			sourceTree = "<group>";
 		};
 		D0F4189284D48070AE905568 /* Frameworks */ = {
@@ -480,18 +513,23 @@
 			files = (
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
+				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
+				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
+				A96462B11CC0A37E0086DEE6 /* BoardModel.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
+				A96462B21CC0A37E0086DEE6 /* BoardInfo.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A11E6AE21CBA01270028DB42 /* UIViewController+ASBase.m in Sources */,
 				A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */,
 				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
+				A96462BC1CC0BB390086DEE6 /* SectionModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
