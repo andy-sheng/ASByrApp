@@ -27,6 +27,10 @@
     self = [super init];
     if (self) {
         self.test = NO;
+        self.oath = [[ASByrOAth2 alloc] initWithAppkey:@"dcaea32813eca7e0a547728b73ab060a"
+                                           redirectUri:[NSURL URLWithString:@"http://bbs.byr.cn/oauth2/callback"]
+                                               appleId:@""
+                                              bundleId:@""];
     }
     return self;
 }
@@ -38,10 +42,7 @@
     self.webview = [[UIWebView alloc] init];
     self.webview.delegate = self;
     
-    self.oath = [[ASByrOAth2 alloc] initWithAppkey:@"dcaea32813eca7e0a547728b73ab060a"
-                                       redirectUri:[NSURL URLWithString:@"http://bbs.byr.cn/oauth2/callback"]
-                                           appleId:@""
-                                          bundleId:@""];
+    
     
     [self.webview loadRequest:[NSURLRequest requestWithURL:[self.oath oathUrl]]];
     [self.view addSubview:self.webview];
@@ -64,10 +65,14 @@
 
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.oath parseRedirectUri:webView.request.URL.absoluteString];
-    if ([[ASByrToken shareInstance] valid]) {
+    //[self.oath parseRedirectUri:webView.request.URL.absoluteString];
+    //NSString * url = webView.request.URL.absoluteString;
+    if ([self.oath parseRedirectUri:webView.request.URL.absoluteString]) {
         //[byrToken saveToken];
         [self dismissViewControllerAnimated:YES completion:nil];
+        NSLog(@"success");
+    } else {
+        NSLog(@"fail");
     }
 }
 

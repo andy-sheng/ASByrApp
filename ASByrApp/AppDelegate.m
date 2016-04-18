@@ -23,16 +23,23 @@
     BoardInfo * boardInfo = [[BoardInfo alloc]init];
     ASTop10RootVC *top10VC = [[ASTop10RootVC alloc] init];
     UITabBarController *tabBarVC = [[UITabBarController alloc] init];
-    UITabBarItem *top10Tab = [[UITabBarItem alloc] initWithTitle:@"十大" image:[UIImage imageNamed:@"top10"] selectedImage:nil];
-    UITabBarItem *testTab = [[UITabBarItem alloc] initWithTitle:@"测试" image:nil selectedImage:nil];
+    UITabBarItem *top10Tab = [[UITabBarItem alloc] initWithTitle:@"十大" image:[UIImage imageNamed:@"fire"] selectedImage:nil];
+    UITabBarItem *likeTab = [[UITabBarItem alloc] initWithTitle:@"收藏" image:[UIImage imageNamed:@"heart"] selectedImage:nil];
+    UITabBarItem *sectionTab = [[UITabBarItem alloc] initWithTitle:@"版面" image:[UIImage imageNamed:@"list"] selectedImage:nil];
+    UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"gear"] selectedImage:nil];
+    
     top10VC.tabBarItem = top10Tab;
-    
-    
-    UIViewController *testVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
-    testVC.tabBarItem = testTab;
+    UIViewController *likeVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
+    likeVC.tabBarItem = likeTab;
+    UIViewController *sectionVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
+    sectionVC.tabBarItem = sectionTab;
+    UIViewController *settingVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
+    settingVC.tabBarItem = settingTab;
     
     tabBarVC.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:top10VC],
-                                 testVC];
+                                 likeVC,
+                                 sectionVC,
+                                 settingVC];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = tabBarVC;
