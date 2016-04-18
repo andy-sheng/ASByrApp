@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "ASTop10RootVC.h"
+#import "ASArticleListVC.h"
+
 #import "BoardInfo.h"
 #import <WMPageController.h>
 
@@ -20,7 +22,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    BoardInfo * boardInfo = [[BoardInfo alloc]init];
+    //BoardInfo * boardInfo = [[BoardInfo alloc]init];
     ASTop10RootVC *top10VC = [[ASTop10RootVC alloc] init];
     UITabBarController *tabBarVC = [[UITabBarController alloc] init];
     UITabBarItem *top10Tab = [[UITabBarItem alloc] initWithTitle:@"十大" image:[UIImage imageNamed:@"fire"] selectedImage:nil];
@@ -31,14 +33,14 @@
     top10VC.tabBarItem = top10Tab;
     UIViewController *likeVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
     likeVC.tabBarItem = likeTab;
-    UIViewController *sectionVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
+    UIViewController *sectionVC = [[ASArticleListVC alloc] init];
     sectionVC.tabBarItem = sectionTab;
     UIViewController *settingVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
     settingVC.tabBarItem = settingTab;
     
     tabBarVC.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:top10VC],
                                  likeVC,
-                                 sectionVC,
+                                 [[UINavigationController alloc] initWithRootViewController:sectionVC],
                                  settingVC];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
