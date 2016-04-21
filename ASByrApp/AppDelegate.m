@@ -10,7 +10,6 @@
 #import "ASTop10RootVC.h"
 #import "ASArticleListVC.h"
 
-#import "BoardInfo.h"
 #import <WMPageController.h>
 
 @interface AppDelegate ()
@@ -22,7 +21,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    //BoardInfo * boardInfo = [[BoardInfo alloc]init];
     ASTop10RootVC *top10VC = [[ASTop10RootVC alloc] init];
     UITabBarController *tabBarVC = [[UITabBarController alloc] init];
     UITabBarItem *top10Tab = [[UITabBarItem alloc] initWithTitle:@"十大" image:[UIImage imageNamed:@"fire"] selectedImage:nil];
