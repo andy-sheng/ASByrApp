@@ -1,14 +1,14 @@
 //
-//  SectionModel.m
+//  XQSectionModel.m
 //  ASByrApp
 //
-//  Created by lxq on 16/4/15.
+//  Created by lxq on 16/4/20.
 //  Copyright © 2016年 andy. All rights reserved.
 //
 
-#import "SectionModel.h"
+#import "XQSectionModel.h"
 
-@interface SectionModel()
+@interface XQSectionModel()
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * descip;
 @property (nonatomic, assign) BOOL isRoot;
@@ -16,7 +16,7 @@
 @end
 
 
-@implementation SectionModel
+@implementation XQSectionModel
 
 - (instancetype) setWithFullInfo:(NSString *)name
                   sectionDescrip:(NSString *)descirp
@@ -38,23 +38,10 @@
     return self;
 };
 
-- (void)loadOtherInfo:(NSString *)descirp sectionIsRoot:(NSString *)isRoot sectionParent:(NSString *)parentName{
-    self.descip=[descirp copy];
-    self.isRoot=isRoot;
-    self.parentName=parentName;
-}
-
-- (void)loadDescription:(NSString *)descrip{
-    self.descip=descrip;
-};
-
 - (NSString *)getDescrip{
     return self.descip;
 };
 
-- (void)loadParent:(NSString *)parentName{
-    self.parentName=parentName;
-};
 - (NSString *)getParent{
     return self.parentName;
 };
@@ -62,5 +49,6 @@
 - (NSString *)getName{
     return self.name;
 }
+
 
 @end
