@@ -31,23 +31,30 @@
 @end
 @implementation ASArticleListVC
 
+- (instancetype)init {
+    self = [super initWithTitle:@""];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    if ([super initWithTitle:@""]) {
-        [self updateBarTheme];
-        
-        self.boardName=@"Travel";
-        self.lastViewBoard=[[XQBoardModel alloc ]initWithOnlyName:self.boardName];
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 100.0;
-        
-        self.tableView.delegate=self;
-        self.tableView.dataSource=self;
-        [self.tableView registerNib:[UINib nibWithNibName:@"XQBoardView" bundle:nil] forCellReuseIdentifier:@"testBoard"];
-        
-        [self loadIfNotLoaded];
-    }
+
+    [self updateBarTheme];
+    
+    self.boardName=@"Travel";
+    self.lastViewBoard=[[XQBoardModel alloc ]initWithOnlyName:self.boardName];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 100.0;
+    
+    self.tableView.delegate=self;
+    self.tableView.dataSource=self;
+    [self.tableView registerNib:[UINib nibWithNibName:@"XQBoardView" bundle:nil] forCellReuseIdentifier:@"testBoard"];
+    
+    
     
 }
 
@@ -58,6 +65,11 @@
     self.boardApi = [[ASByrBoard alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.boardApi.responseDelegate = self;
     self.navigationItem.title = @"海天游踪";
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [super loadIfNotLoaded];
 }
 
 - (void)awakeFromNib {
@@ -92,7 +104,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:[self.lastViewBoard getName]aid:self.boardList[indexPath.row][@"aid"]];
+    ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:[self.lastViewBoard getName]
+                                                                                aid:[self.boardList[indexPath.row][@"aid"] integerValue]];
     [self.navigationController pushViewController:threadsVC animated:YES];
 }
 
@@ -115,10 +128,10 @@
 #pragma 继承方法
 - (void)loadData {
     [super loadData];
-    [self.tableView.mj_header beginRefreshing];
+    //[self.tableView.mj_header beginRefreshing];
     NSLog(@"%@",self.boardName);
     [self.boardApi fetchBoardWithReformer:self boardName:self.boardName];
-    [self.tableView.mj_header endRefreshing];
+    //[self.tableView.mj_header endRefreshing];
 }
 
 - (void)moreData {
@@ -169,6 +182,7 @@
     } else {
         response.isSucceeded = NO;
     }
+    [self.tableView.mj_header endRefreshing];
     return response;
 }
 @end
