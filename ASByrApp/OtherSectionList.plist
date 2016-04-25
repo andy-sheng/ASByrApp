@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Section</key>
+	<dict>
+		<key>Advertise</key>
+		<string>广告乐园</string>
+		<key>Association</key>
+		<string>社团组织</string>
+		<key>BBSLOG</key>
+		<string>论坛数据统计及日志</string>
+		<key>BM_Affair</key>
+		<string>版主事务区</string>
+		<key>BYRBT</key>
+		<string>北邮人BT专区</string>
+		<key>BYR_Team</key>
+		<string>北邮人团队</string>
+		<key>Board</key>
+		<string>版面事务区</string>
+		<key>Court</key>
+		<string>投诉与仲裁</string>
+		<key>School</key>
+		<string>院系校区</string>
+		<key>cn_bbs</key>
+		<string>cnbbs转信</string>
+	</dict>
+</dict>
+</plist>

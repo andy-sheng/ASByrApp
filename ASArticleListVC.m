@@ -21,50 +21,51 @@
 @property(strong, nonatomic) UINavigationController * sectionListVC;
 @property(strong, nonatomic) UIBarButtonItem *addPostBtn;
 @property(strong, nonatomic) UIBarButtonItem *sectionListBtn;
-@property(strong, nonatomic) NSArray *boardContent;
 @property(strong, nonatomic) NSMutableArray *boardList;
 
-@property(retain, nonatomic) XQBoardModel * lastViewBoard;
-@property(retain, nonatomic) ASByrBoard * boardApi;
-@property(strong,nonatomic) NSString *boardName;
+@property(strong, nonatomic) XQBoardModel * lastViewBoard;
+@property(strong, nonatomic) ASByrBoard * boardApi;
+@property(copy, nonatomic) NSString *boardName;
 
 @end
 @implementation ASArticleListVC
 
 - (instancetype)init {
-    self = [super initWithTitle:@""];
+    self = [super initWithTitle:@"海天游踪"];
     if (self) {
-        
+        self.boardName=@"Travel";
     }
     return self;
 }
 
+- (instancetype)initWithNameAndTitle:(NSString *)boardName boardTitle:(NSString *)title{
+    self = [super initWithTitle:title];
+    if (self) {
+        self.boardName=[boardName copy];
+    }
+    return self;
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
-    [self updateBarTheme];
-    
-    self.boardName=@"Travel";
-    self.lastViewBoard=[[XQBoardModel alloc ]initWithOnlyName:self.boardName];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 100.0;
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     [self.tableView registerNib:[UINib nibWithNibName:@"XQBoardView" bundle:nil] forCellReuseIdentifier:@"testBoard"];
-    
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshBoardData:) name:@"chooseBoardFromAllSection" object:nil];
+    self.lastViewBoard=[[XQBoardModel alloc ]initWithOnlyName:self.boardName];
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithHexString:[self.lastViewBoard getColor]]];
     self.boardApi = [[ASByrBoard alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.boardApi.responseDelegate = self;
-    self.navigationItem.title = @"海天游踪";
+    [self updateBarTheme];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -77,6 +78,15 @@
     // Initialization code
 }
 
+- (void)refreshBoardData:(NSNotification *)notis{
+    NSDictionary *dict = notis.userInfo;
+    self.boardName = [[dict objectForKey:@"boardName"] copy];
+    self.navigationItem.title = [[dict objectForKey:@"boardDescription"] copy];
+    self.isLoaded=false;
+    self.lastViewBoard=[[XQBoardModel alloc ]initWithOnlyName:self.boardName];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithHexString:[self.lastViewBoard getColor]]];
+    [super loadIfNotLoaded];
+}
 
 - (void) addPost {
     NSLog(@"add");
@@ -162,19 +172,20 @@
         [self.lastViewBoard setDescrip:response.response[@"description"]];
         for (NSDictionary* article in response.response[@"article"]) {
             NSMutableDictionary * reformedArticle = [[NSMutableDictionary alloc] init];
-                reformedArticle[@"title"]   = article[@"title"];
-                NSLog(@"%@",reformedArticle[@"title"]);
-                reformedArticle[@"aid"]     = article[@"id"];
-                reformedArticle[@"isTop"] = article[@"is_top"];
-                reformedArticle[@"board"]   = article[@"board_name"];
-                reformedArticle[@"replyCount"] = article[@"reply_count"];
-                if ([article objectForKey:@"user"] != nil) {
-                    reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
+            reformedArticle[@"title"]   = article[@"title"];
+            reformedArticle[@"aid"]     = article[@"id"];
+            reformedArticle[@"isTop"] = article[@"is_top"];
+            //reformedArticle[@"board"]   = article[@"board_name"];
+            reformedArticle[@"replyCount"] = article[@"reply_count"];
+            if (![[article objectForKey:@"user"] isEqual:[NSNull null]]&&[article objectForKey:@"user"]!=nil
+                                                                        &&article[@"user"][@"face_url"]!=nil
+                                                                        &&article[@"user"][@"id"]!=nil) {
+                reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
                                                     @"uid": article[@"user"][@"id"]};
-                } else {
-                    reformedArticle[@"user"]    = @{@"face": @"",
+            } else {
+                reformedArticle[@"user"]    = @{@"face": @"",
                                                     @"uid": @"unknown" };
-                }
+            }
             [reformedData addObject:reformedArticle];
         }
         response.reformedData = [reformedData copy];

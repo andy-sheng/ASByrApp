@@ -10,5 +10,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ASArticleListVC :ASBasicArticleListController
+- (instancetype)initWithNameAndTitle:(NSString *)boardName boardTitle:(NSString *)title;
 
+- (void)updateBarTheme;
 @end

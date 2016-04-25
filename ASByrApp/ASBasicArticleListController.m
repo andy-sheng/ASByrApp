@@ -12,7 +12,6 @@
 
 @interface ASBasicArticleListController()
 
-@property(assign, nonatomic) BOOL isLoaded;
 
 @end
 
