@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ASSectionListVC : UITableViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ASSectionListVC : UITableViewController
 
 @end

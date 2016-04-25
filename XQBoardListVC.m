@@ -70,7 +70,7 @@
             }
         }
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OtherSectionList" ofType:@"plist"];
-        NSDictionary * dict = [[NSDictionary alloc]initWithContentsOfFile:filePath];
+        NSDictionary * dict = [[[NSDictionary alloc]initWithContentsOfFile:filePath] objectForKey:@"Section"];
         NSString * sectionListName;
         for (sectionListName in subSectionNameList)
             [subSectionDescripList addObject:dict[sectionListName]];
