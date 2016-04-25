@@ -7,14 +7,23 @@
 //
 
 #import "TestViewController.h"
+#import "ASKeyboard.h"
+#import <MBProgressHUD.h>
 #import <YYText.h>
 @interface TestViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *testLabel;
-
+@property (strong, nonatomic) ASKeyboard *keyboard;
 
 @end
 
 @implementation TestViewController
+- (IBAction)popup:(id)sender {
+    [self.keyboard pop];
+}
+
+- (IBAction)hide:(id)sender {
+    [self.keyboard hide];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,8 +40,19 @@
     NSAttributedString *str2 = [NSMutableAttributedString attributedStringWithAttachment:attach];
     [str appendAttributedString:str2];
     [self.testLabel setAttributedText:str];
+    self.keyboard = [[ASKeyboard alloc] init];
+    
+    [self.view addSubview:self.keyboard];
+    
+    
+    
+    //NSLog(@"%@", keyboard.inputView);
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //NSLog(@"%@", self.keyboard.inputView);
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

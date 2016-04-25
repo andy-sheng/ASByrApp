@@ -40,9 +40,14 @@
                                  likeVC,
                                  [[UINavigationController alloc] initWithRootViewController:sectionVC],
                                  settingVC];
+//    tabBarVC.viewControllers = @[top10VC,
+//                                 likeVC,
+//                                 sectionVC,
+//                                 settingVC];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = tabBarVC;
+   // self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:tabBarVC];
     [self.window makeKeyAndVisible];
     return YES;
 }
