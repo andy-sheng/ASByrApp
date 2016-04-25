@@ -7,10 +7,13 @@
 //
 
 #import "ASSectionListVC.h"
+#import "XQBoardListVC.h"
 
 @interface ASSectionListVC ()
 
 @property(strong, nonatomic) UIBarButtonItem * dismissBtn;
+@property(strong, nonatomic) NSMutableArray *sectionNameList;
+@property(strong, nonatomic) NSMutableArray *sectionDescripList;
 
 @end
 
@@ -19,8 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.dismissBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissVC)];
+    self.dismissBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleDone target:self action:@selector(dismissVC)];
     self.navigationItem.rightBarButtonItem = self.dismissBtn;
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+    
+    UITableView *tableView = [[UITableView alloc]initWithFrame:[[UIScreen mainScreen]bounds] style:UITableViewStylePlain];
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    tableView.delegate=self;
+    tableView.dataSource=self;
+    [self loadRootSectionData];
+    
+    self.view=tableView;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -33,28 +45,47 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)loadRootSectionData{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"RootSectionList" ofType:@"plist"];
+    ///self.sectionList = [[NSDictionary alloc]initWithContentsOfFile:filePath];
+    NSDictionary * dict = [[[NSDictionary alloc]initWithContentsOfFile:filePath] objectForKey:@"Section"];
+    self.sectionNameList=[NSMutableArray arrayWithCapacity:[dict count]];
+    self.sectionDescripList=[NSMutableArray arrayWithCapacity:[dict count]];
+    [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [self.sectionNameList addObject:key];
+        [self.sectionDescripList addObject:obj];
+    }];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Incomplete implementation, return the number of sections
-    return 0;
+    return [self.sectionNameList count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 0;
+    return 1;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    static NSString *MyIdentifier = @"XQRootSection";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    if (cell==nil) {
+        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    }
+    cell.textLabel.text=[self.sectionDescripList objectAtIndex:indexPath.section];
     return cell;
+    // Configure the cell...
 }
-*/
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //NSLog(@"%@",[self.sectionNameList objectAtIndex:indexPath.section]);
+    XQBoardListVC * boardListView=[[XQBoardListVC alloc]initWithSectionName:[self.sectionNameList objectAtIndex:indexPath.section]];
+    [self.navigationController pushViewController:boardListView animated:YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

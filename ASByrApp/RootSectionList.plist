@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Section</key>
+	<dict>
+		<key>0</key>
+		<string>本站站务</string>
+		<key>1</key>
+		<string>北邮校园</string>
+		<key>2</key>
+		<string>学术科技</string>
+		<key>3</key>
+		<string>信息社会</string>
+		<key>4</key>
+		<string>人文艺术</string>
+		<key>5</key>
+		<string>生活时尚</string>
+		<key>6</key>
+		<string>休闲娱乐</string>
+		<key>7</key>
+		<string>体育健身</string>
+		<key>8</key>
+		<string>游戏对战</string>
+		<key>9</key>
+		<string>乡亲乡爱</string>
+	</dict>
+</dict>
+</plist>

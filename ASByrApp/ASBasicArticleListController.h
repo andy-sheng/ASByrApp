@@ -10,6 +10,7 @@
 #import <MJRefresh.h>
 
 @interface ASBasicArticleListController : UITableViewController
+@property(assign, nonatomic) BOOL isLoaded;
 
 
 - (instancetype)initWithTitle:(NSString*) title;

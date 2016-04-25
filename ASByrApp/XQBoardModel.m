@@ -37,15 +37,14 @@
     NSLog(@"color_board文件路径%@",filePath);
     NSDictionary * dict = [[NSDictionary alloc]initWithContentsOfFile:filePath];
     self.color=[dict objectForKey:name];
-    ASByrBoard *netBoard =[[ASByrBoard alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
+    //=======若版面颜色未对应上，则取第363位颜色“030303”======
+    if (self.color==nil) {
+        self.color=@"030303";
+    }
+    //ASByrBoard *netBoard =[[ASByrBoard alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
     NSLog(@"版面颜色：%@",self.color);
-    [netBoard fetchBoardDetailInfoWithName:name successBlock:^(NSInteger statusCode, id response) {
-        self.descip = [response[@"description"] copy];
-        self.parentName = [response[@"section"] copy];
-        NSLog(@"当前版面名称：%@，分区：%@",self.descip,self.parentName);
-    } failureBlock:^(NSInteger statusCode, id response) {
-        NSLog(@"fetch other Info of A board fail!");
-    }];
+    self.descip=@"";
+    self.parentName=@"";
     return self;
 }
 
@@ -67,6 +66,4 @@
 - (NSString *)getColor{
     return self.color;
 };
-
-
 @end

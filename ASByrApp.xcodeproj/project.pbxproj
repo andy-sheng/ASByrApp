@@ -57,6 +57,9 @@
 		A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E69D281CB7F147001E9E27 /* ASLoginController.m */; };
 		A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A91776241CC76CD000ED84B3 /* XQSectionModel.m */; };
 		A91776281CC76CE500ED84B3 /* XQBoardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A91776271CC76CE500ED84B3 /* XQBoardModel.m */; };
+		A92633651CCBB57200B73F58 /* RootSectionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = A92633641CCBB57200B73F58 /* RootSectionList.plist */; };
+		A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A92633671CCCA30400B73F58 /* XQBoardListVC.m */; };
+		A926336A1CCCB12100B73F58 /* OtherSectionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = A92633691CCCB12100B73F58 /* OtherSectionList.plist */; };
 		A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */; };
 		A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */; };
 		A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A96F5B761CC85F5400117F5E /* XQBoardView.m */; };
@@ -155,6 +158,10 @@
 		A91776241CC76CD000ED84B3 /* XQSectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQSectionModel.m; sourceTree = "<group>"; };
 		A91776261CC76CE500ED84B3 /* XQBoardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQBoardModel.h; sourceTree = "<group>"; };
 		A91776271CC76CE500ED84B3 /* XQBoardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQBoardModel.m; sourceTree = "<group>"; };
+		A92633641CCBB57200B73F58 /* RootSectionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RootSectionList.plist; sourceTree = "<group>"; };
+		A92633661CCCA30400B73F58 /* XQBoardListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQBoardListVC.h; sourceTree = "<group>"; };
+		A92633671CCCA30400B73F58 /* XQBoardListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQBoardListVC.m; sourceTree = "<group>"; };
+		A92633691CCCB12100B73F58 /* OtherSectionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OtherSectionList.plist; sourceTree = "<group>"; };
 		A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
 		A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
@@ -252,9 +259,11 @@
 				A16E1A6E1CAE5A0000F7C1FA /* AppDelegate */,
 				A16E1A471CAD6B9500F7C1FA /* Assets.xcassets */,
 				A16E1A491CAD6B9500F7C1FA /* LaunchScreen.storyboard */,
+				A92633641CCBB57200B73F58 /* RootSectionList.plist */,
 				A96F5B7A1CC8CBE300117F5E /* color_board.plist */,
 				A16E1A4C1CAD6B9500F7C1FA /* Info.plist */,
 				A16E1A3B1CAD6B9500F7C1FA /* Supporting Files */,
+				A92633691CCCB12100B73F58 /* OtherSectionList.plist */,
 			);
 			path = ASByrApp;
 			sourceTree = "<group>";
@@ -393,6 +402,8 @@
 				A1BFB6351CC4BAB000FE5CA1 /* ASArticleListVC.m */,
 				A1BFB6431CC4CDED00FE5CA1 /* ASSectionListVC.h */,
 				A1BFB6441CC4CDED00FE5CA1 /* ASSectionListVC.m */,
+				A92633661CCCA30400B73F58 /* XQBoardListVC.h */,
+				A92633671CCCA30400B73F58 /* XQBoardListVC.m */,
 			);
 			name = "SectionList(版面列表)";
 			path = ..;
@@ -549,6 +560,8 @@
 				A1BFB63B1CC4C15000FE5CA1 /* edit@2x.png in Resources */,
 				A1BFB62C1CC48C8F00FE5CA1 /* list@1x.png in Resources */,
 				A1BFB6251CC48AD800FE5CA1 /* gear@2x.png in Resources */,
+				A92633651CCBB57200B73F58 /* RootSectionList.plist in Resources */,
+				A926336A1CCCB12100B73F58 /* OtherSectionList.plist in Resources */,
 				A1BFB61F1CC48A4800FE5CA1 /* fire@2x.png in Resources */,
 				A1BFB64F1CC4D29100FE5CA1 /* down@3x.png in Resources */,
 				A16E1A791CAEBACE00F7C1FA /* top10@2x.png in Resources */,
@@ -635,6 +648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
+				A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
