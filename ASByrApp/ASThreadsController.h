@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ASThreadsController : UITableViewController
+@interface ASThreadsController : UIViewController
 
 - (instancetype)initWithWithBoard:(NSString*)board
                               aid:(NSUInteger)aid;

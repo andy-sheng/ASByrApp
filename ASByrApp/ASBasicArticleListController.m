@@ -9,11 +9,13 @@
 
 #import "ASBasicArticleListController.h"
 
+
 @interface ASBasicArticleListController()
 
 @property(assign, nonatomic) BOOL isLoaded;
 
 @end
+
 
 @implementation ASBasicArticleListController
 
@@ -28,6 +30,24 @@
     return self;
 }
 
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    NSLog(@"y:%f", self.navigationController.navigationBar.frame.size.height);
+//    NSLog(@"y:%f", scrollView.superview.superview.frame.origin.y);
+//    NSLog(@"滑动：%f", scrollView.contentOffset.y);
+}
 
 - (void)loadData {
     //[self.tableView.mj_header beginRefreshing];

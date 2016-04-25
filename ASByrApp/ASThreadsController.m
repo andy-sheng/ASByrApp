@@ -10,15 +10,22 @@
 #import "ASThreadsTitleCell.h"
 #import "ASThreadsBodyCell.h"
 #import "ASThreadsReplyCell.h"
+#import "ASKeyboard.h"
 #import <ASByrToken.h>
 #import <ASByrArticle.h>
 #import <MJRefresh.h>
+#import <Masonry.h>
+#import <MBProgressHUD.h>
 
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<ASByrArticleResponseDelegate, ASByrArticleResponseReformer>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate>
+
+@property(strong, nonatomic) UITableView * tableView;
+@property(strong, nonatomic) ASKeyboard * keyboard;
+@property(strong, nonatomic) MBProgressHUD * hud;
 
 @property(strong, nonatomic) ASByrArticle * articleApi;
 @property(strong, nonatomic) NSString * board;
@@ -28,6 +35,8 @@ const NSUInteger replyRow = 2;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
+
+
 
 
 @end
@@ -46,15 +55,24 @@ const NSUInteger replyRow = 2;
         self.isLoadThreads = YES;
         self.replyArticles = [NSMutableArray array];
         self.navigationItem.title = @"帖子详情";
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 50.0;
-        [self.tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
-        [self.tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
-        [self.tableView registerNib:[UINib nibWithNibName:@"ASThreadsReplyCell" bundle:nil] forCellReuseIdentifier:@"threadsReply"];
-        self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-        self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
+        
+        self.hidesBottomBarWhenPushed = YES;
     }
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.keyboard];
+    [self.view setNeedsUpdateConstraints];
+    //[self.tableView.superview bringSubviewToFront:self.keyboard];
+    //[self addChildViewController:self.keyboard];
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,19 +84,20 @@ const NSUInteger replyRow = 2;
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)updateViewConstraints {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top);
+        make.trailing.equalTo(self.view.mas_trailing);
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.leading.equalTo(self.view.mas_leading);
+    }];
+   
+    [super updateViewConstraints];
 }
 
 #pragma mark - private function
@@ -93,6 +112,14 @@ const NSUInteger replyRow = 2;
 - (void)moreData {
     self.isLoadThreads = NO;
     [self.articleApi fetchThreadsWithBoard:self.board aid:self.aid page:self.page];
+}
+
+#pragma mark - TableView delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    NSLog(@"pop");
+    [self.keyboard pop];
 }
 
 #pragma mark - Table view data source
@@ -122,6 +149,13 @@ const NSUInteger replyRow = 2;
                        content:self.replyArticles[indexPath.row - 1][@"content"]];
         return cell;
     }
+}
+
+#pragma mark - ASKeyBoardDelegate
+
+- (void)sendAcion:(NSString *)text {
+    NSLog(@"post:%@", text);
+
 }
 
 #pragma mark - ASByrArticleResponseDelegate
@@ -174,6 +208,39 @@ const NSUInteger replyRow = 2;
 }
 
 #pragma mark - getter and setter
+
+- (UITableView *)tableView {
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] init];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.estimatedRowHeight = 50.0;
+        [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
+        [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
+        [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsReplyCell" bundle:nil] forCellReuseIdentifier:@"threadsReply"];
+        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+        _tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
+    }
+    return _tableView;
+}
+
+- (ASKeyboard *)keyboard {
+    if (_keyboard == nil) {
+        _keyboard = [[ASKeyboard alloc] init];
+        _keyboard.delegate = self;
+    }
+    return _keyboard;
+}
+
+- (MBProgressHUD *)hud {
+    if (_hud == nil) {
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _hud.mode = MBProgressHUDModeAnnularDeterminate;
+        _hud.labelText = @"Loading";
+    }
+    return _hud;
+}
 
 - (NSUInteger)page {
     return _page++;

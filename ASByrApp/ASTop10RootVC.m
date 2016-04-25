@@ -11,6 +11,7 @@
 #import "ASLoginController.h"
 #import <ASByrToken.h>
 #import <WMPageController.h>
+#import <Masonry.h>
 
 @interface ASTop10RootVC()<WMPageControllerDelegate, WMPageControllerDataSource>
 
@@ -30,9 +31,12 @@
                              [[ASTop10ListController alloc] initWithTitle:@"2" top10Type:ASByrSectiontop sectionNo:1]
                              ];
         self.menuItems = @[@"十大", @"校园", @"学术"];
+        self.showOnNavigationBar = YES;
+        self.menuBGColor = [UIColor clearColor];
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -41,12 +45,30 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //[self updateViewConstraints];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (![ASByrToken shareInstance].accessToken) {
        [self presentViewController:[[ASLoginController alloc] init] animated:YES completion:nil];
     }
 }
+
+//- (void)updateViewConstraints {
+//    [self.view mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(@64);
+//        make.trailing.mas_equalTo(self.view.superview.mas_trailing);
+//        make.bottom.mas_equalTo(self.view.superview.mas_bottom);
+//        make.leading.mas_equalTo(self.view.superview.mas_leading);
+//        NSLog(@"%f", self.navigationController.navigationBar.frame.size.height);
+//        NSLog(@"%f",[[UIApplication sharedApplication] statusBarFrame].size.height);
+//    }];
+//    [super updateViewConstraints];
+//}
 
 #pragma mark - WMPageControllerDataSource
 

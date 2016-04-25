@@ -33,9 +33,6 @@
 		A1BFB61E1CC48A4800FE5CA1 /* fire@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB61B1CC48A4800FE5CA1 /* fire@1x.png */; };
 		A1BFB61F1CC48A4800FE5CA1 /* fire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB61C1CC48A4800FE5CA1 /* fire@2x.png */; };
 		A1BFB6201CC48A4800FE5CA1 /* fire@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB61D1CC48A4800FE5CA1 /* fire@3x.png */; };
-		A1BFB6241CC48AD800FE5CA1 /* gear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB6211CC48AD800FE5CA1 /* gear@3x.png */; };
-		A1BFB6251CC48AD800FE5CA1 /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB6221CC48AD800FE5CA1 /* gear@2x.png */; };
-		A1BFB6261CC48AD800FE5CA1 /* gear@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB6231CC48AD800FE5CA1 /* gear@1x.png */; };
 		A1BFB62A1CC48C8F00FE5CA1 /* list@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB6271CC48C8F00FE5CA1 /* list@3x.png */; };
 		A1BFB62B1CC48C8F00FE5CA1 /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB6281CC48C8F00FE5CA1 /* list@2x.png */; };
 		A1BFB62C1CC48C8F00FE5CA1 /* list@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB6291CC48C8F00FE5CA1 /* list@1x.png */; };
@@ -53,6 +50,7 @@
 		A1BFB64F1CC4D29100FE5CA1 /* down@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB64C1CC4D29100FE5CA1 /* down@3x.png */; };
 		A1BFB6501CC4D29100FE5CA1 /* down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB64D1CC4D29100FE5CA1 /* down@2x.png */; };
 		A1BFB6511CC4D29100FE5CA1 /* down@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1BFB64E1CC4D29100FE5CA1 /* down@1x.png */; };
+		A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */; };
 		A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1E69CF81CB50D34001E9E27 /* Main.storyboard */; };
 		A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E69D281CB7F147001E9E27 /* ASLoginController.m */; };
 		A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A91776241CC76CD000ED84B3 /* XQSectionModel.m */; };
@@ -126,9 +124,6 @@
 		A1BFB61B1CC48A4800FE5CA1 /* fire@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire@1x.png"; sourceTree = "<group>"; };
 		A1BFB61C1CC48A4800FE5CA1 /* fire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire@2x.png"; sourceTree = "<group>"; };
 		A1BFB61D1CC48A4800FE5CA1 /* fire@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire@3x.png"; sourceTree = "<group>"; };
-		A1BFB6211CC48AD800FE5CA1 /* gear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@3x.png"; sourceTree = "<group>"; };
-		A1BFB6221CC48AD800FE5CA1 /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
-		A1BFB6231CC48AD800FE5CA1 /* gear@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@1x.png"; sourceTree = "<group>"; };
 		A1BFB6271CC48C8F00FE5CA1 /* list@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@3x.png"; sourceTree = "<group>"; };
 		A1BFB6281CC48C8F00FE5CA1 /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@2x.png"; sourceTree = "<group>"; };
 		A1BFB6291CC48C8F00FE5CA1 /* list@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@1x.png"; sourceTree = "<group>"; };
@@ -148,6 +143,8 @@
 		A1BFB64C1CC4D29100FE5CA1 /* down@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@3x.png"; sourceTree = "<group>"; };
 		A1BFB64D1CC4D29100FE5CA1 /* down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@2x.png"; sourceTree = "<group>"; };
 		A1BFB64E1CC4D29100FE5CA1 /* down@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@1x.png"; sourceTree = "<group>"; };
+		A1C818DB1CCA162E00D535F6 /* ASKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASKeyboard.h; sourceTree = "<group>"; };
+		A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASKeyboard.m; sourceTree = "<group>"; };
 		A1E69CF81CB50D34001E9E27 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A1E69D271CB7F147001E9E27 /* ASLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASLoginController.h; sourceTree = "<group>"; };
 		A1E69D281CB7F147001E9E27 /* ASLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASLoginController.m; sourceTree = "<group>"; };
@@ -193,14 +190,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A16885D01CC0D22D00338353 /* threads */ = {
+		A16885D01CC0D22D00338353 /* threads(帖子详情) */ = {
 			isa = PBXGroup;
 			children = (
 				A16885D11CC0D24400338353 /* view */,
 				A16885CD1CBF469300338353 /* ASThreadsController.h */,
 				A16885CE1CBF469300338353 /* ASThreadsController.m */,
 			);
-			name = threads;
+			name = "threads(帖子详情)";
 			sourceTree = "<group>";
 		};
 		A16885D11CC0D24400338353 /* view */ = {
@@ -244,10 +241,10 @@
 		A16E1A3A1CAD6B9500F7C1FA /* ASByrApp */ = {
 			isa = PBXGroup;
 			children = (
-				A1BFB6331CC4B5A700FE5CA1 /* SectionList(版面列表) */,
-				A1A7FFC91CB4E82E00AD6787 /* test */,
 				A16E1A7A1CB246C000F7C1FA /* common */,
 				A16E1A731CAEB85800F7C1FA /* images */,
+				A1A7FFC91CB4E82E00AD6787 /* test */,
+				A1BFB6331CC4B5A700FE5CA1 /* SectionList(版面列表) */,
 				A16E1A6F1CAE69B100F7C1FA /* Top10(十大) */,
 				A16E1A6E1CAE5A0000F7C1FA /* AppDelegate */,
 				A16E1A471CAD6B9500F7C1FA /* Assets.xcassets */,
@@ -322,7 +319,8 @@
 		A16E1A7A1CB246C000F7C1FA /* common */ = {
 			isa = PBXGroup;
 			children = (
-				A16885D01CC0D22D00338353 /* threads */,
+				A1BFB6551CC60D4300FE5CA1 /* keyboard */,
+				A16885D01CC0D22D00338353 /* threads(帖子详情) */,
 				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
 				A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */,
 				A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */,
@@ -374,9 +372,6 @@
 				A1BFB6271CC48C8F00FE5CA1 /* list@3x.png */,
 				A1BFB6281CC48C8F00FE5CA1 /* list@2x.png */,
 				A1BFB6291CC48C8F00FE5CA1 /* list@1x.png */,
-				A1BFB6211CC48AD800FE5CA1 /* gear@3x.png */,
-				A1BFB6221CC48AD800FE5CA1 /* gear@2x.png */,
-				A1BFB6231CC48AD800FE5CA1 /* gear@1x.png */,
 				A1BFB61B1CC48A4800FE5CA1 /* fire@1x.png */,
 				A1BFB61C1CC48A4800FE5CA1 /* fire@2x.png */,
 				A1BFB61D1CC48A4800FE5CA1 /* fire@3x.png */,
@@ -396,6 +391,15 @@
 			);
 			name = "SectionList(版面列表)";
 			path = ..;
+			sourceTree = "<group>";
+		};
+		A1BFB6551CC60D4300FE5CA1 /* keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				A1C818DB1CCA162E00D535F6 /* ASKeyboard.h */,
+				A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */,
+			);
+			name = keyboard;
 			sourceTree = "<group>";
 		};
 		A96462B31CC0A3B40086DEE6 /* Board(版面) */ = {
@@ -506,7 +510,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = BASG852M4V;
+						DevelopmentTeam = 9E9C2ZNYDA;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -548,7 +552,6 @@
 				A16E1A781CAEBACE00F7C1FA /* top10.png in Resources */,
 				A1BFB63B1CC4C15000FE5CA1 /* edit@2x.png in Resources */,
 				A1BFB62C1CC48C8F00FE5CA1 /* list@1x.png in Resources */,
-				A1BFB6251CC48AD800FE5CA1 /* gear@2x.png in Resources */,
 				A1BFB61F1CC48A4800FE5CA1 /* fire@2x.png in Resources */,
 				A1BFB64F1CC4D29100FE5CA1 /* down@3x.png in Resources */,
 				A16E1A791CAEBACE00F7C1FA /* top10@2x.png in Resources */,
@@ -565,10 +568,8 @@
 				A96F5B7B1CC8CBE300117F5E /* color_board.plist in Resources */,
 				A1BFB6321CC48CCA00FE5CA1 /* heart@3x.png in Resources */,
 				A1BFB6401CC4C98300FE5CA1 /* list2@3x.png in Resources */,
-				A1BFB6261CC48AD800FE5CA1 /* gear@1x.png in Resources */,
 				A1BFB6501CC4D29100FE5CA1 /* down@2x.png in Resources */,
 				A16E1A4B1CAD6B9500F7C1FA /* LaunchScreen.storyboard in Resources */,
-				A1BFB6241CC48AD800FE5CA1 /* gear@3x.png in Resources */,
 				A16E1A481CAD6B9500F7C1FA /* Assets.xcassets in Resources */,
 				A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */,
 				A1BFB6311CC48CCA00FE5CA1 /* heart@2x.png in Resources */,
@@ -641,6 +642,7 @@
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
 				A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */,
+				A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */,
 				A1BFB6451CC4CDED00FE5CA1 /* ASSectionListVC.m in Sources */,
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
@@ -789,7 +791,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -804,7 +806,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
