@@ -55,13 +55,14 @@
         make.top.equalTo(self.mas_top);
         make.trailing.equalTo(self.mas_trailing);
         make.leading.equalTo(self.mas_leading);
-        make.height.equalTo(@50);
+        make.height.equalTo(@40);
     }];
     
     [self.moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.inputView.mas_top).offset(8);
         make.bottom.equalTo(self.inputView.mas_bottom).offset(-8);
         make.leading.equalTo(self.inputView.mas_leading).offset(8);
+        make.width.equalTo(self.moreBtn.mas_height);
     }];
     
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -74,6 +75,7 @@
         make.top.equalTo(self.inputView.mas_top).offset(8);
         make.bottom.equalTo(self.inputView.mas_bottom).offset(-8);
         make.leading.equalTo(self.textView.mas_trailing).offset(8);
+        make.width.equalTo(self.faceBtn.mas_height);
     }];
     
     [self.sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -134,7 +136,8 @@
     if (_inputView == nil) {
         _inputView = [[UIView alloc] init];
         // init code goes here
-        [_inputView setBackgroundColor:[UIColor grayColor]];
+        [_inputView setBackgroundColor:[UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.00]];
+        [_inputView.layer setBorderWidth:1.0];
     }
     return _inputView;
 }
@@ -152,6 +155,8 @@
     if (_textView == nil) {
         _textView = [[UITextView alloc] init];
         [_textView setFont:[UIFont systemFontOfSize:15.0]];
+        [_textView.layer setBorderWidth:1.0];
+        [_textView.layer setCornerRadius:10.0];
     }
     return _textView;
 }
@@ -163,7 +168,9 @@
         [_sendBtn addTarget:self action:@selector(sendBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_sendBtn setTitleColor:[UIColor whiteColor]
                        forState:UIControlStateHighlighted];
-        [_sendBtn setBackgroundColor:[UIColor redColor]];
+        [_sendBtn setBackgroundColor:[UIColor colorWithRed:0.19 green:0.49 blue:0.95 alpha:1.00]];
+        [_sendBtn.layer setBorderWidth:1.0];
+        [_sendBtn.layer setCornerRadius:5.0];
     }
     return _sendBtn;
 }
@@ -171,9 +178,7 @@
 - (UIButton *)faceBtn {
     if (_faceBtn == nil) {
         _faceBtn = [[UIButton alloc] init];
-        [_faceBtn setTitle:@"表情" forState:UIControlStateNormal];
-        [_faceBtn setTitleColor:[UIColor whiteColor]
-                       forState:UIControlStateHighlighted];
+        [_faceBtn setBackgroundImage:[UIImage imageNamed:@"smile"] forState:UIControlStateNormal];
     }
     return _faceBtn;
 }
@@ -181,9 +186,7 @@
 - (UIButton *)moreBtn {
     if (_moreBtn == nil) {
         _moreBtn = [[UIButton alloc] init];
-        [_moreBtn setTitle:@"加" forState:UIControlStateNormal];
-        [_moreBtn setTitleColor:[UIColor whiteColor]
-                       forState:UIControlStateHighlighted];
+        [_moreBtn setBackgroundImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
     }
     return _moreBtn;
 }

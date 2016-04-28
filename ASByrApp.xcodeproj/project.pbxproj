@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		69A70CC2CD72454EC7843F71 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4FFF6330EA431E2C06640A /* libPods.a */; };
+		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
+		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
 		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
@@ -83,6 +85,8 @@
 
 /* Begin PBXFileReference section */
 		421B8D67E827BF51D3568E76 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
@@ -365,6 +369,8 @@
 		A1BFB6121CC4891500FE5CA1 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				A11FBC6E1CD240C30029DAC8 /* smile.png */,
+				A11FBC6C1CD23F5E0029DAC8 /* plus.png */,
 				A1BFB64C1CC4D29100FE5CA1 /* down@3x.png */,
 				A1BFB64D1CC4D29100FE5CA1 /* down@2x.png */,
 				A1BFB64E1CC4D29100FE5CA1 /* down@1x.png */,
@@ -520,7 +526,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = BASG852M4V;
+						DevelopmentTeam = 9E9C2ZNYDA;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -581,12 +587,14 @@
 				A1BFB6501CC4D29100FE5CA1 /* down@2x.png in Resources */,
 				A16E1A4B1CAD6B9500F7C1FA /* LaunchScreen.storyboard in Resources */,
 				A16E1A481CAD6B9500F7C1FA /* Assets.xcassets in Resources */,
+				A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */,
 				A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */,
 				A926336E1CCE53BD00B73F58 /* OtherSectionList.plist in Resources */,
 				A1BFB6311CC48CCA00FE5CA1 /* heart@2x.png in Resources */,
 				A1BFB63C1CC4C15000FE5CA1 /* edit@1x.png in Resources */,
 				A1BFB62B1CC48C8F00FE5CA1 /* list@2x.png in Resources */,
 				A1BFB6301CC48CCA00FE5CA1 /* heart@1x.png in Resources */,
+				A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */,
 				A1BFB6421CC4C98300FE5CA1 /* list2@1x.png in Resources */,
 				A1BFB6511CC4D29100FE5CA1 /* down@1x.png in Resources */,
 			);
@@ -803,7 +811,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -818,7 +826,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

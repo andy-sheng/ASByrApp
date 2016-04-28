@@ -15,6 +15,7 @@
 
 @interface ASTop10RootVC()<WMPageControllerDelegate, WMPageControllerDataSource>
 
+@property(nonatomic, strong) UIBarButtonItem *manageTop10Btn;
 @property(nonatomic, strong) NSArray * controllers;
 @property(nonatomic, strong) NSArray * menuItems;
 
@@ -27,8 +28,8 @@
     if (self) {
         self.controllers = @[
                              [[ASTop10ListController alloc] initWithTitle:@"十大" top10Type:ASByrTop10 sectionNo:0],
-                             [[ASTop10ListController alloc] initWithTitle:@"1" top10Type:ASByrSectiontop sectionNo:0],
-                             [[ASTop10ListController alloc] initWithTitle:@"2" top10Type:ASByrSectiontop sectionNo:1]
+                             [[ASTop10ListController alloc] initWithTitle:@"1" top10Type:ASByrSectiontop sectionNo:1],
+                             [[ASTop10ListController alloc] initWithTitle:@"2" top10Type:ASByrSectiontop sectionNo:2]
                              ];
         self.menuItems = @[@"十大", @"校园", @"学术"];
         self.showOnNavigationBar = YES;
@@ -40,6 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.rightBarButtonItem = self.manageTop10Btn;
     self.dataSource = self;
     self.delegate = self;
 
@@ -88,5 +90,20 @@
 - (void)pageController:(WMPageController *)pageController didEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info {
     ASBasicArticleListController* tmp = viewController;
     [tmp loadIfNotLoaded];
+}
+
+#pragma mark - event reponser
+
+- (void)manageTop10 {
+
+}
+
+#pragma mark - getter and setter
+
+- (UIBarButtonItem *)manageTop10Btn {
+    if (_manageTop10Btn == nil) {
+        _manageTop10Btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(manageTop10)];
+    }
+    return _manageTop10Btn;
 }
 @end
