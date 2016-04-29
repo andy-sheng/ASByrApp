@@ -164,7 +164,7 @@
 - (UIButton *)sendBtn {
     if (_sendBtn == nil) {
         _sendBtn = [[UIButton alloc] init];
-        [_sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+        [_sendBtn setTitle:@" 发送 " forState:UIControlStateNormal];
         [_sendBtn addTarget:self action:@selector(sendBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_sendBtn setTitleColor:[UIColor whiteColor]
                        forState:UIControlStateHighlighted];
