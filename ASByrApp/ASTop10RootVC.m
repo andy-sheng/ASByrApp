@@ -9,6 +9,9 @@
 #import "ASTop10RootVC.h"
 #import "ASTop10ListController.h"
 #import "ASLoginController.h"
+#import "ASTop10ManageVC.h"
+#import "ASTop10Manager.h"
+
 #import <ASByrToken.h>
 #import <WMPageController.h>
 #import <Masonry.h>
@@ -16,9 +19,12 @@
 @interface ASTop10RootVC()<WMPageControllerDelegate, WMPageControllerDataSource>
 
 @property(nonatomic, strong) UIBarButtonItem *manageTop10Btn;
+
 @property(nonatomic, strong) NSArray * controllers;
+
 @property(nonatomic, strong) NSArray * menuItems;
 
+@property(nonatomic, strong) ASTop10Manager * top10Manager;
 @end
 
 @implementation ASTop10RootVC
@@ -26,14 +32,18 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.controllers = @[
-                             [[ASTop10ListController alloc] initWithTitle:@"十大" top10Type:ASByrTop10 sectionNo:0],
-                             [[ASTop10ListController alloc] initWithTitle:@"1" top10Type:ASByrSectiontop sectionNo:1],
-                             [[ASTop10ListController alloc] initWithTitle:@"2" top10Type:ASByrSectiontop sectionNo:2]
-                             ];
-        self.menuItems = @[@"十大", @"校园", @"学术"];
-        self.showOnNavigationBar = YES;
-        self.menuBGColor = [UIColor clearColor];
+        NSMutableArray *controllers = [NSMutableArray array];
+        NSMutableArray *titles = [NSMutableArray array];
+        self.top10Manager = [[ASTop10Manager alloc] init];
+        for (int i = 0; i < [self.top10Manager shownItemsCount]; ++i) {
+            ASTop10ManageItem * item = [self.top10Manager shownObjectAtIndex:i];
+            [controllers addObject:[[ASTop10ListController alloc] initWithTitle:item.name
+                                                                      top10Type:item.type
+                                                                      sectionNo:item.section]];
+            [titles addObject:item.name];
+        }
+        self.controllers = controllers;
+        self.menuItems   = titles;
     }
     return self;
 }
@@ -60,17 +70,6 @@
     }
 }
 
-//- (void)updateViewConstraints {
-//    [self.view mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(@64);
-//        make.trailing.mas_equalTo(self.view.superview.mas_trailing);
-//        make.bottom.mas_equalTo(self.view.superview.mas_bottom);
-//        make.leading.mas_equalTo(self.view.superview.mas_leading);
-//        NSLog(@"%f", self.navigationController.navigationBar.frame.size.height);
-//        NSLog(@"%f",[[UIApplication sharedApplication] statusBarFrame].size.height);
-//    }];
-//    [super updateViewConstraints];
-//}
 
 #pragma mark - WMPageControllerDataSource
 
@@ -95,15 +94,21 @@
 #pragma mark - event reponser
 
 - (void)manageTop10 {
-
+    UIViewController *tmp = [[ASTop10ManageVC alloc] init];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tmp]
+                       animated:YES
+                     completion:nil];
 }
 
 #pragma mark - getter and setter
 
 - (UIBarButtonItem *)manageTop10Btn {
     if (_manageTop10Btn == nil) {
-        _manageTop10Btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(manageTop10)];
+        _manageTop10Btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                        target:self
+                                                                        action:@selector(manageTop10)];
     }
     return _manageTop10Btn;
 }
+
 @end

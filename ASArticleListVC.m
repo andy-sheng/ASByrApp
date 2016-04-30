@@ -135,7 +135,7 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
 }
 
-#pragma 继承方法
+#pragma mark - 继承方法
 - (void)loadData {
     [super loadData];
     //[self.tableView.mj_header beginRefreshing];

@@ -9,5 +9,10 @@
 #ifndef ASConfig_h
 #define ASConfig_h
 
+typedef enum {
+    ASTop10      = 1 << 0,
+    ASRecommend  = 1 << 1,
+    ASSectionTop = 1 << 2
+}ASTop10Type;
 
 #endif /* ASConfig_h */
