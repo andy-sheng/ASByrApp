@@ -43,10 +43,14 @@ NSString * const hiddenArrKey = @"hiddenArr";
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"top10Iterms" ofType:@"plist"];
-        NSMutableDictionary *tmp = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+        NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *path =  [pathArr objectAtIndex:0];
+        NSString *filePath=[path stringByAppendingPathComponent:@"top10Iterms.plist"];
+        
+        NSMutableDictionary *tmp = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
         self.shownArr = [tmp objectForKey:showArrKey];
         if (self.shownArr == nil) {
+            NSLog(@"no");
             self.shownArr = [NSMutableArray arrayWithArray:@[
                                                              @{@"name":@"十大",
                                                                @"sectionNo":@(0),
@@ -110,9 +114,12 @@ NSString * const hiddenArrKey = @"hiddenArr";
     return tmp;}
 
 - (void)save {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"top10Iterms" ofType:@"plist"];
+    NSArray *pathArr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path =  [pathArr objectAtIndex:0];
+    NSString *filePath=[path stringByAppendingPathComponent:@"top10Iterms.plist"];
+    
     NSDictionary * tmp = [NSDictionary dictionaryWithObjectsAndKeys:self.shownArr, showArrKey, self.hiddenArr, hiddenArrKey, nil];
-    [tmp writeToFile:path atomically:YES];
+    [tmp writeToFile:filePath atomically:YES];
 }
 
 - (void)moveFromShownAtIndex:(NSUInteger)fromIndex

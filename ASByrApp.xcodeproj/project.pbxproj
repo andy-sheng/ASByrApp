@@ -12,7 +12,7 @@
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
 		A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC771CD50BF40029DAC8 /* ASTop10Manager.m */; };
-		A11FBC7A1CD799630029DAC8 /* top10Iterms.plist in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC791CD799630029DAC8 /* top10Iterms.plist */; };
+		A11FBC7C1CD876460029DAC8 /* top10Iterms.plist in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC7B1CD876460029DAC8 /* top10Iterms.plist */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
 		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
@@ -77,7 +77,7 @@
 		A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTop10ManageVC.m; sourceTree = "<group>"; };
 		A11FBC761CD50BF40029DAC8 /* ASTop10Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10Manager.h; sourceTree = "<group>"; };
 		A11FBC771CD50BF40029DAC8 /* ASTop10Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTop10Manager.m; sourceTree = "<group>"; };
-		A11FBC791CD799630029DAC8 /* top10Iterms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = top10Iterms.plist; sourceTree = "<group>"; };
+		A11FBC7B1CD876460029DAC8 /* top10Iterms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = top10Iterms.plist; path = ../top10Iterms.plist; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
@@ -243,10 +243,10 @@
 				A16E1A491CAD6B9500F7C1FA /* LaunchScreen.storyboard */,
 				A926336B1CCE515E00B73F58 /* RootSectionList.plist */,
 				A96F5B7A1CC8CBE300117F5E /* color_board.plist */,
+				A11FBC7B1CD876460029DAC8 /* top10Iterms.plist */,
 				A16E1A4C1CAD6B9500F7C1FA /* Info.plist */,
 				A16E1A3B1CAD6B9500F7C1FA /* Supporting Files */,
 				A926336D1CCE53BD00B73F58 /* OtherSectionList.plist */,
-				A11FBC791CD799630029DAC8 /* top10Iterms.plist */,
 			);
 			path = ASByrApp;
 			sourceTree = "<group>";
@@ -536,7 +536,7 @@
 				A16E1A781CAEBACE00F7C1FA /* top10.png in Resources */,
 				A16E1A791CAEBACE00F7C1FA /* top10@2x.png in Resources */,
 				A926336C1CCE515E00B73F58 /* RootSectionList.plist in Resources */,
-				A11FBC7A1CD799630029DAC8 /* top10Iterms.plist in Resources */,
+				A11FBC7C1CD876460029DAC8 /* top10Iterms.plist in Resources */,
 				A16E1A941CB4A40B00F7C1FA /* ASTop10Cell.xib in Resources */,
 				A96F5B791CC85F6F00117F5E /* XQBoardView.xib in Resources */,
 				A16885E51CC0D51000338353 /* ASThreadsReplyCell.xib in Resources */,
