@@ -32,18 +32,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        NSMutableArray *controllers = [NSMutableArray array];
-        NSMutableArray *titles = [NSMutableArray array];
-        self.top10Manager = [[ASTop10Manager alloc] init];
-        for (int i = 0; i < [self.top10Manager shownItemsCount]; ++i) {
-            ASTop10ManageItem * item = [self.top10Manager shownObjectAtIndex:i];
-            [controllers addObject:[[ASTop10ListController alloc] initWithTitle:item.name
-                                                                      top10Type:item.type
-                                                                      sectionNo:item.section]];
-            [titles addObject:item.name];
-        }
-        self.controllers = controllers;
-        self.menuItems   = titles;
+        [self setupTitlesAndControllers];
     }
     return self;
 }
@@ -70,6 +59,26 @@
     }
 }
 
+- (void) setupTitlesAndControllers {
+    NSMutableArray *controllers = [NSMutableArray array];
+    NSMutableArray *titles = [NSMutableArray array];
+    self.top10Manager = [[ASTop10Manager alloc] init];
+    for (int i = 0; i < [self.top10Manager shownItemsCount]; ++i) {
+        ASTop10ManageItem * item = [self.top10Manager shownObjectAtIndex:i];
+        [controllers addObject:[[ASTop10ListController alloc] initWithTitle:item.name
+                                                                  top10Type:item.type
+                                                                  sectionNo:item.section]];
+        [titles addObject:item.name];
+    }
+    self.controllers = controllers;
+    self.menuItems   = titles;
+}
+
+- (void)reloadData {
+    [self setupTitlesAndControllers];
+    [super reloadData];
+}
+
 
 #pragma mark - WMPageControllerDataSource
 
@@ -94,7 +103,8 @@
 #pragma mark - event reponser
 
 - (void)manageTop10 {
-    UIViewController *tmp = [[ASTop10ManageVC alloc] init];
+    ASTop10ManageVC *tmp = [[ASTop10ManageVC alloc] init];
+    tmp.rootVC = self;
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tmp]
                        animated:YES
                      completion:nil];

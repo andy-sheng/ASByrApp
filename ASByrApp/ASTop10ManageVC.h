@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ASTop10RootVC.h"
 
 @interface ASTop10ManageVC : UITableViewController
+
+@property(weak, nonatomic) ASTop10RootVC * rootVC;
 
 @end

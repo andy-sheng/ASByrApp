@@ -141,7 +141,7 @@
             reformedArticle[@"aid"]     = article[@"id"];
             reformedArticle[@"content"] = article[@"content"];
             reformedArticle[@"board"]   = article[@"board_name"];
-            if ([article objectForKey:@"user"] != nil) {
+            if ([article objectForKey:@"user"] != nil && [article objectForKey:@"user"] != [NSNull null]) {
                 reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
                                                 @"uid": article[@"user"][@"id"]};
             } else {

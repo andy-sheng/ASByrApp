@@ -39,4 +39,18 @@
 
 - (ASTop10ManageItem*)hiddenObjectAtIndex:(NSUInteger)index;
 
+- (void)save;
+
+- (void)moveFromShownAtIndex:(NSUInteger)fromIndex
+             toHiddenAtIndex:(NSUInteger)toIndex;
+
+- (void)moveFromShownAtIndex:(NSUInteger)fromIndex
+              toShownAtIndex:(NSUInteger)toIndex;
+
+- (void)moveFromHiddenAtIndex:(NSUInteger)fromIndex
+               toShownAtIndex:(NSUInteger)toIndex;
+
+- (void)moveFromHiddenAtIndex:(NSUInteger)fromIndex
+              toHiddenAtIndex:(NSUInteger)toIndex;
+
 @end

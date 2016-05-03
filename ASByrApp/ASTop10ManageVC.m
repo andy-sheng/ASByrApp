@@ -93,6 +93,20 @@
 
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    if (fromIndexPath.section == 0) {
+        if (toIndexPath.section == 0) {
+            [self.top10Manager moveFromShownAtIndex:fromIndexPath.row toShownAtIndex:toIndexPath.row];
+        } else {
+            [self.top10Manager moveFromShownAtIndex:fromIndexPath.row toHiddenAtIndex:toIndexPath.row];
+        }
+    } else {
+        if (toIndexPath.section == 0) {
+            [self.top10Manager moveFromHiddenAtIndex:fromIndexPath.row toShownAtIndex:toIndexPath.row];
+        } else {
+            [self.top10Manager moveFromHiddenAtIndex:fromIndexPath.row toHiddenAtIndex:toIndexPath.row];
+        }
+        
+    }
 }
 
 
@@ -103,6 +117,8 @@
 #pragma mark - event handler
 
 - (void)doneBtnClick {
+    [self.top10Manager save];
+    [self.rootVC reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

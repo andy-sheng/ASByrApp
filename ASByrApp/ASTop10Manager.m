@@ -28,74 +28,141 @@
 
 @interface ASTop10Manager()
 
-@property(strong, nonatomic) NSArray * top10ItemArr;
+@property(strong, nonatomic) NSMutableArray * shownArr;
+
+@property(strong, nonatomic) NSMutableArray * hiddenArr;
 
 @end
+
+NSString * const showArrKey   = @"shownArr";
+
+NSString * const hiddenArrKey = @"hiddenArr";
 
 @implementation ASTop10Manager
 
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        self.top10ItemArr = @[[ASTop10ManageItem itemWithName:@"十大" sectionNo:0 type:ASTop10 isShown:YES],
-                              [ASTop10ManageItem itemWithName:@"本站" sectionNo:0 type:ASSectionTop isShown:YES],
-                              [ASTop10ManageItem itemWithName:@"北邮" sectionNo:1 type:ASSectionTop isShown:YES],
-                              [ASTop10ManageItem itemWithName:@"学术" sectionNo:2 type:ASSectionTop isShown:YES],
-                              [ASTop10ManageItem itemWithName:@"信息" sectionNo:3 type:ASSectionTop isShown:YES],
-                              [ASTop10ManageItem itemWithName:@"人文" sectionNo:3 type:ASSectionTop isShown:YES],
-                              [ASTop10ManageItem itemWithName:@"生活" sectionNo:3 type:ASSectionTop isShown:NO]];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"top10Iterms" ofType:@"plist"];
+        NSMutableDictionary *tmp = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+        self.shownArr = [tmp objectForKey:showArrKey];
+        if (self.shownArr == nil) {
+            self.shownArr = [NSMutableArray arrayWithArray:@[
+                                                             @{@"name":@"十大",
+                                                               @"sectionNo":@(0),
+                                                               @"type":@(ASTop10)},
+                                                             @{@"name":@"本站",
+                                                               @"sectionNo":@(0),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"北邮",
+                                                               @"sectionNo":@(1),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"学术",
+                                                               @"sectionNo":@(2),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"信息",
+                                                               @"sectionNo":@(3),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"人文",
+                                                               @"sectionNo":@(4),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"生活",
+                                                               @"sectionNo":@(5),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"休闲",
+                                                               @"sectionNo":@(6),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"体育",
+                                                               @"sectionNo":@(7),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"游戏",
+                                                               @"sectionNo":@(8),
+                                                               @"type":@(ASSectionTop)},
+                                                             @{@"name":@"乡亲",
+                                                               @"sectionNo":@(9),
+                                                               @"type":@(ASSectionTop)}
+                                                             ]];
+            tmp[@"top10Items"] = self.shownArr;
+            [tmp writeToFile:path atomically:YES];
+        }
+        
+        self.hiddenArr = [tmp objectForKey:hiddenArrKey];
+        if (self.hiddenArr == nil) {
+            self.hiddenArr = [NSMutableArray array];
+        }
     }
     return self;
 }
 
 - (ASTop10ManageItem *) shownObjectAtIndex:(NSUInteger)index {
-    for (ASTop10ManageItem * item in self.top10ItemArr) {
-        if (item.isShown) {
-            if (index == 0) {
-                return item;
-            } else {
-                --index;
-            }
-        }
-        
-    }
-    return nil;
+    ASTop10ManageItem * tmp = [[ASTop10ManageItem alloc] init];
+    tmp.name = self.shownArr[index][@"name"];
+    tmp.section = [self.shownArr[index][@"sectionNo"] integerValue];
+    tmp.type = [self.shownArr[index][@"type"] intValue];
+    return tmp;
 }
 
 - (ASTop10ManageItem *) hiddenObjectAtIndex:(NSUInteger)index {
-    for (ASTop10ManageItem * item in self.top10ItemArr) {
-        if (!item.isShown) {
-            if (index == 0) {
-                return item;
-            } else {
-                --index;
-            }
-        }
-        
+    ASTop10ManageItem * tmp = [[ASTop10ManageItem alloc] init];
+    tmp.name = self.hiddenArr[index][@"name"];
+    tmp.section = [self.hiddenArr[index][@"sectionNo"] integerValue];
+    tmp.type = [self.hiddenArr[index][@"type"] intValue];
+    return tmp;}
+
+- (void)save {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"top10Iterms" ofType:@"plist"];
+    NSDictionary * tmp = [NSDictionary dictionaryWithObjectsAndKeys:self.shownArr, showArrKey, self.hiddenArr, hiddenArrKey, nil];
+    [tmp writeToFile:path atomically:YES];
+}
+
+- (void)moveFromShownAtIndex:(NSUInteger)fromIndex
+             toHiddenAtIndex:(NSUInteger)toIndex {
+    NSDictionary * tmp = [self.shownArr objectAtIndex:fromIndex];
+    [self.hiddenArr insertObject:tmp atIndex:toIndex];
+    [self.shownArr removeObjectAtIndex:fromIndex];
+}
+
+- (void)moveFromShownAtIndex:(NSUInteger)fromIndex
+              toShownAtIndex:(NSUInteger)toIndex {
+    NSDictionary * tmp = [self.shownArr objectAtIndex:fromIndex];
+    if (fromIndex < toIndex) {
+        [self.shownArr insertObject:tmp atIndex:++toIndex];
+        [self.shownArr removeObjectAtIndex:fromIndex];
     }
-    return nil;
+    if (fromIndex > toIndex) {
+        [self.shownArr insertObject:tmp atIndex:toIndex];
+        [self.shownArr removeObjectAtIndex:++fromIndex];
+    }
+}
+
+- (void)moveFromHiddenAtIndex:(NSUInteger)fromIndex
+               toShownAtIndex:(NSUInteger)toIndex {
+    NSDictionary * tmp = [self.hiddenArr objectAtIndex:fromIndex];
+    [self.shownArr insertObject:tmp atIndex:toIndex];
+    [self.hiddenArr removeObjectAtIndex:fromIndex];
+}
+
+- (void)moveFromHiddenAtIndex:(NSUInteger)fromIndex
+              toHiddenAtIndex:(NSUInteger)toIndex {
+    NSDictionary * tmp = [self.hiddenArr objectAtIndex:fromIndex];
+    if (fromIndex < toIndex) {
+        [self.hiddenArr insertObject:tmp atIndex:++toIndex];
+        [self.hiddenArr removeObjectAtIndex:fromIndex];
+    }
+    if (fromIndex > toIndex) {
+        [self.hiddenArr insertObject:tmp atIndex:toIndex];
+        [self.hiddenArr removeObjectAtIndex:++fromIndex];
+    }
 }
 
 #pragma mark - getter and setter
 
 - (NSUInteger)shownItemsCount {
-    NSUInteger tmp = 0;
-    for (ASTop10ManageItem* item in self.top10ItemArr) {
-        if (item.isShown) {
-            ++tmp;
-        }
-    }
-    return tmp;
+    return [self.shownArr count];
 }
 
 - (NSUInteger)hiddenItemsCount {
-    NSUInteger tmp = 0;
-    for (ASTop10ManageItem* item in self.top10ItemArr) {
-        if (!item.isShown) {
-            ++tmp;
-        }
-    }
-    return tmp;
+    return [self.hiddenArr count];
 }
 
 @end
