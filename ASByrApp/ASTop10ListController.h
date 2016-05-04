@@ -7,17 +7,12 @@
 //
 
 #import "ASBasicArticleListController.h"
-
-typedef enum{
-    ASByrTop10,
-    ASByrRecommend,
-    ASByrSectiontop
-} ASByrTop10Type;
+#import "ASConfig.h"
 
 @interface ASTop10ListController : ASBasicArticleListController
 
 - (instancetype)initWithTitle:(NSString *)title
-                    top10Type:(ASByrTop10Type)top10Type
+                    top10Type:(ASTop10Type)top10Type
                     sectionNo:(NSInteger)section;
 
 @end

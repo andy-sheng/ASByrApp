@@ -11,5 +11,6 @@
 
 @interface ASTop10RootVC : WMPageController
 
+- (void)reloadData;
 
 @end

@@ -19,7 +19,7 @@
 
 @property(nonatomic, strong) ASByrWidget *widgerApi;
 
-@property(nonatomic, assign) ASByrTop10Type top10Type;
+@property(nonatomic, assign) ASTop10Type top10Type;
 
 @property(nonatomic, strong) NSArray *top10;
 
@@ -32,7 +32,7 @@
 #pragma mark - lifecycle
 
 - (instancetype)initWithTitle:(NSString *)title
-                    top10Type:(ASByrTop10Type)top10Type
+                    top10Type:(ASTop10Type)top10Type
                     sectionNo:(NSInteger)section{
     self = [super initWithTitle:title];
     if (self) {
@@ -81,10 +81,10 @@
 - (void)loadData {
     [super loadData];
     switch (self.top10Type) {
-        case ASByrSectiontop:
+        case ASSectionTop:
             [self.widgerApi fetchSectionTopWithSectionNo:self.sectionNo reformer:self];
             break;
-        case ASByrRecommend:
+        case ASRecommend:
             [self.widgerApi fetchRecommendWithReformer:self];
             break;
         default:
@@ -141,7 +141,7 @@
             reformedArticle[@"aid"]     = article[@"id"];
             reformedArticle[@"content"] = article[@"content"];
             reformedArticle[@"board"]   = article[@"board_name"];
-            if ([article objectForKey:@"user"] != nil) {
+            if ([article objectForKey:@"user"] != nil && [article objectForKey:@"user"] != [NSNull null]) {
                 reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
                                                 @"uid": article[@"user"][@"id"]};
             } else {
