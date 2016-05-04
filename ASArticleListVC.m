@@ -9,7 +9,8 @@
 #import "ASArticleListVC.h"
 #import "ASSectionListVC.h"
 #import "XQBoardModel.h"
-#import "XQBoardView.h"
+//#import "XQBoardView.h"
+#import "XQNewBoardViewCell.h"
 #import "ASThreadsController.h"
 #import "UIColor+Hex.h"
 
@@ -106,10 +107,11 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XQBoardView *cell = (XQBoardView*)[tableView dequeueReusableCellWithIdentifier:@"testBoard"];
-    [cell setupWithface:self.boardList[indexPath.row][@"user"][@"face"]
-                    uid:self.boardList[indexPath.row][@"user"][@"uid"]
-                  title:self.boardList[indexPath.row][@"title"]];
+    //XQBoardView *cell = (XQBoardView*)[tableView dequeueReusableCellWithIdentifier:@"testBoard"];
+    //[cell setupWithface:self.boardList[indexPath.row][@"user"][@"face"]
+                    //uid:self.boardList[indexPath.row][@"user"][@"uid"]
+                  //title:self.boardList[indexPath.row][@"title"]];
+    XQNewBoardViewCell *cell = [XQNewBoardViewCell newCellWithIdentifier:@"testBoard" andParameters:self.boardList[indexPath.row]];
     return cell;
 }
 
@@ -176,7 +178,10 @@
             reformedArticle[@"aid"]     = article[@"id"];
             reformedArticle[@"isTop"] = article[@"is_top"];
             //reformedArticle[@"board"]   = article[@"board_name"];
+            reformedArticle[@"postTime"] = article[@"post_time"];
             reformedArticle[@"replyCount"] = article[@"reply_count"];
+            //reformedArticle[@"imageW"] = article[@"face_width"];
+            //reformedArticle[@"imageH"] = article[@"face_height"];
             if (![[article objectForKey:@"user"] isEqual:[NSNull null]]&&[article objectForKey:@"user"]!=nil
                                                                         &&article[@"user"][@"face_url"]!=nil
                                                                         &&article[@"user"][@"id"]!=nil) {
