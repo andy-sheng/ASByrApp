@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface ASThreadsController : UIViewController
 
 - (instancetype)initWithWithBoard:(NSString*)board

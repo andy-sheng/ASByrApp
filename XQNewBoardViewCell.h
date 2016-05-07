@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface XQNewBoardViewCell : UITableViewCell
+
+@property (strong,nonatomic)UIView *wapView;
 @property (strong, nonatomic) UILabel * nameLabel;
 @property (strong, nonatomic) UILabel * timeLabel;
-@property (strong, nonatomic) UIImageView * imageView;
 @property (strong, nonatomic) UILabel * replyLabel;
-+ (XQNewBoardViewCell *)newCellWithIdentifier:(NSString *) identifier andParameters:(NSDictionary *)paramDictionary;
+@property (strong,nonatomic) UILabel * titleLabel;
+@property (strong, nonatomic) UIImageView*imView;
+
++ (XQNewBoardViewCell *)newCellWithIdentifier:(NSString *)identifier andStyle:(UITableViewCellStyle)style andParameters:(NSDictionary *)paramDictionary;
+
+- (void)setUpCellWithParameters:(NSDictionary *)paramDictionary;
+
 @end

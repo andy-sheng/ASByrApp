@@ -9,11 +9,11 @@
 #import "ASArticleListVC.h"
 #import "ASSectionListVC.h"
 #import "XQBoardModel.h"
-//#import "XQBoardView.h"
+#import "XQBoardView.h"
 #import "XQNewBoardViewCell.h"
 #import "ASThreadsController.h"
 #import "UIColor+Hex.h"
-
+#import <Masonry.h>
 #import <ASByrBoard.h>
 #import <ASByrToken.h>
 
@@ -27,25 +27,20 @@
 @property(strong, nonatomic) XQBoardModel * lastViewBoard;
 @property(strong, nonatomic) ASByrBoard * boardApi;
 @property(copy, nonatomic) NSString *boardName;
+@property(assign, nonatomic) NSInteger page;
+@property(assign, nonatomic) BOOL firstLoaded;
 
 @end
 @implementation ASArticleListVC
 
 - (instancetype)init {
     self = [super initWithTitle:@"海天游踪"];
-    if (self) {
+    if (self){
         self.boardName=@"Travel";
     }
     return self;
 }
 
-- (instancetype)initWithNameAndTitle:(NSString *)boardName boardTitle:(NSString *)title{
-    self = [super initWithTitle:title];
-    if (self) {
-        self.boardName=[boardName copy];
-    }
-    return self;
-}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -78,7 +73,7 @@
     [super awakeFromNib];
     // Initialization code
 }
-
+// 从版面列表回到有tab的位置
 - (void)refreshBoardData:(NSNotification *)notis{
     NSDictionary *dict = notis.userInfo;
     self.boardName = [[dict objectForKey:@"boardName"] copy];
@@ -95,23 +90,39 @@
 
 - (void)listSection {
     if (self.sectionListVC == nil) {
-        self.sectionListVC = [[UINavigationController alloc] initWithRootViewController:[[ASSectionListVC alloc] init]];;
+        self.sectionListVC = [[UINavigationController alloc] initWithRootViewController:[[ASSectionListVC alloc] init]];
     }
     [self presentViewController:self.sectionListVC animated:YES completion:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {return UIStatusBarStyleLightContent;}
+/*
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 6;
+}
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewAutomaticDimension;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.boardList count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //XQBoardView *cell = (XQBoardView*)[tableView dequeueReusableCellWithIdentifier:@"testBoard"];
-    //[cell setupWithface:self.boardList[indexPath.row][@"user"][@"face"]
-                    //uid:self.boardList[indexPath.row][@"user"][@"uid"]
-                  //title:self.boardList[indexPath.row][@"title"]];
-    XQNewBoardViewCell *cell = [XQNewBoardViewCell newCellWithIdentifier:@"testBoard" andParameters:self.boardList[indexPath.row]];
+    /*
+    XQBoardView *cell = (XQBoardView*)[tableView dequeueReusableCellWithIdentifier:@"testBoard"];
+    [cell setupWithface:self.boardList[indexPath.row][@"user"][@"face"]
+                    uid:self.boardList[indexPath.row][@"user"][@"uid"]
+                  title:self.boardList[indexPath.row][@"title"]];
+    XQNewBoardViewCell *cell = [XQNewBoardViewCell newCellWithFrame:CGRectZero andParameters:self.boardList[indexPath.row]];
+    */
+    XQNewBoardViewCell *cell = (XQNewBoardViewCell *)[tableView dequeueReusableCellWithIdentifier:@"testboard"];
+    if (cell==nil) {
+        cell = [XQNewBoardViewCell newCellWithIdentifier:@"testboard" andStyle:UITableViewCellStyleDefault andParameters:self.boardList[indexPath.row]];
+    }else{
+        [cell setUpCellWithParameters:self.boardList[indexPath.row]];
+    }
     return cell;
 }
 
@@ -124,7 +135,7 @@
 - (void) updateBarTheme{
     //设置按钮和标题为白色
     [[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
-    
+
     self.addPostBtn = [[UIBarButtonItem alloc] initWithTitle:@"发帖" style:UIBarButtonItemStyleDone target:self action:@selector(addPost)];
     self.addPostBtn.image = [UIImage imageNamed:@"edit"];
     self.navigationItem.leftBarButtonItem = self.addPostBtn;
@@ -141,14 +152,16 @@
 - (void)loadData {
     [super loadData];
     //[self.tableView.mj_header beginRefreshing];
-    NSLog(@"%@",self.boardName);
-    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName];
+    self.page=1;
+    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName pageNumber:self.page];
     //[self.tableView.mj_header endRefreshing];
 }
 
 - (void)moreData {
-    [super moreData];
-    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    //self.isLoaded=NO;
+    self.page++;
+    NSLog(@"%lu",(long)self.page);
+    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName pageNumber:self.page];
 }
 
 
@@ -158,9 +171,17 @@
 }
 
 - (void)commenResponseRecv:(ASByrResponse *)response{
-    self.boardList = response.reformedData;
-    [self.tableView reloadData];
-    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    if(self.page<=1){
+        self.boardList = [NSMutableArray arrayWithArray:response.reformedData];
+    }else
+        [self.boardList addObjectsFromArray:response.reformedData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        if([response.reformedData count]<30)
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        else
+            [self.tableView.mj_footer endRefreshing];
+    });
 }
 
 #pragma mark - ASByrBoardResponseReformer
@@ -201,4 +222,5 @@
     [self.tableView.mj_header endRefreshing];
     return response;
 }
+
 @end

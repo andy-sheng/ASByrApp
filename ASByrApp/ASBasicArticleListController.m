@@ -49,7 +49,7 @@
 }
 
 - (void)loadData {
-    //[self.tableView.mj_header beginRefreshing];
+    //[self.tableView.mj_header beginRefreshing]
     self.isLoaded = YES;
 }
 

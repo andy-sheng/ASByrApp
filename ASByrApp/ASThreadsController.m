@@ -16,7 +16,7 @@
 #import <MJRefresh.h>
 #import <Masonry.h>
 #import <MBProgressHUD.h>
-
+#import "ASArticleListVC.h"
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
@@ -55,7 +55,6 @@ const NSUInteger replyRow = 2;
         self.isLoadThreads = YES;
         self.replyArticles = [NSMutableArray array];
         self.navigationItem.title = @"帖子详情";
-        
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
@@ -81,7 +80,10 @@ const NSUInteger replyRow = 2;
     self.articleApi.responseDelegate = self;
     self.articleApi.responseReformer = self;
     [self.tableView.mj_header beginRefreshing];
-    
+    NSUInteger length = [self.navigationController.viewControllers count];
+    //对于从版面列表进来的文章，设置标题栏的属性
+    if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[ASArticleListVC class]])
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -131,7 +133,6 @@ const NSUInteger replyRow = 2;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.replyArticles count] == 0 ? 0 : [self.replyArticles count] + 1;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == titleRow) {
