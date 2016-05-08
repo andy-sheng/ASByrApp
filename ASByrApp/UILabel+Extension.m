@@ -17,8 +17,6 @@
     roundLabel.numberOfLines=1;
     roundLabel.adjustsFontSizeToFitWidth=YES;
     roundLabel.backgroundColor=[UIColor colorWithHexString:colorHex];
-    
-    
     return roundLabel;
 }
 

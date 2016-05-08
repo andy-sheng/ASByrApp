@@ -45,6 +45,7 @@
 		A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A92633671CCCA30400B73F58 /* XQBoardListVC.m */; };
 		A926336C1CCE515E00B73F58 /* RootSectionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = A926336B1CCE515E00B73F58 /* RootSectionList.plist */; };
 		A926336E1CCE53BD00B73F58 /* OtherSectionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = A926336D1CCE53BD00B73F58 /* OtherSectionList.plist */; };
+		A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92FE6FD1CD8421F000A182F /* XQNewBoardViewCell.m */; };
 		A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */; };
 		A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */; };
 		A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A96F5B761CC85F5400117F5E /* XQBoardView.m */; };
@@ -135,6 +136,8 @@
 		A92633671CCCA30400B73F58 /* XQBoardListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQBoardListVC.m; sourceTree = "<group>"; };
 		A926336B1CCE515E00B73F58 /* RootSectionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RootSectionList.plist; sourceTree = "<group>"; };
 		A926336D1CCE53BD00B73F58 /* OtherSectionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OtherSectionList.plist; sourceTree = "<group>"; };
+		A92FE6FC1CD8421F000A182F /* XQNewBoardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQNewBoardViewCell.h; sourceTree = "<group>"; };
+		A92FE6FD1CD8421F000A182F /* XQNewBoardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQNewBoardViewCell.m; sourceTree = "<group>"; };
 		A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
 		A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
@@ -404,6 +407,8 @@
 				A96F5B751CC85F5400117F5E /* XQBoardView.h */,
 				A96F5B761CC85F5400117F5E /* XQBoardView.m */,
 				A96F5B781CC85F6F00117F5E /* XQBoardView.xib */,
+				A92FE6FC1CD8421F000A182F /* XQNewBoardViewCell.h */,
+				A92FE6FD1CD8421F000A182F /* XQNewBoardViewCell.m */,
 			);
 			name = BooardView;
 			sourceTree = "<group>";
@@ -494,7 +499,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 9E9C2ZNYDA;
+						DevelopmentTeam = BASG852M4V;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -612,6 +617,7 @@
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
+				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
 				A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */,
@@ -765,7 +771,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -780,7 +786,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp1;
+				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
