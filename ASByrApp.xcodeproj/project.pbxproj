@@ -46,6 +46,10 @@
 		A926336C1CCE515E00B73F58 /* RootSectionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = A926336B1CCE515E00B73F58 /* RootSectionList.plist */; };
 		A926336E1CCE53BD00B73F58 /* OtherSectionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = A926336D1CCE53BD00B73F58 /* OtherSectionList.plist */; };
 		A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92FE6FD1CD8421F000A182F /* XQNewBoardViewCell.m */; };
+		A95F63741CDF33970060075E /* XQCollectArticleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F63731CDF33970060075E /* XQCollectArticleVC.m */; };
+		A95F63771CDF33AE0060075E /* XQCollectBoardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F63761CDF33AE0060075E /* XQCollectBoardVC.m */; };
+		A95F637A1CDF814F0060075E /* XQCollectiArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F63791CDF814F0060075E /* XQCollectiArticleCell.m */; };
+		A95F637F1CE016850060075E /* XQCFrameLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F637E1CE016850060075E /* XQCFrameLayout.m */; };
 		A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */; };
 		A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */; };
 		A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A96F5B761CC85F5400117F5E /* XQBoardView.m */; };
@@ -138,6 +142,15 @@
 		A926336D1CCE53BD00B73F58 /* OtherSectionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OtherSectionList.plist; sourceTree = "<group>"; };
 		A92FE6FC1CD8421F000A182F /* XQNewBoardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQNewBoardViewCell.h; sourceTree = "<group>"; };
 		A92FE6FD1CD8421F000A182F /* XQNewBoardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQNewBoardViewCell.m; sourceTree = "<group>"; };
+		A95F63721CDF33960060075E /* XQCollectArticleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleVC.h; sourceTree = "<group>"; };
+		A95F63731CDF33970060075E /* XQCollectArticleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleVC.m; sourceTree = "<group>"; };
+		A95F63751CDF33AE0060075E /* XQCollectBoardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectBoardVC.h; sourceTree = "<group>"; };
+		A95F63761CDF33AE0060075E /* XQCollectBoardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectBoardVC.m; sourceTree = "<group>"; };
+		A95F63781CDF814F0060075E /* XQCollectiArticleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectiArticleCell.h; sourceTree = "<group>"; };
+		A95F63791CDF814F0060075E /* XQCollectiArticleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectiArticleCell.m; sourceTree = "<group>"; };
+		A95F637C1CDF86A00060075E /* XQConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQConstant.h; sourceTree = "<group>"; };
+		A95F637D1CE016840060075E /* XQCFrameLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCFrameLayout.h; sourceTree = "<group>"; };
+		A95F637E1CE016850060075E /* XQCFrameLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCFrameLayout.m; sourceTree = "<group>"; };
 		A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
 		A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
@@ -239,6 +252,7 @@
 				A16E1A7A1CB246C000F7C1FA /* common */,
 				A16E1A731CAEB85800F7C1FA /* images */,
 				A1A7FFC91CB4E82E00AD6787 /* test */,
+				A95F636B1CDF0CAE0060075E /* Collection(收藏) */,
 				A1BFB6331CC4B5A700FE5CA1 /* SectionList(版面列表) */,
 				A16E1A6F1CAE69B100F7C1FA /* Top10(十大) */,
 				A16E1A6E1CAE5A0000F7C1FA /* AppDelegate */,
@@ -331,6 +345,7 @@
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
 				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
 				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
+				A95F637C1CDF86A00060075E /* XQConstant.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -387,6 +402,29 @@
 				A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */,
 			);
 			name = keyboard;
+			sourceTree = "<group>";
+		};
+		A95F636B1CDF0CAE0060075E /* Collection(收藏) */ = {
+			isa = PBXGroup;
+			children = (
+				A95F637B1CDF81570060075E /* view */,
+				A95F63721CDF33960060075E /* XQCollectArticleVC.h */,
+				A95F63731CDF33970060075E /* XQCollectArticleVC.m */,
+				A95F63751CDF33AE0060075E /* XQCollectBoardVC.h */,
+				A95F63761CDF33AE0060075E /* XQCollectBoardVC.m */,
+				A95F637D1CE016840060075E /* XQCFrameLayout.h */,
+				A95F637E1CE016850060075E /* XQCFrameLayout.m */,
+			);
+			name = "Collection(收藏)";
+			sourceTree = "<group>";
+		};
+		A95F637B1CDF81570060075E /* view */ = {
+			isa = PBXGroup;
+			children = (
+				A95F63781CDF814F0060075E /* XQCollectiArticleCell.h */,
+				A95F63791CDF814F0060075E /* XQCollectiArticleCell.m */,
+			);
+			name = view;
 			sourceTree = "<group>";
 		};
 		A96462B31CC0A3B40086DEE6 /* Board(版面) */ = {
@@ -612,10 +650,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */,
+				A95F637F1CE016850060075E /* XQCFrameLayout.m in Sources */,
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
 				A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
+				A95F63741CDF33970060075E /* XQCollectArticleVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
@@ -628,6 +668,7 @@
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
+				A95F637A1CDF814F0060075E /* XQCollectiArticleCell.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A91776281CC76CE500ED84B3 /* XQBoardModel.m in Sources */,
@@ -636,6 +677,7 @@
 				A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */,
 				A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
+				A95F63771CDF33AE0060075E /* XQCollectBoardVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

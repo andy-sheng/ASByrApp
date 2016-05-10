@@ -21,11 +21,12 @@ const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource,ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate>
 
 @property(strong, nonatomic) UITableView * tableView;
 @property(strong, nonatomic) ASKeyboard * keyboard;
 @property(strong, nonatomic) MBProgressHUD * hud;
+@property(strong, nonatomic) UIBarButtonItem * moreOperBtn;
 
 @property(strong, nonatomic) ASByrArticle * articleApi;
 @property(strong, nonatomic) NSString * board;
@@ -35,7 +36,6 @@ const NSUInteger replyRow = 2;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
-
 
 
 
@@ -56,6 +56,10 @@ const NSUInteger replyRow = 2;
         self.replyArticles = [NSMutableArray array];
         self.navigationItem.title = @"帖子详情";
         self.hidesBottomBarWhenPushed = YES;
+        //more 按钮，added by lxq
+        self.moreOperBtn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"more.png"] style:UIBarButtonItemStylePlain target:self action:@selector(moreOperation)];
+        self.navigationItem.rightBarButtonItem = self.moreOperBtn;
+        
     }
     return self;
 }
@@ -81,7 +85,7 @@ const NSUInteger replyRow = 2;
     self.articleApi.responseReformer = self;
     [self.tableView.mj_header beginRefreshing];
     NSUInteger length = [self.navigationController.viewControllers count];
-    //对于从版面列表进来的文章，设置标题栏的属性
+    //对于从版面列表进来的文章，设置标题栏的属性 added by lxq
     if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[ASArticleListVC class]])
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 }
@@ -114,6 +118,28 @@ const NSUInteger replyRow = 2;
 - (void)moreData {
     self.isLoadThreads = NO;
     [self.articleApi fetchThreadsWithBoard:self.board aid:self.aid page:self.page];
+}
+
+- (void)moreOperation{
+    NSString * collectBtnTitle = NSLocalizedString(@"收藏文章", nil);
+    NSString * cancelBtnTitle = NSLocalizedString(@"取消", nil);
+    
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"The \"Cancel\" alert action sheet's cancel action occured.");
+    }];
+    
+    UIAlertAction *collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        NSLog(@"%@",self.replyArticles[0]);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:self.replyArticles[0]];
+        NSLog(@"The \"Collect\" alert action sheet's destructive action occured.");
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:collectAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - TableView delegate
@@ -173,7 +199,7 @@ const NSUInteger replyRow = 2;
 }
 
 - (void)fetchThreadsResponse:(ASByrResponse *)response {
-    
+    NSLog(@"%@",response.reformedData[0]);
     self.replyArticles = [self.replyArticles arrayByAddingObjectsFromArray:response.reformedData];
     [self.tableView reloadData];
     if (self.isLoadThreads) {
