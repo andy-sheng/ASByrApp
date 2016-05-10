@@ -50,6 +50,7 @@
     [super viewWillAppear:animated];
     //NSLog(@"accesstoken:%@", [ASByrToken shareInstance].accessToken);
     self.widgerApi = [[ASByrWidget alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
+    NSLog(@"%@", [ASByrToken shareInstance].accessToken);
     self.widgerApi.responseDelegate = self;
     //self.widgerApi
 }
@@ -142,8 +143,8 @@
             reformedArticle[@"content"] = article[@"content"];
             reformedArticle[@"board"]   = article[@"board_name"];
             if ([article objectForKey:@"user"] != nil && [article objectForKey:@"user"] != [NSNull null]) {
-                reformedArticle[@"user"]    = @{@"face": article[@"user"][@"face_url"],
-                                                @"uid": article[@"user"][@"id"]};
+                reformedArticle[@"user"]    = @{@"face": [article[@"user"] objectForKey:@"face_url"] ?: @"",
+                                                @"uid": [article[@"user"] objectForKey:@"id"] ?: @""};
             } else {
                 reformedArticle[@"user"]    = @{@"face": @"",
                                                 @"uid": @"unknown" };
