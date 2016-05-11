@@ -13,6 +13,7 @@
 - (void)setupWithface:(NSString*) faceUrl
                   uid:(NSString*) uid
                 title:(NSString*) title
-              content:(NSString*) content;
+              content:(NSString*) content
+                  num:(NSUInteger)num;
 
 @end
