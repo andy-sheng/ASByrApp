@@ -9,6 +9,7 @@
 #import "ASTop10ListController.h"
 #import "ASConfig.h"
 #import "ASTop10Cell.h"
+#import "ASTop10SeperatorCell.h"
 #import "ASThreadsController.h"
 #import <ASByrToken.h>
 #import <ASByrWidget.h>
@@ -40,7 +41,10 @@
         self.top10Type = top10Type;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 100.0;
-        [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10Cell" bundle:nil] forCellReuseIdentifier:@"test"];
+        [self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg3.png"]]];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10Cell" bundle:nil] forCellReuseIdentifier:@"ASTop10Cell"];
+        [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10SeperatorCell" bundle:nil] forCellReuseIdentifier:@"ASTop10SeperatorCell"];
         //[self.tableView registerClass:[ASTop10Cell class] forCellReuseIdentifier:@"test"];
     }
     return self;
@@ -56,23 +60,40 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.top10 count];
+    return [self.top10 count] * 2 - 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ASTop10Cell *cell = (ASTop10Cell*)[tableView dequeueReusableCellWithIdentifier:@"test"];
-    [cell setupWithface:self.top10[indexPath.row][@"user"][@"face"]
-                    uid:self.top10[indexPath.row][@"user"][@"uid"]
-                  title:self.top10[indexPath.row][@"title"]
-                content:self.top10[indexPath.row][@"content"]];
+    if (indexPath.row % 2 == 0) {
+        ASTop10Cell *cell = (ASTop10Cell*)[tableView dequeueReusableCellWithIdentifier:@"ASTop10Cell"];
+        [cell setupWithface:self.top10[indexPath.row / 2][@"user"][@"face"]
+                        uid:self.top10[indexPath.row / 2][@"user"][@"uid"]
+                      title:self.top10[indexPath.row / 2][@"title"]
+                    content:self.top10[indexPath.row / 2][@"content"]
+                        num:indexPath.row / 2 + 1];
+        return cell;
+    } else {
+        ASTop10SeperatorCell *cell = (ASTop10SeperatorCell*)[tableView dequeueReusableCellWithIdentifier:@"ASTop10SeperatorCell"];
+        return cell;
+    }
     
-    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row % 2 == 0) {
+        return UITableViewAutomaticDimension;
+    } else {
+        return 30;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:self.top10[indexPath.row][@"board"]
-                                                                                aid:[self.top10[indexPath.row][@"aid"] integerValue]];
-    [self.navigationController pushViewController:threadsVC animated:YES];
+    NSLog(@"%ld", indexPath.row);
+    if (indexPath.row % 2 == 0) {
+        ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:self.top10[indexPath.row / 2][@"board"]
+                                                                                    aid:[self.top10[indexPath.row / 2][@"aid"] integerValue]];
+        [self.navigationController pushViewController:threadsVC animated:YES];
+    }
 }
 
 

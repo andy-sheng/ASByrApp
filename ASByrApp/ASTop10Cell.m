@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *uidLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
 
 @property (strong, nonatomic) NSString * faceUrl;
 @property (strong, nonatomic) NSString * uid;
@@ -28,7 +29,8 @@
 #pragma mark - life cycle
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -42,11 +44,13 @@
 - (void)setupWithface:(NSString *)faceUrl
                   uid:(NSString *)uid
                 title:(NSString *)title
-              content:(NSString *)content {
+              content:(NSString *)content
+                  num:(NSUInteger)num {
     [self.faceView setImageWithURL:[NSURL URLWithString:faceUrl]];
     self.uidLabel.text = uid;
     self.titleLabel.text = title;
     self.contentLabel.text = content;
+    self.numLabel.text = [NSString stringWithFormat:@"%ld", num];
 }
 
 #pragma mark - setter and getter
