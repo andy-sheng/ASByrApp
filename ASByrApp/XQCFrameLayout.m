@@ -24,33 +24,9 @@
         _dicOfHeight = [NSMutableDictionary dictionary];
         _array = [NSMutableArray array];
         self.block = ^(NSIndexPath *indexPath , CGFloat width){
-            CGFloat tempWidth;
-            /*
-            switch (indexPath.row%6) {
-                case 0:
-                    tempWidth=100;
-                    break;
-                case 1:
-                    tempWidth=50;
-                    break;
-                case 2:
-                    tempWidth=70;
-                    break;
-                case 3:
-                    tempWidth=40;
-                    break;
-                case 4:
-                    tempWidth=80;
-                    break;
-                case 5:
-                    tempWidth=130;
-                    break;
-                default:
-                    break;
-            }
-             */
-            tempWidth = 120;
-            return tempWidth;
+            CGFloat tempHeight;
+            tempHeight= 120;
+            return tempHeight;
         };
     }
     return self;
@@ -68,43 +44,43 @@
         NSIndexPath * indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         [_array addObject:[self layoutAttributesForItemAtIndexPath:indexPath]];
     }
+    
+    
 }
 
 - (CGSize)collectionViewContentSize{
     __block NSString * maxHeightline = @"0";
+
     [_dicOfHeight enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([_dicOfHeight[maxHeightline] floatValue] < [obj floatValue]) {
             maxHeightline = key;
         }
     }];
-    return CGSizeMake(self.collectionView.bounds.size.width, [_dicOfHeight[maxHeightline] floatValue]+self.sectionInset.bottom);
+    
+    CGSize tabBarHeight = [[UIApplication sharedApplication] statusBarFrame].size;
+    return CGSizeMake(self.collectionView.bounds.size.width, [_dicOfHeight[maxHeightline] floatValue]+self.sectionInset.bottom+tabBarHeight.height
+                      +self.block(0, 0));
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewLayoutAttributes * attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     
-    CGFloat itemW = (self.collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right-(self.lineNumber-1)*self.lineSpacing)/self.lineNumber;
+    self.cellWidth = (self.collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right-(self.lineNumber-1)*self.lineSpacing)/self.lineNumber;
     CGFloat itemH ;
-    NSLog(@"%ld",(long)indexPath.row);
     if (self.block!=nil) {
-        itemH = self.block(indexPath, itemW);
-    }else{
+        itemH = self.block(indexPath, self.cellWidth);
+    }else
         NSAssert(itemH!=0, @"Please implement block method.");
-    }
     
     CGRect frame;
-    frame.size = CGSizeMake(itemW, itemH);
+    frame.size = CGSizeMake(self.cellWidth, itemH);
     
-    __block NSString * lineMinHeight = @"0";
-    [_dicOfHeight enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([_dicOfHeight[lineMinHeight] floatValue]>[obj floatValue]) {
-            lineMinHeight = key;
-        }
-    }];
+    NSInteger line = indexPath.row%2;
     
-    int line = [lineMinHeight intValue];
+    NSString *heightKey = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
+    _dicOfHeight[heightKey] = [NSString stringWithFormat:@"%f",(indexPath.row/2)*(itemH+self.lineSpacing)+self.lineSpacing];
     
-    frame.origin = CGPointMake(self.sectionInset.left+line*(itemW+self.lineSpacing),[_dicOfHeight[lineMinHeight] floatValue]);
+    frame.origin = CGPointMake(self.sectionInset.left+line*(self.cellWidth+self.lineSpacing),[_dicOfHeight[heightKey] floatValue]);
     attr.frame=frame;
     
     return attr;
