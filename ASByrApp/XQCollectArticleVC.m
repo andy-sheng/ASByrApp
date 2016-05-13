@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) NSMutableArray * arrayList;
 @property (strong, nonatomic) NSMutableArray * photos;
-@property (strong, nonatomic) XQCollectiArticleCell * cell;
 
 @end
 
@@ -73,9 +72,9 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void)writeIntoFile:(NSString *)name articleInfo:(NSDictionary *)articleInfo{
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSLog(@"%@",documentsDirectory);
+    //NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    //NSString *documentsDirectory = [paths objectAtIndex:0];
+    //NSLog(@"%@",documentsDirectory);
     
 }
 #pragma mark <UICollectionViewDataSource>
@@ -136,7 +135,7 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <XQCLayoutDelegate>
 - (CGFloat)heightForPhoto:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
     UIImage * photo = self.photos[indexPath.item];
-    NSLog(@"photos' size: height:%f, width:%f",photo.size.height,photo.size.width);
+    //NSLog(@"photos' size: height:%f, width:%f",photo.size.height,photo.size.width);
     CGRect boudingRect = CGRectMake(0, 0, width-2*PADDING_TO_CONTENTVIEW, (width/photo.size.width)*photo.size.height);
     CGRect rect = AVMakeRectWithAspectRatioInsideRect(photo.size, boudingRect);
     return rect.size.height;

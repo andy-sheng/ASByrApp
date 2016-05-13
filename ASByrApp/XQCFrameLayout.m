@@ -49,13 +49,13 @@
             
             //非图片区的所有高度，上下与其他cell各间隔self.lineSpacing/2
             CGFloat height = photoHeight+titleHeight+boardNameHeight+DISTRACTOR_HEIGHT+5*PADDING_WITHIN+2*PADDING_TO_CONTENTVIEW+IMAGE_WIDTH;
-            
+            /*
             NSLog(@"cell width: %f",self.cellWidth);
             NSLog(@"other width: %f", self.cellWidth-self.sectionInset.left-self.sectionInset.right);
             NSLog(@"photo height: %f",photoHeight);
             NSLog(@"title height: %f",titleHeight);
             NSLog(@"boardNameHeight: %f",boardNameHeight);
-            
+            */
             //CGRect frame = CGRectMake([xOffset[column] floatValue], [yOffset[column] floatValue], self.cellWidth-self.lineSpacing-(column/2)*self.lineSpacing, height);
             CGRect frame = CGRectMake([xOffset[column] floatValue], [yOffset[column] floatValue], self.cellWidth-0.5*self.lineSpacing, height);
 
