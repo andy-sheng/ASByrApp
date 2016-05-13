@@ -131,7 +131,7 @@ const NSUInteger replyRow = 2;
     }];
     
     UIAlertAction *collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"top10.png",@"firstImage",self.replyArticles[0][@"title"],@"title",@"情感天空",@"boardName",@"santi.jpg",@"userImage",@"top10",@"userName",@"100",@"replyCount",nil];
+         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"top10.png",@"firstImage",self.replyArticles[0][@"title"],@"title",@"情感天空",@"boardName",@"fire",@"userImage",@"top10",@"userName",@"100",@"replyCount",nil];
         //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:self.replyArticles[0]];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:dict];
         NSLog(@"收了个藏.");

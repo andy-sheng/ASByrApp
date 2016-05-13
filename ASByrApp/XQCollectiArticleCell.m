@@ -47,7 +47,7 @@
         self.wapDownView = wapDownView;
         [self.wapView addSubview:wapDownView];
         
-        self.firstImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"santi.jpg"]];
+        self.firstImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fire"]];
         [self.wapUpView addSubview:self.firstImageView];
         
         UILabel * titleLabel=[UILabel new];
@@ -66,7 +66,7 @@
         boardNameLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:10];
         [self.wapUpView addSubview:boardNameLabel];
         
-        self.userImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"santi.jpg"]];
+        self.userImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fire"]];
         self.userImageView.layer.masksToBounds=YES;
         self.userImageView.layer.cornerRadius=IMAGE_WIDTH/2;
         self.userImageView.layer.borderWidth =1;
