@@ -10,4 +10,7 @@
 
 @interface XQCollectArticleVC : UICollectionViewController
 
+
+- (void)writeIntoFile:(NSString *)name articleInfo:(NSDictionary *)articleInfo;
+
 @end

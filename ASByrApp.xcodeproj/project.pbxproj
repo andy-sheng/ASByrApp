@@ -55,6 +55,8 @@
 		A95F63771CDF33AE0060075E /* XQCollectBoardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F63761CDF33AE0060075E /* XQCollectBoardVC.m */; };
 		A95F637A1CDF814F0060075E /* XQCollectiArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F63791CDF814F0060075E /* XQCollectiArticleCell.m */; };
 		A95F637F1CE016850060075E /* XQCFrameLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F637E1CE016850060075E /* XQCFrameLayout.m */; };
+		A95F63821CE427610060075E /* XQCLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = A95F63811CE427610060075E /* XQCLayoutAttributes.m */; };
+		A95F63841CE4B5270060075E /* santi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A95F63831CE4B5260060075E /* santi.jpg */; };
 		A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */; };
 		A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */; };
 		A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A96F5B761CC85F5400117F5E /* XQBoardView.m */; };
@@ -162,6 +164,9 @@
 		A95F637C1CDF86A00060075E /* XQConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQConstant.h; sourceTree = "<group>"; };
 		A95F637D1CE016840060075E /* XQCFrameLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCFrameLayout.h; sourceTree = "<group>"; };
 		A95F637E1CE016850060075E /* XQCFrameLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCFrameLayout.m; sourceTree = "<group>"; };
+		A95F63801CE427610060075E /* XQCLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCLayoutAttributes.h; sourceTree = "<group>"; };
+		A95F63811CE427610060075E /* XQCLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCLayoutAttributes.m; sourceTree = "<group>"; };
+		A95F63831CE4B5260060075E /* santi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = santi.jpg; sourceTree = "<group>"; };
 		A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
 		A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
@@ -338,6 +343,7 @@
 				A192A15F1CE33E6E0024C694 /* bg3.png */,
 				A192A15D1CE332760024C694 /* bg2.jpg */,
 				A192A15B1CE3312B0024C694 /* bg.jpg */,
+				A95F63831CE4B5260060075E /* santi.jpg */,
 				A1BFB6121CC4891500FE5CA1 /* icons */,
 				A16E1A761CAEBACE00F7C1FA /* top10.png */,
 				A16E1A771CAEBACE00F7C1FA /* top10@2x.png */,
@@ -431,6 +437,8 @@
 				A95F63761CDF33AE0060075E /* XQCollectBoardVC.m */,
 				A95F637D1CE016840060075E /* XQCFrameLayout.h */,
 				A95F637E1CE016850060075E /* XQCFrameLayout.m */,
+				A95F63801CE427610060075E /* XQCLayoutAttributes.h */,
+				A95F63811CE427610060075E /* XQCLayoutAttributes.m */,
 			);
 			name = "Collection(收藏)";
 			sourceTree = "<group>";
@@ -554,7 +562,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 9E9C2ZNYDA;
+						DevelopmentTeam = BASG852M4V;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -604,6 +612,7 @@
 				A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */,
 				A192A15E1CE332760024C694 /* bg2.jpg in Resources */,
 				A192A1601CE33E6E0024C694 /* bg3.png in Resources */,
+				A95F63841CE4B5270060075E /* santi.jpg in Resources */,
 				A192A15C1CE3312B0024C694 /* bg.jpg in Resources */,
 				A192A15A1CE32B030024C694 /* ASTop10SeperatorCell.xib in Resources */,
 				A96F5B7B1CC8CBE300117F5E /* color_board.plist in Resources */,
@@ -694,6 +703,7 @@
 				A192A1581CE32AE40024C694 /* ASTop10SeperatorCell.m in Sources */,
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A91776281CC76CE500ED84B3 /* XQBoardModel.m in Sources */,
+				A95F63821CE427610060075E /* XQCLayoutAttributes.m in Sources */,
 				A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */,
 				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */,

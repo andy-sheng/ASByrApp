@@ -9,18 +9,27 @@
 #import "XQCollectArticleVC.h"
 #import "XQCollectiArticleCell.h"
 #import "XQCFrameLayout.h"
-@interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
+#import "XQConstant.h"
+#import <AVFoundation/AVFoundation.h>
+@interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XQCLayoutDelegate>
+
 @property (strong, nonatomic) NSMutableArray * arrayList;
-@property (strong, nonatomic) XQCFrameLayout * layout;
+@property (strong, nonatomic) NSMutableArray * photos;
+@property (strong, nonatomic) XQCollectiArticleCell * cell;
+
 @end
 
 @implementation XQCollectArticleVC
 
-static NSString * const reuseIdentifier = @"NewNewCell";
+static NSString * const reuseIdentifier = @"Cell";
 - (id)initWithCollectionViewLayout:(XQCFrameLayout *)layout{
     if (self=[super initWithCollectionViewLayout:layout]) {
-        self.layout = layout;
         UICollectionView * collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:layout];
+        
+        self.arrayList = [NSMutableArray array];
+        self.photos = [NSMutableArray array];
+        layout.delegate=self;
+        
         [self.view addSubview:collectionView];
         self.collectionView = collectionView;
         [self.collectionView registerClass:[XQCollectiArticleCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -38,7 +47,6 @@ static NSString * const reuseIdentifier = @"NewNewCell";
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor=[UIColor whiteColor];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addCollectArticle:) name:@"addNewCollectedArticle" object:nil];
     
@@ -48,7 +56,7 @@ static NSString * const reuseIdentifier = @"NewNewCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.collectionView.backgroundColor = [UIColor whiteColor];
-
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +68,15 @@ static NSString * const reuseIdentifier = @"NewNewCell";
 
 - (void)addCollectArticle:(NSNotification *)notis{
     [self.arrayList addObject:notis.userInfo];
-    [self.collectionView reloadData];
+    [self.photos addObject:[UIImage imageNamed:notis.userInfo[@"userImage"]]];
+    [self writeIntoFile:COLLECTION_FILE articleInfo:notis.userInfo];
+}
+
+- (void)writeIntoFile:(NSString *)name articleInfo:(NSDictionary *)articleInfo{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSLog(@"%@",documentsDirectory);
+    
 }
 #pragma mark <UICollectionViewDataSource>
 
@@ -69,33 +85,17 @@ static NSString * const reuseIdentifier = @"NewNewCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 100;
+    return [self.arrayList count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    //self.layout.cellWidth = (self.collectionView.frame.size.width-self.layout.sectionInset.left-self.layout.sectionInset.right-(self.layout.lineNumber-1)*self.layout.lineSpacing)/self.layout.lineNumber;
-    NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"top10.png",@"firstImage",@"北京北京",@"title",@"情感天空",@"boardName",@"top10.png",@"userImage",@"top10",@"userName",@"100",@"replyCount",@"44",@"firstImageWidth",@"44",@"firstImageHeight", @192,@"layoutAttri",nil];
+    
     XQCollectiArticleCell *cell = (XQCollectiArticleCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     if (cell==nil) {
-        cell = [[XQCollectiArticleCell alloc]newCellWithFrame:CGRectZero andParameters:dict];
+        cell = [[XQCollectiArticleCell alloc]newCellWithFrame:CGRectZero andParameters:self.arrayList[indexPath.row]];
     }else{
-        [cell setUpFaceWithDictionary:dict];
+        [cell setUpFaceWithDictionary:self.arrayList[indexPath.row]];
     }
-    /*
-    UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    if (cell ==nil) {
-        cell = [[XQCollectiArticleCell alloc]initWithFrame:CGRectZero];
-    }
-    cell.backgroundColor =[UIColor redColor];
-    // Configure the cell
-    */
-    //if ([self.arrayList count]==0) {
-    //cell.titleLabel.text =[@"北京冬季奥运会北京冬季奥运会北京冬季奥运会北京冬季奥运会北京冬季奥运会" copy];
-    //cell.contentLabel.text=[@"北京夏天奥运会北京夏天奥运会北京夏天奥运会北京夏天奥运会北京夏天奥运会" copy];
-    //}else{
-    //  cell.titleLabel.text = self.arrayList[indexPath.row][@"title"];
-    // cell.contentLabel.text = self.arrayList[indexPath.row][@"content"];
-    //}
     return cell;
 }
 
@@ -132,7 +132,27 @@ static NSString * const reuseIdentifier = @"NewNewCell";
 	
 }
 */
+- (CGFloat)heightForPhoto:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
+    UIImage * photo = self.photos[indexPath.item];
+    NSLog(@"photos' size: height:%f, width:%f",photo.size.height,photo.size.width);
+    CGRect boudingRect = CGRectMake(0, 0, width-2*PADDING_TO_CONTENTVIEW, (width/photo.size.width)*photo.size.height);
+    CGRect rect = AVMakeRectWithAspectRatioInsideRect(photo.size, boudingRect);
+    return rect.size.height;
+}
 
+- (CGFloat)heightForTitle:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
+    NSString * title = self.arrayList[indexPath.row][@"title"];
+    CGRect heightTitle;
+    heightTitle = [title boundingRectWithSize:CGSizeMake(width-2*PADDING_TO_CONTENTVIEW-2*PADDING_WITHIN, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNext-Regular" size:14]} context:nil];
+    return heightTitle.size.height;
+}
+
+-(CGFloat)heightForBoardName:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
+    NSString * boardName = self.arrayList[indexPath.row][@"boardName"];
+    CGRect heightBoardName;
+    heightBoardName = [boardName boundingRectWithSize:CGSizeMake(width-2*PADDING_TO_CONTENTVIEW-2*PADDING_WITHIN, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNext-Regular" size:10]} context:nil];
+    return heightBoardName.size.height;
+}
 - (NSMutableArray *)arrayList{
     if (!_arrayList) {
         _arrayList = [NSMutableArray array];
