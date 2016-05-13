@@ -132,6 +132,8 @@ static NSString * const reuseIdentifier = @"Cell";
 	
 }
 */
+
+#pragma mark <XQCLayoutDelegate>
 - (CGFloat)heightForPhoto:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
     UIImage * photo = self.photos[indexPath.item];
     NSLog(@"photos' size: height:%f, width:%f",photo.size.height,photo.size.width);
@@ -153,6 +155,8 @@ static NSString * const reuseIdentifier = @"Cell";
     heightBoardName = [boardName boundingRectWithSize:CGSizeMake(width-2*PADDING_TO_CONTENTVIEW-2*PADDING_WITHIN, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNext-Regular" size:10]} context:nil];
     return heightBoardName.size.height;
 }
+
+#pragma mark getter and setter
 - (NSMutableArray *)arrayList{
     if (!_arrayList) {
         _arrayList = [NSMutableArray array];

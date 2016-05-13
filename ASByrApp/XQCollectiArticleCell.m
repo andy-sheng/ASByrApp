@@ -12,7 +12,7 @@
 #import "XQCFrameLayout.h"
 #import "XQCLayoutAttributes.h"
 #import <Masonry.h>
-@interface XQCollectiArticleCell()<NSCopying>
+@interface XQCollectiArticleCell()
 @property (strong, nonatomic) NSDictionary * paramDict;
 @end
 @implementation XQCollectiArticleCell
@@ -171,11 +171,5 @@
             make.height.mas_equalTo(attributes.photoHeight);
         }];
     }    
-}
-
-#pragma mark NSCopying 协议
-- (id)copyWithZone:(NSZone *)zone{
-    XQCollectiArticleCell * copyCell = [[[self class]allocWithZone:zone]newCellWithFrame:self.frame andParameters:self.paramDict];
-    return copyCell;
 }
 @end
