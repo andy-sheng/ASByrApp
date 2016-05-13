@@ -8,23 +8,23 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="116" id="KGk-i7-Jjw" customClass="ASThreadsTitleCell">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="116"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="49" id="KGk-i7-Jjw" customClass="ASThreadsTitleCell">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="115.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="48.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGI-gc-d0p">
-                        <rect key="frame" x="8" y="17" width="584" height="28"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="8" y="17" width="584" height="23.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="cGI-gc-d0p" secondAttribute="trailing" id="MRu-g2-IvA"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="cGI-gc-d0p" secondAttribute="bottom" constant="62.5" id="ipq-hd-jPx"/>
+                    <constraint firstAttribute="bottom" secondItem="cGI-gc-d0p" secondAttribute="bottom" constant="8" id="i0F-aX-b7e"/>
                     <constraint firstItem="cGI-gc-d0p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="upI-lS-Vf3"/>
                     <constraint firstItem="cGI-gc-d0p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="xiF-KB-2Zt"/>
                 </constraints>
@@ -32,7 +32,7 @@
             <connections>
                 <outlet property="titleLabel" destination="cGI-gc-d0p" id="Duf-z6-6gR"/>
             </connections>
-            <point key="canvasLocation" x="531" y="279"/>
+            <point key="canvasLocation" x="531" y="245.5"/>
         </tableViewCell>
     </objects>
 </document>

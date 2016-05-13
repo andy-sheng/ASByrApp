@@ -43,6 +43,7 @@
 		A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BFB6351CC4BAB000FE5CA1 /* ASArticleListVC.m */; };
 		A1BFB6451CC4CDED00FE5CA1 /* ASSectionListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BFB6441CC4CDED00FE5CA1 /* ASSectionListVC.m */; };
 		A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */; };
+		A1C9433F1CE45FE4000D0667 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = A1C9433E1CE45FE4000D0667 /* arrow-right.png */; };
 		A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1E69CF81CB50D34001E9E27 /* Main.storyboard */; };
 		A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E69D281CB7F147001E9E27 /* ASLoginController.m */; };
 		A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A91776241CC76CD000ED84B3 /* XQSectionModel.m */; };
@@ -136,6 +137,7 @@
 		A1BFB6441CC4CDED00FE5CA1 /* ASSectionListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASSectionListVC.m; sourceTree = "<group>"; };
 		A1C818DB1CCA162E00D535F6 /* ASKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASKeyboard.h; sourceTree = "<group>"; };
 		A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASKeyboard.m; sourceTree = "<group>"; };
+		A1C9433E1CE45FE4000D0667 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
 		A1E69CF81CB50D34001E9E27 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A1E69D271CB7F147001E9E27 /* ASLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASLoginController.h; sourceTree = "<group>"; };
 		A1E69D281CB7F147001E9E27 /* ASLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASLoginController.m; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 		A16E1A731CAEB85800F7C1FA /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A1C9433E1CE45FE4000D0667 /* arrow-right.png */,
 				A192A15F1CE33E6E0024C694 /* bg3.png */,
 				A192A15D1CE332760024C694 /* bg2.jpg */,
 				A192A15B1CE3312B0024C694 /* bg.jpg */,
@@ -566,6 +569,7 @@
 				A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */,
 				A192A15E1CE332760024C694 /* bg2.jpg in Resources */,
 				A192A1601CE33E6E0024C694 /* bg3.png in Resources */,
+				A1C9433F1CE45FE4000D0667 /* arrow-right.png in Resources */,
 				A192A15C1CE3312B0024C694 /* bg.jpg in Resources */,
 				A192A15A1CE32B030024C694 /* ASTop10SeperatorCell.xib in Resources */,
 				A96F5B7B1CC8CBE300117F5E /* color_board.plist in Resources */,

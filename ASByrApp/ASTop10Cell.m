@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numLabel;
+@property (weak, nonatomic) IBOutlet UIView *colorBar;
+@property (weak, nonatomic) IBOutlet UIImageView *arrow;
 
 @property (strong, nonatomic) NSString * faceUrl;
 @property (strong, nonatomic) NSString * uid;
@@ -51,6 +53,11 @@
     self.titleLabel.text = title;
     self.contentLabel.text = content;
     self.numLabel.text = [NSString stringWithFormat:@"%ld", num];
+    if ([content isEqualToString:@""] || content == nil) {
+        self.arrow.hidden = YES;
+    } else {
+        self.arrow.hidden = NO;
+    }
 }
 
 #pragma mark - setter and getter
