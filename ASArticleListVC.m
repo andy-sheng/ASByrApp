@@ -37,6 +37,7 @@
     self = [super initWithTitle:@"海天游踪"];
     if (self){
         self.boardName=@"Travel";
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshBoardData:) name:@"chooseBoardFromAllSection" object:nil];
     }
     return self;
 }
@@ -55,7 +56,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshBoardData:) name:@"chooseBoardFromAllSection" object:nil];
     self.lastViewBoard=[[XQBoardModel alloc ]initWithOnlyName:self.boardName];
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithHexString:[self.lastViewBoard getColor]]];
@@ -96,11 +96,7 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {return UIStatusBarStyleLightContent;}
-/*
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
-}
- */
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewAutomaticDimension;
 }

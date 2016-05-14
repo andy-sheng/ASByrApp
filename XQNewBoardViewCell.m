@@ -8,17 +8,10 @@
 
 #import "XQNewBoardViewCell.h"
 #import "UIColor+Hex.h"
+#import "XQConstant.h"
 #import <UIImageView+AFNetworking.h>
 #import <Masonry/Masonry.h>
-#define D_MINUTE 60
-#define D_HOUR   3600
-#define D_DAY    86400
-#define D_WEEK   604800
-#define D_YEAR   31556926
-#define IMAGE_BACKCOLOR @"D3D3D3"
-#define IMAGE_WIDTH 30
-#define PADDING_TO_CONTENTVIEW 8
-#define PADDING_WITHIN 6
+
 @implementation XQNewBoardViewCell
 
 + (XQNewBoardViewCell *)newCellWithIdentifier:(NSString *)identifier andStyle:(UITableViewCellStyle)style andParameters:(NSDictionary *)paramDictionary{
