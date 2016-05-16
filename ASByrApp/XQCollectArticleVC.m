@@ -63,7 +63,7 @@ static NSString * const reuseIdentifier = @"Cell";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma private method
+#pragma mark private method
 
 - (void)addCollectArticle:(NSNotification *)notis{
     [self.arrayList addObject:notis.userInfo];

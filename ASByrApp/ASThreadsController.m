@@ -127,14 +127,14 @@ const NSUInteger replyRow = 2;
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        NSLog(@"取了个消.");
+        NSLog(@"已取消操作.");
     }];
     
     UIAlertAction *collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
          NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"top10.png",@"firstImage",self.replyArticles[0][@"title"],@"title",@"情感天空",@"boardName",@"fire",@"userImage",@"top10",@"userName",@"100",@"replyCount",nil];
         //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:self.replyArticles[0]];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:dict];
-        NSLog(@"收了个藏.");
+        NSLog(@"已收藏文章.");
     }];
     
     [alertController addAction:cancelAction];
