@@ -7,6 +7,7 @@
 //
 
 #import "ASThreadsTitleCell.h"
+#import "NSAttributedString+ASUBB.h"
 
 @interface ASThreadsTitleCell()
 
@@ -28,7 +29,7 @@
 }
 
 - (void)setupWithTitle:(NSString *)title {
-    self.titleLabel.text = title;
+    self.titleLabel.attributedText = [[NSAttributedString alloc] initWithUBB:title];
 }
 
 @end

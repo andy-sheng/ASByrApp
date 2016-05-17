@@ -11,6 +11,7 @@
 #import "ASThreadsBodyCell.h"
 #import "ASThreadsReplyCell.h"
 #import "ASKeyboard.h"
+#import "NSAttributedString+ASUBB.h"
 #import <ASByrToken.h>
 #import <ASByrArticle.h>
 #import <MJRefresh.h>

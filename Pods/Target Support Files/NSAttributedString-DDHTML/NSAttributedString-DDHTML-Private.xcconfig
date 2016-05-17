@@ -1,6 +1,0 @@
-#include "NSAttributedString-DDHTML.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/NSAttributedString-DDHTML" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/ASByr" "${PODS_ROOT}/Headers/Public/ASUBBParser" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/MJRefresh" "${PODS_ROOT}/Headers/Public/Masonry" "${PODS_ROOT}/Headers/Public/NSAttributedString-DDHTML" "${PODS_ROOT}/Headers/Public/Reveal-iOS-SDK" "${PODS_ROOT}/Headers/Public/Reveal-iOS-SDK/Reveal" "${PODS_ROOT}/Headers/Public/WMPageController" "${PODS_ROOT}/Headers/Public/YYText" ${NSATTRIBUTEDSTRING_DDHTML_HEADER_SEARCH_PATHS}
-OTHER_LDFLAGS = ${NSATTRIBUTEDSTRING_DDHTML_OTHER_LDFLAGS}
-PODS_ROOT = ${SRCROOT}
-SKIP_INSTALL = YES

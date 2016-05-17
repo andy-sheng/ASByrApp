@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69A70CC2CD72454EC7843F71 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4FFF6330EA431E2C06640A /* libPods.a */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
@@ -42,6 +41,7 @@
 		A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A7FFCB1CB4E84D00AD6787 /* TestViewController.m */; };
 		A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BFB6351CC4BAB000FE5CA1 /* ASArticleListVC.m */; };
 		A1BFB6451CC4CDED00FE5CA1 /* ASSectionListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BFB6441CC4CDED00FE5CA1 /* ASSectionListVC.m */; };
+		A1C0032E1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */; };
 		A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */; };
 		A1C9433F1CE45FE4000D0667 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = A1C9433E1CE45FE4000D0667 /* arrow-right.png */; };
 		A1E69CF91CB50D34001E9E27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1E69CF81CB50D34001E9E27 /* Main.storyboard */; };
@@ -62,6 +62,7 @@
 		A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A96F5B761CC85F5400117F5E /* XQBoardView.m */; };
 		A96F5B791CC85F6F00117F5E /* XQBoardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A96F5B781CC85F6F00117F5E /* XQBoardView.xib */; };
 		A96F5B7B1CC8CBE300117F5E /* color_board.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96F5B7A1CC8CBE300117F5E /* color_board.plist */; };
+		E82AD933CAE9360B64FF268E /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 524B54970CD5F262B8906519 /* libPods-ASByrApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		421B8D67E827BF51D3568E76 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		524B54970CD5F262B8906519 /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
@@ -140,6 +141,8 @@
 		A1BFB6351CC4BAB000FE5CA1 /* ASArticleListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASArticleListVC.m; sourceTree = "<group>"; };
 		A1BFB6431CC4CDED00FE5CA1 /* ASSectionListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASSectionListVC.h; sourceTree = "<group>"; };
 		A1BFB6441CC4CDED00FE5CA1 /* ASSectionListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASSectionListVC.m; sourceTree = "<group>"; };
+		A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ASUBB.m"; sourceTree = "<group>"; };
+		A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+ASUBB.h"; sourceTree = "<group>"; };
 		A1C818DB1CCA162E00D535F6 /* ASKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASKeyboard.h; sourceTree = "<group>"; };
 		A1C818DC1CCA162E00D535F6 /* ASKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASKeyboard.m; sourceTree = "<group>"; };
 		A1C9433E1CE45FE4000D0667 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
@@ -175,8 +178,8 @@
 		A96F5B761CC85F5400117F5E /* XQBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQBoardView.m; sourceTree = "<group>"; };
 		A96F5B781CC85F6F00117F5E /* XQBoardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XQBoardView.xib; sourceTree = "<group>"; };
 		A96F5B7A1CC8CBE300117F5E /* color_board.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = color_board.plist; sourceTree = "<group>"; };
-		AC1202C2F4ED3D9C792EC2FC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		DC4FFF6330EA431E2C06640A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFEB0B90720F3E673F124D65 /* Pods-ASByrApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASByrApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp.release.xcconfig"; sourceTree = "<group>"; };
+		F9B2B79ECA6F5866DFDD62C8 /* Pods-ASByrApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASByrApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69A70CC2CD72454EC7843F71 /* libPods.a in Frameworks */,
+				E82AD933CAE9360B64FF268E /* libPods-ASByrApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,8 +249,8 @@
 				A16E1A3A1CAD6B9500F7C1FA /* ASByrApp */,
 				A16E1A541CAD6B9500F7C1FA /* ASByrAppTests */,
 				A16E1A5F1CAD6B9500F7C1FA /* ASByrAppUITests */,
-				F90F45AE7F75B8768CDC9C36 /* Pods */,
-				D0F4189284D48070AE905568 /* Frameworks */,
+				D92BD1A728EB4E1FBDDA8C29 /* Pods */,
+				EF4472D6054597B6F1110508 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -354,6 +357,8 @@
 		A16E1A7A1CB246C000F7C1FA /* common */ = {
 			isa = PBXGroup;
 			children = (
+				A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */,
+				A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */,
 				A1BFB6551CC60D4300FE5CA1 /* keyboard */,
 				A16885D01CC0D22D00338353 /* threads(帖子详情) */,
 				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
@@ -476,21 +481,21 @@
 			name = BooardView;
 			sourceTree = "<group>";
 		};
-		D0F4189284D48070AE905568 /* Frameworks */ = {
+		D92BD1A728EB4E1FBDDA8C29 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DC4FFF6330EA431E2C06640A /* libPods.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F90F45AE7F75B8768CDC9C36 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				AC1202C2F4ED3D9C792EC2FC /* Pods.debug.xcconfig */,
-				421B8D67E827BF51D3568E76 /* Pods.release.xcconfig */,
+				F9B2B79ECA6F5866DFDD62C8 /* Pods-ASByrApp.debug.xcconfig */,
+				AFEB0B90720F3E673F124D65 /* Pods-ASByrApp.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EF4472D6054597B6F1110508 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				524B54970CD5F262B8906519 /* libPods-ASByrApp.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,11 +505,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A16E1A651CAD6B9500F7C1FA /* Build configuration list for PBXNativeTarget "ASByrApp" */;
 			buildPhases = (
-				8155728EE5F611DBD0E7E44D /* Check Pods Manifest.lock */,
+				953444F165896642E160EA12 /* 📦 Check Pods Manifest.lock */,
 				A16E1A341CAD6B9500F7C1FA /* Sources */,
 				A16E1A351CAD6B9500F7C1FA /* Frameworks */,
 				A16E1A361CAD6B9500F7C1FA /* Resources */,
-				C096A2E99E593520F75D3C45 /* Copy Pods Resources */,
+				518358ADE0297345FE988FFE /* 📦 Embed Pods Frameworks */,
+				990611FA3E68853734129B8F /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -562,7 +568,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = BASG852M4V;
+						DevelopmentTeam = 9E9C2ZNYDA;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -642,14 +648,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8155728EE5F611DBD0E7E44D /* Check Pods Manifest.lock */ = {
+		518358ADE0297345FE988FFE /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		953444F165896642E160EA12 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,19 +678,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		C096A2E99E593520F75D3C45 /* Copy Pods Resources */ = {
+		990611FA3E68853734129B8F /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -708,6 +729,7 @@
 				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */,
 				A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */,
+				A1C0032E1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
 				A95F63771CDF33AE0060075E /* XQCollectBoardVC.m in Sources */,
 			);
@@ -838,7 +860,7 @@
 		};
 		A16E1A661CAD6B9500F7C1FA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC1202C2F4ED3D9C792EC2FC /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F9B2B79ECA6F5866DFDD62C8 /* Pods-ASByrApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -853,7 +875,7 @@
 		};
 		A16E1A671CAD6B9500F7C1FA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 421B8D67E827BF51D3568E76 /* Pods.release.xcconfig */;
+			baseConfigurationReference = AFEB0B90720F3E673F124D65 /* Pods-ASByrApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

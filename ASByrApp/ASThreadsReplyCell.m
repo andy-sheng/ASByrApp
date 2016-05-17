@@ -7,6 +7,7 @@
 //
 
 #import "ASThreadsReplyCell.h"
+#import "NSAttributedString+ASUBB.h"
 #import <UIImageView+AFNetworking.h>
 
 @interface ASThreadsReplyCell()
@@ -34,7 +35,7 @@
                  content:(NSString *)content {
     [self.faceImage setImageWithURL:[NSURL URLWithString:faceUrl]];
     self.uidLabel.text = uid;
-    self.contentLabel.text = content;
+    self.contentLabel.attributedText = [[NSAttributedString alloc] initWithUBB:content];
 }
 
 @end

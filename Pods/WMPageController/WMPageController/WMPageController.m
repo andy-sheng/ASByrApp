@@ -13,7 +13,7 @@ static CGFloat   const kWMMarginToNavigationItem = 6.0;
 static NSInteger const kWMUndefinedIndex = -1;
 @interface WMPageController () {
     CGFloat _viewHeight, _viewWidth, _viewX, _viewY, _targetX, _superviewHeight;
-    BOOL    _animate, _hasInited, _shouldNotScroll;
+    BOOL    _hasInited, _shouldNotScroll;
     NSInteger _initializedIndex;
 }
 @property (nonatomic, strong, readwrite) UIViewController *currentViewController;
@@ -75,6 +75,14 @@ static NSInteger const kWMUndefinedIndex = -1;
     return self;
 }
 
+- (void)setEdgesForExtendedLayout:(UIRectEdge)edgesForExtendedLayout {
+    [super setEdgesForExtendedLayout:edgesForExtendedLayout];
+    if (_hasInited) {
+        _hasInited = NO;
+        [self viewDidLayoutSubviews];
+    }
+}
+
 - (void)setCachePolicy:(WMPageControllerCachePolicy)cachePolicy {
     _cachePolicy = cachePolicy;
     self.memCache.countLimit = _cachePolicy;
@@ -90,6 +98,7 @@ static NSInteger const kWMUndefinedIndex = -1;
 - (void)setViewFrame:(CGRect)viewFrame {
     _viewFrame = viewFrame;
     if (self.menuView) {
+        _hasInited = NO;
         [self viewDidLayoutSubviews];
     }
 }
@@ -136,6 +145,7 @@ static NSInteger const kWMUndefinedIndex = -1;
 }
 
 - (void)willEnterController:(UIViewController *)vc atIndex:(NSInteger)index {
+    _selectIndex = (int)index;
     if (self.childControllersCount && [self.delegate respondsToSelector:@selector(pageController:willEnterViewController:withInfo:)]) {
         NSDictionary *info = [self infoWithIndex:index];
         [self.delegate pageController:self willEnterViewController:vc withInfo:info];
@@ -145,7 +155,6 @@ static NSInteger const kWMUndefinedIndex = -1;
 // 完全进入控制器 (即停止滑动后调用)
 - (void)didEnterController:(UIViewController *)vc atIndex:(NSInteger)index {
     if (!self.childControllersCount) { return; }
-    
     NSDictionary *info = [self infoWithIndex:index];
     if ([self.delegate respondsToSelector:@selector(pageController:didEnterViewController:withInfo:)]) {
         [self.delegate pageController:self didEnterViewController:vc withInfo:info];
@@ -174,6 +183,7 @@ static NSInteger const kWMUndefinedIndex = -1;
             [self postAddToSuperViewNotificationWithIndex:i];
         }
     }
+    _selectIndex = (int)index;
 }
 
 #pragma mark - Data source
@@ -272,9 +282,18 @@ static NSInteger const kWMUndefinedIndex = -1;
 
 // 包括宽高，子控制器视图 frame
 - (void)calculateSize {
+    CGFloat navigationHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    UIView *tabBar = self.tabBarController.tabBar ? self.tabBarController.tabBar : self.navigationController.toolbar;
+    CGFloat height = tabBar && !tabBar.hidden ? CGRectGetHeight(tabBar.frame) : 0;
+    CGFloat tarBarHeight = self.hidesBottomBarWhenPushed == YES ? 0 : height;
+    // 计算相对 window 的绝对 frame
+    CGRect absoluteRect = [self.view.superview convertRect:self.view.frame toView:self.view.window];
+    navigationHeight -= absoluteRect.origin.y;
+    tarBarHeight -= self.view.window.frame.size.height - CGRectGetMaxY(absoluteRect);
+    
     if (CGRectEqualToRect(self.viewFrame, CGRectZero)) {
         _viewWidth = self.view.frame.size.width;
-        _viewHeight = self.view.frame.size.height - self.menuHeight - self.menuViewBottom;
+        _viewHeight = self.view.frame.size.height - self.menuHeight - self.menuViewBottom - navigationHeight - tarBarHeight;
     } else {
         _viewWidth = self.viewFrame.size.width;
         _viewHeight = self.viewFrame.size.height - self.menuHeight - self.menuViewBottom;
@@ -283,7 +302,7 @@ static NSInteger const kWMUndefinedIndex = -1;
         _viewHeight += self.menuHeight;
     }
     _viewX = self.viewFrame.origin.x;
-    _viewY = self.viewFrame.origin.y;
+    _viewY = self.viewFrame.origin.y + navigationHeight;
     // 重新计算各个控制器视图的宽高
     _childViewFrames = [NSMutableArray array];
     for (int i = 0; i < self.childControllersCount; i++) {
@@ -307,7 +326,8 @@ static NSInteger const kWMUndefinedIndex = -1;
 }
 
 - (void)addMenuView {
-    CGRect frame = CGRectMake(_viewX, _viewY, _viewWidth, self.menuHeight);
+    CGFloat menuY = self.showOnNavigationBar ? 0 : _viewY;
+    CGRect frame = CGRectMake(_viewX, menuY, _viewWidth, self.menuHeight);
     WMMenuView *menuView = [[WMMenuView alloc] initWithFrame:frame];
     menuView.backgroundColor = self.menuBGColor;
     menuView.delegate = self;
@@ -474,9 +494,14 @@ static NSInteger const kWMUndefinedIndex = -1;
 }
 
 - (void)resetMenuView {
-    WMMenuView *oldMenuView = self.menuView;
-    [self addMenuView];
-    [oldMenuView removeFromSuperview];
+    if (!self.menuView) {
+        [self addMenuView];
+    } else {
+        [self.menuView reload];
+        if (self.selectIndex != 0) {
+            [self.menuView selectItemAtIndex:self.selectIndex];
+        }
+    }
 }
 
 - (void)growCachePolicyAfterMemoryWarning {
@@ -514,6 +539,7 @@ static NSInteger const kWMUndefinedIndex = -1;
     // 根据是否在导航栏上展示调整frame
     CGFloat menuHeight = self.menuHeight;
     __block CGFloat menuX = _viewX;
+    __block CGFloat menuY = _viewY;
     __block CGFloat rightWidth = 0;
     if (self.showOnNavigationBar && self.navigationController.navigationBar) {
         [self.navigationController.navigationBar.subviews enumerateObjectsUsingBlock:^(UIView* obj, NSUInteger idx, BOOL *stop) {
@@ -532,9 +558,10 @@ static NSInteger const kWMUndefinedIndex = -1;
         }];
         CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
         menuHeight = self.menuHeight > navHeight ? navHeight : self.menuHeight;
+        menuY = 0;
     }
     CGFloat menuWidth = _viewWidth - menuX - rightWidth;
-    self.menuView.frame = CGRectMake(menuX, _viewY, menuWidth, menuHeight);
+    self.menuView.frame = CGRectMake(menuX, menuY, menuWidth, menuHeight);
     [self.menuView resetFrames];
 }
 
@@ -542,13 +569,8 @@ static NSInteger const kWMUndefinedIndex = -1;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
-    id appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate respondsToSelector:@selector(window)]) {
-        [appDelegate window].backgroundColor = [UIColor whiteColor];
-    }
-    
+
     if (!self.childControllersCount) return;
     
     [self addScrollView];
@@ -580,7 +602,6 @@ static NSInteger const kWMUndefinedIndex = -1;
     
     [self removeSuperfluousViewControllersIfNeeded];
 
-//    self.currentViewController.view.frame = [self.childViewFrames[self.selectIndex] CGRectValue];
     _hasInited = YES;
     [self.view layoutIfNeeded];
 }
@@ -612,10 +633,10 @@ static NSInteger const kWMUndefinedIndex = -1;
 
 #pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (_shouldNotScroll) { return; }
+    if (_shouldNotScroll || !_hasInited) { return; }
     
     [self layoutChildViewControllers];
-    if (_animate) {
+    if (_startDragging) {
         CGFloat contentOffsetX = scrollView.contentOffset.x;
         if (contentOffsetX < 0) {
             contentOffsetX = 0;
@@ -635,7 +656,7 @@ static NSInteger const kWMUndefinedIndex = -1;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    _animate = YES;
+    _startDragging = YES;
     self.menuView.userInteractionEnabled = NO;
 }
 
@@ -670,13 +691,11 @@ static NSInteger const kWMUndefinedIndex = -1;
 #pragma mark - WMMenuView Delegate
 - (void)menuView:(WMMenuView *)menu didSelesctedIndex:(NSInteger)index currentIndex:(NSInteger)currentIndex {
     if (!_hasInited) { return; }
-    NSInteger gap = (NSInteger)labs(index - currentIndex);
     _selectIndex = (int)index;
-    _animate = NO;
+    _startDragging = NO;
     CGPoint targetP = CGPointMake(_viewWidth*index, 0);
-    BOOL animate = (gap > 1 || !_hasInited) ? NO : self.pageAnimatable;
-    [self.scrollView setContentOffset:targetP animated:animate];
-    if (gap > 1 || !self.pageAnimatable) {
+    [self.scrollView setContentOffset:targetP animated:self.pageAnimatable];
+    if (!self.pageAnimatable) {
         // 由于不触发 -scrollViewDidScroll: 手动处理控制器
         [self removeSuperfluousViewControllersIfNeeded];
         UIViewController *currentViewController = self.displayVC[@(currentIndex)];

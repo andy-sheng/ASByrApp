@@ -7,6 +7,7 @@
 //
 
 #import "ASThreadsBodyCell.h"
+#import "NSAttributedString+ASUBB.h"
 
 @interface ASThreadsBodyCell()
 
@@ -28,7 +29,7 @@
 }
 
 - (void)setupWithContent:(NSString *)content {
-    self.contentLabel.text = content;
+    self.contentLabel.attributedText = [[NSAttributedString alloc] initWithUBB:content];
 }
 
 @end
