@@ -8,10 +8,11 @@
 
 #import "ASThreadsBodyCell.h"
 #import "NSAttributedString+ASUBB.h"
+#import "TTTAttributedLabel.h"
 
-@interface ASThreadsBodyCell()
+@interface ASThreadsBodyCell()<TTTAttributedLabelDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *contentLabel;
 
 @end
 
@@ -19,7 +20,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+    self.contentLabel.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -29,7 +31,21 @@
 }
 
 - (void)setupWithContent:(NSString *)content {
-    self.contentLabel.attributedText = [[NSAttributedString alloc] initWithUBB:content];
+    NSAttributedString * str = [[NSAttributedString alloc] initWithUBB:content];
+    [self.contentLabel setText:str];
+    [str enumerateAttribute:NSLinkAttributeName
+                    inRange:NSMakeRange(0, str.length)
+                    options:NSAttributedStringEnumerationReverse
+                 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if (value != nil) {
+            [self.contentLabel addLinkToURL:value withRange:range];
+        }
+    }];
+}
+
+- (void)attributedLabel:(TTTAttributedLabel *)label
+   didSelectLinkWithURL:(NSURL *)url {
+    [self.delegate linkClicked:url];
 }
 
 @end

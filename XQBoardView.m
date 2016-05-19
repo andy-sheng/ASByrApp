@@ -7,7 +7,7 @@
 //
 
 #import "XQBoardView.h"
-#import <UIImageView+AFNetworking.h>
+#import "UIImageView+AFNetworking.h"
 
 @interface XQBoardView()
 

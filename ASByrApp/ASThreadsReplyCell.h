@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ASThreadsReplyCellDelegate <NSObject>
+
+@required
+
+- (void)linkClicked:(NSURL*) url;
+
+@end
+
 @interface ASThreadsReplyCell : UITableViewCell
+
+@property(nonatomic, strong) id <ASThreadsReplyCellDelegate> delegate;
 
 - (void)setupWithFaceurl:(NSString*) faceUrl
                      uid:(NSString*) uid

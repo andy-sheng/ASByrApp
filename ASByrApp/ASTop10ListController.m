@@ -11,8 +11,8 @@
 #import "ASTop10Cell.h"
 #import "ASTop10SeperatorCell.h"
 #import "ASThreadsController.h"
-#import <ASByrToken.h>
-#import <ASByrWidget.h>
+#import "ASByrToken.h"
+#import "ASByrWidget.h"
 
 #define END_REFRESHING [self.tableView.mj_header endRefreshing];
 

@@ -8,8 +8,8 @@
 
 #import "XQBoardModel.h"
 #import "ASConfig.h"
-#import <ASByrToken.h>
-#import <ASByrBoard.h>
+#import "ASByrToken.h"
+#import "ASByrBoard.h"
 
 @interface XQBoardModel()
 

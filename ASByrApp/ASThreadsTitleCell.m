@@ -8,10 +8,11 @@
 
 #import "ASThreadsTitleCell.h"
 #import "NSAttributedString+ASUBB.h"
+#import "TTTAttributedLabel.h"
 
 @interface ASThreadsTitleCell()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *titleLabel;
 
 @end
 
@@ -19,7 +20,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

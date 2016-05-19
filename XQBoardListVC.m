@@ -8,7 +8,7 @@
 
 #import "XQBoardListVC.h"
 #import "ASArticleListVC.h"
-#import <ASByrBoard.h>
+#import "ASByrBoard.h"
 
 @interface XQBoardListVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (copy, nonatomic) NSString *sectionName;

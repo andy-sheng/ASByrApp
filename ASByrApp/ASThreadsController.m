@@ -12,17 +12,17 @@
 #import "ASThreadsReplyCell.h"
 #import "ASKeyboard.h"
 #import "NSAttributedString+ASUBB.h"
-#import <ASByrToken.h>
-#import <ASByrArticle.h>
-#import <MJRefresh.h>
-#import <Masonry.h>
-#import <MBProgressHUD.h>
+#import "ASByrToken.h"
+#import "ASByrArticle.h"
+#import "MJRefresh.h"
+#import "Masonry.h"
+#import "MBProgressHUD.h"
 #import "ASArticleListVC.h"
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource,ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate, ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
 
 @property(strong, nonatomic) UITableView * tableView;
 @property(strong, nonatomic) ASKeyboard * keyboard;
@@ -70,13 +70,6 @@ const NSUInteger replyRow = 2;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.keyboard];
     [self.view setNeedsUpdateConstraints];
-    //[self.tableView.superview bringSubviewToFront:self.keyboard];
-    //[self addChildViewController:self.keyboard];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -165,14 +158,17 @@ const NSUInteger replyRow = 2;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == titleRow) {
         ASThreadsTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsTitle" forIndexPath:indexPath];
+        cell.delegate = self;
         [cell setupWithTitle:self.replyArticles[0][@"title"]];
         return cell;
     } else if(indexPath.row == bodyRow) {
         ASThreadsBodyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody" forIndexPath:indexPath];
+        cell.delegate = self;
         [cell setupWithContent:self.replyArticles[0][@"content"]];
         return cell;
     } else {
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
+        cell.delegate = self;
         [cell setupWithFaceurl:self.replyArticles[indexPath.row - 1][@"user"][@"faceurl"]
                            uid:self.replyArticles[indexPath.row - 1][@"user"][@"uid"]
                        content:self.replyArticles[indexPath.row - 1][@"content"]];
@@ -235,6 +231,17 @@ const NSUInteger replyRow = 2;
     response.reformedData = reformedArticles;
     return response;
 }
+
+#pragma mark - ASThreadsTitleCellDelegate
+
+- (void)linkClicked:(NSURL *)url {
+    //self.navigationController pushViewController:[UIWebView] animated:<#(BOOL)#>
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+#pragma mark - ASThreadsBodyCellDelegate
+
+#pragma mark - ASThreadsReplyCellDelegate
 
 #pragma mark - getter and setter
 

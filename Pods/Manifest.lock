@@ -16,21 +16,31 @@ PODS:
     - AFNetworking/NSURLSession
   - ASByr (0.1.0):
     - AFNetworking
+  - FLAnimatedImage (1.0.12)
   - Masonry (1.0.0)
   - MBProgressHUD (0.9.2)
   - MJRefresh (3.1.0)
+  - OLImageView (1.5.1):
+    - OLImageView/Core (= 1.5.1)
+  - OLImageView/Core (1.5.1)
   - Reveal-iOS-SDK (1.6.2)
+  - TTTAttributedLabel (2.0.0)
   - WMPageController (1.5.0)
+  - YYModel (1.0.3)
   - YYText (1.0.5)
 
 DEPENDENCIES:
   - AFNetworking
   - ASByr (from `../ASByr`)
+  - FLAnimatedImage (~> 1.0)
   - Masonry
   - MBProgressHUD (~> 0.9.2)
   - MJRefresh
+  - OLImageView
   - Reveal-iOS-SDK
+  - TTTAttributedLabel
   - WMPageController
+  - YYModel
   - YYText
 
 EXTERNAL SOURCES:
@@ -40,13 +50,17 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   ASByr: f2eb6844fd9f3598704709ea133985b1b1efd76b
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  OLImageView: e03cd533ce6b1a155acb9f708ab9b2e71ea070d5
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   WMPageController: 83dbd55e604a4704c7e955bbe9020c5d74020fff
+  YYModel: 63142c2f07c5c8c9d1c261689cf3827ea6ab2886
   YYText: ac09660c9ccd9b817f409a20caa6f5587444d2ae
 
-PODFILE CHECKSUM: 8e5040149fd6ad1e80e97a556384610b4b5dd091
+PODFILE CHECKSUM: cc53efab3fde96da5ceaa47d7f0ee638e4371c4e
 
 COCOAPODS: 1.0.0

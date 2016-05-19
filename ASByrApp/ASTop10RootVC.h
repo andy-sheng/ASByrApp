@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <WMPageController.h>
+#import "WMPageController.h"
 
 @interface ASTop10RootVC : WMPageController
 

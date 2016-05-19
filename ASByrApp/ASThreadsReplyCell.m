@@ -8,12 +8,13 @@
 
 #import "ASThreadsReplyCell.h"
 #import "NSAttributedString+ASUBB.h"
-#import <UIImageView+AFNetworking.h>
+#import "UIImageView+AFNetworking.h"
+#import "TTTAttributedLabel.h"
 
-@interface ASThreadsReplyCell()
+@interface ASThreadsReplyCell()<TTTAttributedLabelDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *faceImage;
 @property (weak, nonatomic) IBOutlet UILabel *uidLabel;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *contentLabel;
 
 @end
 
@@ -21,7 +22,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+    self.contentLabel.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,7 +37,23 @@
                  content:(NSString *)content {
     [self.faceImage setImageWithURL:[NSURL URLWithString:faceUrl]];
     self.uidLabel.text = uid;
-    self.contentLabel.attributedText = [[NSAttributedString alloc] initWithUBB:content];
+    
+    NSAttributedString * str = [[NSAttributedString alloc] initWithUBB:content];
+    [self.contentLabel setText:str];
+    [str enumerateAttribute:NSLinkAttributeName
+                    inRange:NSMakeRange(0, str.length)
+                    options:NSAttributedStringEnumerationReverse
+                 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+                     if (value != nil) {
+                         [self.contentLabel addLinkToURL:value withRange:range];
+                     }
+                 }];
+    self.contentLabel.attributedText = str;
+}
+
+- (void)attributedLabel:(TTTAttributedLabel *)label
+   didSelectLinkWithURL:(NSURL *)url {
+    [self.delegate linkClicked:url];
 }
 
 @end

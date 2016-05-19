@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MJRefresh.h>
+#import "MJRefresh.h"
 
 @interface ASBasicArticleListController : UITableViewController
 @property(assign, nonatomic) BOOL isLoaded;

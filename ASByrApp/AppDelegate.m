@@ -11,7 +11,7 @@
 #import "ASArticleListVC.h"
 #import "XQCollectArticleVC.h"
 #import "XQCFrameLayout.h"
-#import <WMPageController.h>
+#import "WMPageController.h"
 
 @interface AppDelegate ()
 

@@ -9,7 +9,7 @@
 #import "NSAttributedString+ASUBB.h"
 #import "UIColor+Hex.h"
 #import <UIKit/UIKit.h>
-#import <YYText.h>
+#import "YYText.h"
 
 typedef enum {
     ScanNormalChar = 1 << 0,
@@ -318,34 +318,35 @@ typedef enum {
     }
     if ([tags[0] isEqualToString:@"b"]) {
         [str yy_setFont:[UIFont fontWithName:@"Helvetica-Bold" size:17] range:range];
-        
     } else if ([tags[0] isEqualToString:@"color"]) {
         [str yy_setColor:[UIColor colorWithHexString:values[0]] range:range];
     } else if ([tags[0] isEqualToString:@"code"]) {
         [str yy_setBackgroundColor:[UIColor grayColor] range:range];
     } else if ([tags[0] isEqualToString:@"email"]) {
-        
+    #warning - todo
     } else if ([tags[0] isEqualToString:@"face"]) {
-        
+    #warning - todo
     } else if ([tags[0] isEqualToString:@"i"]) {
         CGAffineTransform matrix = CGAffineTransformMake(1, 0, tanf(15 * (CGFloat)M_PI / 180), 1, 0, 0);
         UIFontDescriptor *desc =  [UIFontDescriptor fontDescriptorWithName:[UIFont systemFontOfSize:17].fontName matrix:matrix];
         [str yy_setFont:[UIFont fontWithDescriptor:desc size:17] range:range];
     } else if ([tags[0] isEqualToString:@"img"]) {
-        
+     #warning - todo
     } else if ([tags[0] isEqualToString:@"mp3"]) {
-        
+    #warning - todo
     } else if ([tags[0] isEqualToString:@"map"]) {
-        
+    #warning - todo
     } else if ([tags[0] isEqualToString:@"size"]) {
         [str yy_setFont:[UIFont systemFontOfSize:[values[0] integerValue]] range:range];
         NSLog(@"setting size:%ld", [values[0] integerValue]);
     } else if ([tags[0] isEqualToString:@"u"]) {
-        
+        [str yy_setUnderlineColor:[UIColor blackColor] range:range];
+        [str yy_setUnderlineStyle:NSUnderlineStyleSingle range:range];
     } else if ([tags[0] isEqualToString:@"url"]) {
-        
+        [str yy_setLink:[NSURL URLWithString:[values objectAtIndex:0]] range:range];
+        [str yy_setUnderlineColor:[UIColor clearColor] range:range];
     } else if ([tags[0] isEqualToString:@"upload"]) {
-        
+    #warning - todo
     }
     return str;
 }

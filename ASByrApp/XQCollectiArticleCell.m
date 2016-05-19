@@ -11,7 +11,7 @@
 #import "UIColor+Hex.h"
 #import "XQCFrameLayout.h"
 #import "XQCLayoutAttributes.h"
-#import <Masonry.h>
+#import "Masonry.h"
 @interface XQCollectiArticleCell()
 @property (strong, nonatomic) NSDictionary * paramDict;
 @end

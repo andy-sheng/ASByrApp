@@ -7,7 +7,7 @@
 //
 
 #import "ASTop10Cell.h"
-#import <UIImageView+AFNetworking.h>
+#import "UIImageView+AFNetworking.h"
 
 @interface ASTop10Cell()
 

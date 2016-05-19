@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ASThreadsBodyCellDelegate <NSObject>
+
+@required
+
+- (void)linkClicked:(NSURL*) url;
+
+@end
+
 @interface ASThreadsBodyCell : UITableViewCell
+
+@property(nonatomic, strong) id <ASThreadsBodyCellDelegate> delegate;
 
 - (void)setupWithContent:(NSString*)content;
 
