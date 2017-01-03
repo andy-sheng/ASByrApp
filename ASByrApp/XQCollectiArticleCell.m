@@ -7,7 +7,6 @@
 //
 
 #import "XQCollectiArticleCell.h"
-#import "XQConstant.h"
 #import "UIColor+Hex.h"
 #import "XQCFrameLayout.h"
 #import "XQCLayoutAttributes.h"

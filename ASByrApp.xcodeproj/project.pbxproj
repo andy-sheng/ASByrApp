@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */; };
+		75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */; };
+		75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */; };
+		75A4C1E71E1B971D00B563A7 /* XQSelfInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */; };
+		75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */; };
+		75A4C20A1E1BC67D00B563A7 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2071E1BC67D00B563A7 /* DBManager.m */; };
+		75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */; };
+		75A4C2111E1BC6B200B563A7 /* XQArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C20E1E1BC6B200B563A7 /* XQArticle.m */; };
+		75A4C2121E1BC6B200B563A7 /* XQUserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2101E1BC6B200B563A7 /* XQUserEntity.m */; };
+		75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2141E1BC6C400B563A7 /* XQArticleService.m */; };
+		75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2161E1BC6C400B563A7 /* XQUserService.m */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
@@ -283,6 +293,26 @@
 
 /* Begin PBXFileReference section */
 		442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSelfInfoVC.h; sourceTree = "<group>"; };
+		75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQSelfInfoVC.m; sourceTree = "<group>"; };
+		75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = XQSelfInfoVC.storyboard; sourceTree = "<group>"; };
+		75A4C1E91E1B97AE00B563A7 /* XQUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserInfo.h; sourceTree = "<group>"; };
+		75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserInfo.m; sourceTree = "<group>"; };
+		75A4C1EB1E1B97AE00B563A7 /* XQSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSingleton.h; sourceTree = "<group>"; };
+		75A4C2041E1BA3BA00B563A7 /* XQPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQPrefixHeader.pch; sourceTree = "<group>"; };
+		75A4C2061E1BC67D00B563A7 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		75A4C2071E1BC67D00B563A7 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		75A4C2081E1BC67D00B563A7 /* XQDatabaseCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDatabaseCreator.h; sourceTree = "<group>"; };
+		75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDatabaseCreator.m; sourceTree = "<group>"; };
+		75A4C20D1E1BC6B200B563A7 /* XQArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticle.h; sourceTree = "<group>"; };
+		75A4C20E1E1BC6B200B563A7 /* XQArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticle.m; sourceTree = "<group>"; };
+		75A4C20F1E1BC6B200B563A7 /* XQUserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserEntity.h; sourceTree = "<group>"; };
+		75A4C2101E1BC6B200B563A7 /* XQUserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserEntity.m; sourceTree = "<group>"; };
+		75A4C2141E1BC6C400B563A7 /* XQArticleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticleService.m; sourceTree = "<group>"; };
+		75A4C2151E1BC6C400B563A7 /* XQArticleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticleService.h; sourceTree = "<group>"; };
+		75A4C2161E1BC6C400B563A7 /* XQUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserService.m; sourceTree = "<group>"; };
+		75A4C2171E1BC6C400B563A7 /* XQUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserService.h; sourceTree = "<group>"; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
@@ -563,7 +593,6 @@
 		A95F63761CDF33AE0060075E /* XQCollectBoardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectBoardVC.m; sourceTree = "<group>"; };
 		A95F63781CDF814F0060075E /* XQCollectiArticleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectiArticleCell.h; sourceTree = "<group>"; };
 		A95F63791CDF814F0060075E /* XQCollectiArticleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectiArticleCell.m; sourceTree = "<group>"; };
-		A95F637C1CDF86A00060075E /* XQConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQConstant.h; sourceTree = "<group>"; };
 		A95F637D1CE016840060075E /* XQCFrameLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCFrameLayout.h; sourceTree = "<group>"; };
 		A95F637E1CE016850060075E /* XQCFrameLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCFrameLayout.m; sourceTree = "<group>"; };
 		A95F63801CE427610060075E /* XQCLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCLayoutAttributes.h; sourceTree = "<group>"; };
@@ -585,6 +614,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */,
 				40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,6 +636,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75A4C1E21E1B970000B563A7 /* Personal(设置) */ = {
+			isa = PBXGroup;
+			children = (
+				75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */,
+				75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */,
+				75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */,
+			);
+			name = "Personal(设置)";
+			sourceTree = "<group>";
+		};
+		75A4C1E81E1B979D00B563A7 /* singleton */ = {
+			isa = PBXGroup;
+			children = (
+				75A4C1E91E1B97AE00B563A7 /* XQUserInfo.h */,
+				75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */,
+				75A4C1EB1E1B97AE00B563A7 /* XQSingleton.h */,
+			);
+			name = singleton;
+			sourceTree = "<group>";
+		};
+		75A4C2051E1BC65600B563A7 /* Sqlite */ = {
+			isa = PBXGroup;
+			children = (
+				75A4C2131E1BC6B800B563A7 /* Service */,
+				75A4C20C1E1BC6A600B563A7 /* Entity */,
+				75A4C2061E1BC67D00B563A7 /* DBManager.h */,
+				75A4C2071E1BC67D00B563A7 /* DBManager.m */,
+				75A4C2081E1BC67D00B563A7 /* XQDatabaseCreator.h */,
+				75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */,
+			);
+			name = Sqlite;
+			sourceTree = "<group>";
+		};
+		75A4C20C1E1BC6A600B563A7 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				75A4C20D1E1BC6B200B563A7 /* XQArticle.h */,
+				75A4C20E1E1BC6B200B563A7 /* XQArticle.m */,
+				75A4C20F1E1BC6B200B563A7 /* XQUserEntity.h */,
+				75A4C2101E1BC6B200B563A7 /* XQUserEntity.m */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
+		75A4C2131E1BC6B800B563A7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				75A4C2141E1BC6C400B563A7 /* XQArticleService.m */,
+				75A4C2151E1BC6C400B563A7 /* XQArticleService.h */,
+				75A4C2161E1BC6C400B563A7 /* XQUserService.m */,
+				75A4C2171E1BC6C400B563A7 /* XQUserService.h */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		A11FBC751CD50BC50029DAC8 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,6 +751,8 @@
 		A16E1A3A1CAD6B9500F7C1FA /* ASByrApp */ = {
 			isa = PBXGroup;
 			children = (
+				75A4C2051E1BC65600B563A7 /* Sqlite */,
+				75A4C1E21E1B970000B563A7 /* Personal(设置) */,
 				A16E1A7A1CB246C000F7C1FA /* common */,
 				A16E1A731CAEB85800F7C1FA /* images */,
 				A1A7FFC91CB4E82E00AD6787 /* test */,
@@ -689,6 +776,7 @@
 			isa = PBXGroup;
 			children = (
 				A16E1A3C1CAD6B9500F7C1FA /* main.m */,
+				75A4C2041E1BA3BA00B563A7 /* XQPrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -756,6 +844,7 @@
 		A16E1A7A1CB246C000F7C1FA /* common */ = {
 			isa = PBXGroup;
 			children = (
+				75A4C1E81E1B979D00B563A7 /* singleton */,
 				A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */,
 				A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */,
 				A1BFB6551CC60D4300FE5CA1 /* keyboard */,
@@ -769,7 +858,6 @@
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
 				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
 				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
-				A95F637C1CDF86A00060075E /* XQConstant.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -1130,6 +1218,7 @@
 		EF4472D6054597B6F1110508 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */,
 				442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */,
 			);
 			name = Frameworks;
@@ -1142,12 +1231,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A16E1A651CAD6B9500F7C1FA /* Build configuration list for PBXNativeTarget "ASByrApp" */;
 			buildPhases = (
-				953444F165896642E160EA12 /* 📦 Check Pods Manifest.lock */,
+				953444F165896642E160EA12 /* [CP] Check Pods Manifest.lock */,
 				A16E1A341CAD6B9500F7C1FA /* Sources */,
 				A16E1A351CAD6B9500F7C1FA /* Frameworks */,
 				A16E1A361CAD6B9500F7C1FA /* Resources */,
-				518358ADE0297345FE988FFE /* 📦 Embed Pods Frameworks */,
-				990611FA3E68853734129B8F /* 📦 Copy Pods Resources */,
+				518358ADE0297345FE988FFE /* [CP] Embed Pods Frameworks */,
+				990611FA3E68853734129B8F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1205,7 +1294,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 9E9C2ZNYDA;
+						DevelopmentTeam = E8LJ49NMXA;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1362,6 +1451,7 @@
 				A16885E01CC0D4F900338353 /* ASThreadsBodyCell.xib in Resources */,
 				A1C004A91CEC189100AA6B53 /* em53.gif in Resources */,
 				A1C004201CEC189100AA6B53 /* emc42.gif in Resources */,
+				75A4C1E71E1B971D00B563A7 /* XQSelfInfoVC.storyboard in Resources */,
 				A1C004351CEC189100AA6B53 /* emc9.gif in Resources */,
 				A1C0043B1CEC189100AA6B53 /* emb13.gif in Resources */,
 				A1C0040A1CEC189100AA6B53 /* emc22.gif in Resources */,
@@ -1484,14 +1574,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		518358ADE0297345FE988FFE /* 📦 Embed Pods Frameworks */ = {
+		518358ADE0297345FE988FFE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1499,29 +1589,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		953444F165896642E160EA12 /* 📦 Check Pods Manifest.lock */ = {
+		953444F165896642E160EA12 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		990611FA3E68853734129B8F /* 📦 Copy Pods Resources */ = {
+		990611FA3E68853734129B8F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1536,12 +1626,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */,
 				A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */,
 				A95F637F1CE016850060075E /* XQCFrameLayout.m in Sources */,
+				75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */,
+				75A4C2111E1BC6B200B563A7 /* XQArticle.m in Sources */,
+				75A4C2121E1BC6B200B563A7 /* XQUserEntity.m in Sources */,
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
 				A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
+				75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
+				75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */,
 				A95F63741CDF33970060075E /* XQCollectArticleVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
@@ -1549,6 +1645,7 @@
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
 				A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */,
 				A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */,
+				75A4C20A1E1BC67D00B563A7 /* DBManager.m in Sources */,
 				A1BFB6451CC4CDED00FE5CA1 /* ASSectionListVC.m in Sources */,
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
@@ -1564,6 +1661,7 @@
 				A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */,
 				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */,
+				75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */,
 				A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */,
 				A1C0032E1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
@@ -1701,7 +1799,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = E8LJ49NMXA;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/ASByrApp/XQPrefixHeader.pch";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1716,7 +1818,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = E8LJ49NMXA;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/ASByrApp/XQPrefixHeader.pch";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

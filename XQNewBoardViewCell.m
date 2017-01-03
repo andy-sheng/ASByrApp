@@ -8,7 +8,6 @@
 
 #import "XQNewBoardViewCell.h"
 #import "UIColor+Hex.h"
-#import "XQConstant.h"
 #import "UIImageView+AFNetworking.h"
 #import <Masonry/Masonry.h>
 

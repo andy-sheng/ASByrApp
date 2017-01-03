@@ -8,7 +8,6 @@
 
 #import "XQCFrameLayout.h"
 #import "XQCLayoutAttributes.h"
-#import "XQConstant.h"
 @interface XQCFrameLayout()
 @property (strong, nonatomic) NSMutableArray * cache;//暂存高度，避免重复计算
 @end
