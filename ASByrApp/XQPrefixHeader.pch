@@ -1,13 +1,16 @@
 //
-//  XQConstant.h
+//  XQPrefixHeader.pch
 //  ASByrApp
 //
-//  Created by lxq on 16/5/8.
-//  Copyright © 2016年 andy. All rights reserved.
+//  Created by lixiangqian on 17/1/3.
+//  Copyright © 2017年 andy. All rights reserved.
 //
 
+#ifndef XQPrefixHeader_pch
+#define XQPrefixHeader_pch
 
-#pragma mark 用在版面列表里面
+//一些适用于全局的宏
+
 #define D_MINUTE 60
 #define D_HOUR   3600
 #define D_DAY    86400
@@ -20,3 +23,7 @@
 #define DISTRACTOR_HEIGHT 0.3
 
 #define COLLECTION_FILE @"XQCollection"
+
+#define XQDATABASE_NAME @"XQByrDatabase.db"
+
+#endif /* XQPrefixHeader_pch */

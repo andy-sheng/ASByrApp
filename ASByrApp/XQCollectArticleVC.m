@@ -9,7 +9,6 @@
 #import "XQCollectArticleVC.h"
 #import "XQCollectiArticleCell.h"
 #import "XQCFrameLayout.h"
-#import "XQConstant.h"
 #import <AVFoundation/AVFoundation.h>
 @interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XQCLayoutDelegate>
 

@@ -11,8 +11,9 @@
 #import "ASArticleListVC.h"
 #import "XQCollectArticleVC.h"
 #import "XQCFrameLayout.h"
+#import "XQSelfInfoVC.h"
 #import "WMPageController.h"
-
+#import "XQDatabaseCreator.h"
 @interface AppDelegate ()
 
 @end
@@ -35,13 +36,14 @@
     likeVC.tabBarItem = likeTab;
     UIViewController *sectionVC = [[ASArticleListVC alloc] init];
     sectionVC.tabBarItem = sectionTab;
-    UIViewController *settingVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"test"];
+    XQSelfInfoVC* settingVC = [[UIStoryboard storyboardWithName:@"XQSelfInfoVC" bundle:nil]instantiateViewControllerWithIdentifier:@"userInfo"];
     settingVC.tabBarItem = settingTab;
     
     tabBarVC.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:top10VC],
                                  [[UINavigationController alloc] initWithRootViewController:likeVC],
                                  [[UINavigationController alloc] initWithRootViewController:sectionVC],
-                                 settingVC];
+                                 [[UINavigationController alloc]
+                                  initWithRootViewController:settingVC]];
 //    tabBarVC.viewControllers = @[top10VC,
 //                                 likeVC,
 //                                 sectionVC,
@@ -50,6 +52,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = tabBarVC;
    // self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:tabBarVC];
+    
+    //打开数据库
+    [XQDatabaseCreator createDatabase];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -57,6 +63,9 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    //关闭数据库
+    [XQDatabaseCreator closeDatabase];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -66,10 +75,14 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    //打开数据库
+    [XQDatabaseCreator openDatabase];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
