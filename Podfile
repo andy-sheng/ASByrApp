@@ -11,4 +11,5 @@ target 'ASByrApp' do
     pod 'OLImageView'
     pod 'FLAnimatedImage', '~> 1.0'
     pod 'TTTAttributedLabel'
+    pod 'SDWebImage', '~>3.8'
 end

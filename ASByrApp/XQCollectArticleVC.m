@@ -9,11 +9,15 @@
 #import "XQCollectArticleVC.h"
 #import "XQCollectiArticleCell.h"
 #import "XQCFrameLayout.h"
+
 #import <AVFoundation/AVFoundation.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <ASByrToken.h>
+#import "XQCollectDataCenter.h"
 @interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XQCLayoutDelegate>
 
 @property (strong, nonatomic) NSMutableArray * arrayList;
-@property (strong, nonatomic) NSMutableArray * photos;
+@property (strong, nonatomic) XQCollectDataCenter * collectDataCenter;
 
 @end
 
@@ -25,7 +29,7 @@ static NSString * const reuseIdentifier = @"Cell";
         UICollectionView * collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:layout];
         
         self.arrayList = [NSMutableArray array];
-        self.photos = [NSMutableArray array];
+        self.collectDataCenter = [[XQCollectDataCenter alloc]init];
         layout.delegate=self;
         
         [self.view addSubview:collectionView];
@@ -54,6 +58,7 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
     [self.collectionView reloadData];
 }
 
@@ -65,17 +70,9 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark private method
 
 - (void)addCollectArticle:(NSNotification *)notis{
-    [self.arrayList addObject:notis.userInfo];
-    [self.photos addObject:[UIImage imageNamed:notis.userInfo[@"userImage"]]];
-    [self writeIntoFile:COLLECTION_FILE articleInfo:notis.userInfo];
+    [_collectDataCenter addCollectData:notis.userInfo[@"article"]];
 }
 
-- (void)writeIntoFile:(NSString *)name articleInfo:(NSDictionary *)articleInfo{
-    //NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    //NSString *documentsDirectory = [paths objectAtIndex:0];
-    //NSLog(@"%@",documentsDirectory);
-    
-}
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -93,6 +90,15 @@ static NSString * const reuseIdentifier = @"Cell";
         cell = [[XQCollectiArticleCell alloc]newCellWithFrame:CGRectZero andParameters:self.arrayList[indexPath.row]];
     }else{
         [cell setUpFaceWithDictionary:self.arrayList[indexPath.row]];
+    }
+    NSString * firstImageUrl = self.arrayList[indexPath.row][@"firstImageUrl"];
+    if(firstImageUrl &&![firstImageUrl isEqual:@""]){
+        NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",firstImageUrl,[ASByrToken shareInstance].accessToken]];
+        [cell.firstImageView sd_setImageWithURL:url];
+    }
+    NSString * profileImageUrl = self.arrayList[indexPath.row][@"profileImageUrl"];
+    if(profileImageUrl && ![profileImageUrl isEqual:@""]){
+        [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:profileImageUrl]placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];
     }
     return cell;
 }
@@ -133,11 +139,21 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark <XQCLayoutDelegate>
 - (CGFloat)heightForPhoto:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
-    UIImage * photo = self.photos[indexPath.item];
-    //NSLog(@"photos' size: height:%f, width:%f",photo.size.height,photo.size.width);
-    CGRect boudingRect = CGRectMake(0, 0, width-2*PADDING_TO_CONTENTVIEW, (width/photo.size.width)*photo.size.height);
-    CGRect rect = AVMakeRectWithAspectRatioInsideRect(photo.size, boudingRect);
-    return rect.size.height;
+    if(![self.arrayList[indexPath.row][@"firstImageUrl"] isEqual:@""]){
+        //NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",self.arrayList[indexPath.row][@"firstImageUrl"],[ASByrToken shareInstance].accessToken]];
+        //    UIImageView * photo = [[UIImageView alloc]init];
+        //    [photo sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];
+        /*
+         * 固定图片高度
+         */
+        UIImage * photo = [UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE];
+        CGRect boudingRect = CGRectMake(0, 0, width-2*PADDING_TO_CONTENTVIEW, (width/photo.size.width)*photo.size.height);
+        CGRect rect = AVMakeRectWithAspectRatioInsideRect(photo.size, boudingRect);
+        return rect.size.height;
+        
+    }else{
+        return 0;
+    }
 }
 
 - (CGFloat)heightForTitle:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
@@ -160,5 +176,9 @@ static NSString * const reuseIdentifier = @"Cell";
         _arrayList = [NSMutableArray array];
     }
     return _arrayList;
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addNewCollectedArticle" object:nil];
 }
 @end

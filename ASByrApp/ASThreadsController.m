@@ -18,6 +18,9 @@
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 #import "ASArticleListVC.h"
+
+#import "XQByrArticle.h"
+#import <YYModel/YYModel.h>
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
@@ -37,8 +40,7 @@ const NSUInteger replyRow = 2;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
-
-
+@property(strong, nonatomic) XQByrArticle * articleEntity;
 
 @end
 
@@ -125,9 +127,9 @@ const NSUInteger replyRow = 2;
     }];
     
     UIAlertAction *collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:@"top10.png",@"firstImage",self.replyArticles[0][@"title"],@"title",@"情感天空",@"boardName",@"fire",@"userImage",@"top10",@"userName",@"100",@"replyCount",nil];
-        //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:self.replyArticles[0]];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:dict];
+        NSDictionary* userInfo = @{@"article": _articleEntity};
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
         NSLog(@"已收藏文章.");
     }];
     
@@ -220,6 +222,8 @@ const NSUInteger replyRow = 2;
 
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
     NSMutableArray *reformedArticles = [NSMutableArray array];
+    _articleEntity = [XQByrArticle yy_modelWithJSON:response.response];
+    //mainarticle setContent:[NSString stringWithFormat:@"%@",[NSArray arraywith]]
     for (NSDictionary * article in response.response[@"article"]) {
         NSMutableDictionary * tmp = [NSMutableDictionary dictionary];
         tmp[@"title"] = article[@"title"];

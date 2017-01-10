@@ -7,7 +7,7 @@
 //
 
 #import "DBManager.h"
-#import "XQArticle.h"
+#import <XQByrArticle.h>
 @implementation DBManager
 singleton_implementation(DBManager)
 

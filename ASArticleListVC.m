@@ -223,4 +223,8 @@
     return response;
 }
 
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"chooseBoardFromAllSection" object:nil];
+}
 @end
