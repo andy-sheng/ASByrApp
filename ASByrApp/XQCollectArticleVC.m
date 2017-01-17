@@ -21,6 +21,8 @@
 #import <XQByrArticle.h>
 #import <XQByrCollection.h>
 #import <YYModel/YYModel.h>
+#import <MJRefresh/MJRefresh.h>
+
 @interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XQCLayoutDelegate,ASByrCollectionResponseDelegate,ASByrCollectionResponseReformer>
 
 @property (strong, nonatomic) NSMutableArray * arrayList;
@@ -38,7 +40,8 @@ static NSString * const reuseIdentifier = @"Cell";
         
         self.arrayList = [NSMutableArray array];
         self.collectDataCenter = [[XQCollectDataCenter alloc]init];
-
+//        self.collectionView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+//        self.collectionView.mj_footer = [MJRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
         layout.delegate=self;
         
         [self.view addSubview:collectionView];
@@ -73,7 +76,6 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionApi.responseDelegate = self;
     self.collectionApi.responseReformer = self;
     [self fentchCollectionsFromInternet:1];
-
     
     [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
     [self.collectionView reloadData];
@@ -85,13 +87,13 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 #pragma mark private method
+
 - (void)fentchCollectionsFromInternet:(NSInteger)pagenum{
     //第一次登录时取数据
     if (![XQUserInfo sharedXQUserInfo].firstLogin) {
         [self.collectionApi fetchCollectionsWithCount:30 page:pagenum];
     }
 }
-
 
 - (void)addCollectArticle:(NSNotification *)notis{
     [_collectDataCenter addCollectData:notis.userInfo[@"article"]];
@@ -166,6 +168,8 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)fentchCollectionsResponse:(ASByrResponse *)response{
     NSArray * array = [NSArray arrayWithArray:response.reformedData];
     [_collectDataCenter saveCollectDataFromCollections:array];
+    [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
+    [self.collectionView reloadData];
 }
 
 #pragma mark ASByrCollectionResponseReformer
@@ -189,7 +193,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark <XQCLayoutDelegate>
 - (CGFloat)heightForPhoto:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
-    if([self.arrayList[indexPath.row] objectForKey:@"firstImageUrl"]){
+    NSString * url =[self.arrayList[indexPath.row] objectForKey:@"firstImageUrl"];
+    if( url && ![url isEqualToString:@""]){
         //NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",self.arrayList[indexPath.row][@"firstImageUrl"],[ASByrToken shareInstance].accessToken]];
         //    UIImageView * photo = [[UIImageView alloc]init];
         //    [photo sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];

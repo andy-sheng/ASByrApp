@@ -34,7 +34,7 @@
 }
 
 - (NSArray *)fetchCollectListFromLocal:(NSDictionary * __nullable)filters{
-    //暂时不考虑处理横向切片的情况
+    //暂时不考虑处理横向切片(将有图的帖子和无图的帖子分开)的情况
     NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[XQArticleService getArticlesByFilters:filters]];
     for (NSInteger i = 0; i < [articleArray count]; i++) {
         NSMutableDictionary * articleDic = [NSMutableDictionary dictionaryWithDictionary:articleArray[i]];

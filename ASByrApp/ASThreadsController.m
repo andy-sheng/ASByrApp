@@ -126,11 +126,28 @@ const NSUInteger replyRow = 2;
         NSLog(@"已取消操作.");
     }];
     
+    
     UIAlertAction *collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         NSDictionary* userInfo = @{@"article": _articleEntity};
+        
+        
+        //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
+        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
 
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
-        NSLog(@"已收藏文章.");
+        hud.labelText = @"已收藏";
+        hud.minShowTime = 2;
+        
+        [hud showAnimated:YES whileExecutingBlock:^{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
+        }];
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//            
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        });
+        
     }];
     
     [alertController addAction:cancelAction];
