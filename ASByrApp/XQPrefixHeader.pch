@@ -29,4 +29,12 @@
 #define XQCOLLECTION_FIRST_IMAGE @"fire"
 
 #define XQCOLLECTION_PROFILE_IMAGE @"blank"
+
+//用于沙盒中存储登录用户信息
+#define XQByrUserIdKey @"userId"
+#define XQByrUserNameKey @"userName"
+#define XQByrUserAvatarKey @"userFace"
+#define XQByrUserLoginStatusKey @"userLoginStatus"
+#define XQByrFirstLoginStatusKey @"userFirstLogin"
+
 #endif /* XQPrefixHeader_pch */

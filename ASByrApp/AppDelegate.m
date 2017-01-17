@@ -14,6 +14,8 @@
 #import "XQSelfInfoVC.h"
 #import "WMPageController.h"
 #import "XQDatabaseCreator.h"
+
+#import "XQUserInfo.h"
 @interface AppDelegate ()
 
 @end
@@ -23,6 +25,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
+    
     ASTop10RootVC *top10VC = [[ASTop10RootVC alloc] init];
     UITabBarController *tabBarVC = [[UITabBarController alloc] init];
     UITabBarItem *top10Tab = [[UITabBarItem alloc] initWithTitle:@"十大" image:[UIImage imageNamed:@"fire"] selectedImage:nil];

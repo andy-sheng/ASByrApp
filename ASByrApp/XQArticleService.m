@@ -9,7 +9,7 @@
 #import "XQArticleService.h"
 #import "DBManager.h"
 #import <XQByrArticle.h>
-
+#import <XQByrCollection.h>
 @implementation XQArticleService
 singleton_implementation(XQArticleService)
 
@@ -17,6 +17,16 @@ singleton_implementation(XQArticleService)
     NSString *sql=@"SELECT * FROM Article ORDER BY articleID";
     NSArray *rows= [[DBManager sharedDBManager] executeQuery:sql];
     return rows;
+}
+
+- (void)addArticleWithCollection:(XQByrCollection *)article andParameters:(NSDictionary * _Nonnull)parameters{
+    NSString * sql;
+    if(parameters[@"userID"]){
+        sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, author, replyCount) VALUES ('%@','%@','%@','%@','%@','%@')",article.gid,article.title,article.bname,article.createdTime,parameters[@"userID"],article.num];
+    }else{
+        sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, replyCount) VALUES ('%@','%@','%@','%@','%@')",article.gid,article.title,article.bname,article.createdTime,article.num];
+    }
+    [[DBManager sharedDBManager]executeNonQuery:sql];
 }
 
 - (void)addArticle:(XQByrArticle *)article andParameters:(NSDictionary *)parameters{

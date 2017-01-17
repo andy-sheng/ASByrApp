@@ -52,7 +52,6 @@
     userInfo.userId = response.reformedData[@"uid"];
     userInfo.userAvatar=[NSData dataWithContentsOfURL:[NSURL URLWithString:response.reformedData[@"uavatar"]]];
     userInfo.loginStatus = YES;
-        
     //保存用户数据到沙盒
     [userInfo setDataIntoSandbox];
     
@@ -75,7 +74,6 @@
 }
 
 - (void)loadData{
-    [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     //[XQUserInfo sharedXQUserInfo].loginStatus=false;
     if (![XQUserInfo sharedXQUserInfo].loginStatus) {
         self.userApi= [[ASByrUser alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];

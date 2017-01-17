@@ -159,7 +159,7 @@
     self.titleLabel.text = [dict[@"title"] copy];
     self.boardNameLabel.text = [dict[@"boardName"] copy];
     self.userNameLabel.text = [dict[@"userName"] copy];
-    self.replyCount.text = [NSString stringWithFormat:@"%@.R",dict[@"replyCount"]];
+    self.replyCount.text = [NSString stringWithFormat:@"%@条回复",dict[@"replyCount"]];
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{

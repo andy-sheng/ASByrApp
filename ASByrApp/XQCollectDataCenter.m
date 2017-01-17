@@ -12,9 +12,12 @@
 
 #import <XQByrArticle.h>
 #import <XQByrAttachment.h>
+#import <XQByrCollection.h>
 #import <XQByrFile.h>
 #import <XQByrUser.h>
 #import <YYModel/YYModel.h>
+
+
 @interface XQCollectDataCenter()
 @property (strong, nonatomic) XQUserService * userService;
 @property (strong, nonatomic) XQArticleService * articleService;
@@ -35,12 +38,38 @@
     NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[XQArticleService getArticlesByFilters:filters]];
     for (NSInteger i = 0; i < [articleArray count]; i++) {
         NSMutableDictionary * articleDic = [NSMutableDictionary dictionaryWithDictionary:articleArray[i]];
-        NSString * userID = articleDic[@"author"];
-        NSDictionary * userDic = [XQUserService getUserById:userID];
-        [articleDic addEntriesFromDictionary:userDic];
+        if ([articleDic objectForKey:@"author"]) {
+            NSString * userID = articleDic[@"author"];
+            NSDictionary * userDic = [XQUserService getUserById:userID];
+            [articleDic addEntriesFromDictionary:userDic];
+        }else{
+            articleDic[@"userName"] = @"unknown";
+        }
         articleArray[i] = articleDic;
     }
     return articleArray;
+}
+
+- (BOOL)saveCollectDataFromCollections:(NSArray *)array{
+    if (array != nil && [array count] >0) {
+        for (NSInteger i = 0; i < [array count]; i++) {
+            
+            XQByrCollection* collection = (XQByrCollection *)[array objectAtIndex:i];
+            XQByrUser * user = [[XQByrUser alloc]init];
+            if (collection.user){
+                if([collection.user isKindOfClass:[XQByrUser class]]){
+                    user = collection.user;
+                }else{
+                    user.uid = (NSString *)collection.user;
+                    user.user_name = @"";
+                }
+                [_userService addUser:user];
+            }
+            NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",nil];
+            [_articleService addArticleWithCollection:(XQByrCollection *)[array objectAtIndex:i] andParameters:dic];
+        }
+    }
+    return true;
 }
 
 - (BOOL)addCollectData:(XQByrArticle *)article{
@@ -73,7 +102,7 @@
         userId = user.uid;
     }else{
         userId = (NSString *)article.user;
-        user.face_url = @"fire";
+        user.face_url = @"";
         user.uid = (NSString *)article.user;
     }
     [_userService addUser:user];
@@ -82,4 +111,7 @@
     [_articleService addArticle:article andParameters:parameters];
     return true;
 }
+
+
+
 @end

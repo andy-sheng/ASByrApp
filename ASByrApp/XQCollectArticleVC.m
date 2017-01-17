@@ -9,15 +9,23 @@
 #import "XQCollectArticleVC.h"
 #import "XQCollectiArticleCell.h"
 #import "XQCFrameLayout.h"
+#import "XQUserInfo.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <ASByrToken.h>
+#import <ASByrCollection.h>
+
 #import "XQCollectDataCenter.h"
-@interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XQCLayoutDelegate>
+#import <XQByrUser.h>
+#import <XQByrArticle.h>
+#import <XQByrCollection.h>
+#import <YYModel/YYModel.h>
+@interface XQCollectArticleVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XQCLayoutDelegate,ASByrCollectionResponseDelegate,ASByrCollectionResponseReformer>
 
 @property (strong, nonatomic) NSMutableArray * arrayList;
 @property (strong, nonatomic) XQCollectDataCenter * collectDataCenter;
+@property (strong, nonatomic) ASByrCollection * collectionApi;
 
 @end
 
@@ -30,6 +38,7 @@ static NSString * const reuseIdentifier = @"Cell";
         
         self.arrayList = [NSMutableArray array];
         self.collectDataCenter = [[XQCollectDataCenter alloc]init];
+
         layout.delegate=self;
         
         [self.view addSubview:collectionView];
@@ -57,7 +66,15 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    self.collectionApi = [[ASByrCollection alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
+    self.collectionApi.responseDelegate = self;
+    self.collectionApi.responseReformer = self;
+    [self fentchCollectionsFromInternet:1];
+
+    
     [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
     [self.collectionView reloadData];
 }
@@ -68,6 +85,13 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 #pragma mark private method
+- (void)fentchCollectionsFromInternet:(NSInteger)pagenum{
+    //第一次登录时取数据
+    if (![XQUserInfo sharedXQUserInfo].firstLogin) {
+        [self.collectionApi fetchCollectionsWithCount:30 page:pagenum];
+    }
+}
+
 
 - (void)addCollectArticle:(NSNotification *)notis{
     [_collectDataCenter addCollectData:notis.userInfo[@"article"]];
@@ -91,12 +115,13 @@ static NSString * const reuseIdentifier = @"Cell";
     }else{
         [cell setUpFaceWithDictionary:self.arrayList[indexPath.row]];
     }
-    NSString * firstImageUrl = self.arrayList[indexPath.row][@"firstImageUrl"];
+    //return nil if the key doesn't exist
+    NSString * firstImageUrl = [self.arrayList[indexPath.row] objectForKey:@"firstImageUrl"];
     if(firstImageUrl &&![firstImageUrl isEqual:@""]){
         NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",firstImageUrl,[ASByrToken shareInstance].accessToken]];
         [cell.firstImageView sd_setImageWithURL:url];
     }
-    NSString * profileImageUrl = self.arrayList[indexPath.row][@"profileImageUrl"];
+    NSString * profileImageUrl = [self.arrayList[indexPath.row] objectForKey:@"profileImageUrl"];
     if(profileImageUrl && ![profileImageUrl isEqual:@""]){
         [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:profileImageUrl]placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];
     }
@@ -137,9 +162,34 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 */
 
+#pragma mark ASByrCollectionResponseDelegate
+- (void)fentchCollectionsResponse:(ASByrResponse *)response{
+    NSArray * array = [NSArray arrayWithArray:response.reformedData];
+    [_collectDataCenter saveCollectDataFromCollections:array];
+}
+
+#pragma mark ASByrCollectionResponseReformer
+- (ASByrResponse *)reformCollectionResponse:(ASByrResponse *)response{
+    NSMutableArray * reformedArticles = [NSMutableArray array];
+    for(NSDictionary * article in response.response[@"article"]){
+        XQByrCollection * collection = [XQByrCollection yy_modelWithJSON:article];
+        [reformedArticles addObject:collection];
+    }
+    
+    if((NSInteger)response.response[@"pagination"][@"page_current_count"] < (NSInteger)response.response[@"pagination"][@"page_all_count"]) {
+        [self fentchCollectionsFromInternet:(NSInteger)response.response[@"pagination"][@"page_current_count"]+1];
+    }else{
+        [XQUserInfo sharedXQUserInfo].firstLogin = NO;
+        [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
+        [[XQUserInfo sharedXQUserInfo]getDataFromSandbox];
+    }
+    response.reformedData = reformedArticles;
+    return response;
+}
+
 #pragma mark <XQCLayoutDelegate>
 - (CGFloat)heightForPhoto:(UICollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width{
-    if(![self.arrayList[indexPath.row][@"firstImageUrl"] isEqual:@""]){
+    if([self.arrayList[indexPath.row] objectForKey:@"firstImageUrl"]){
         //NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",self.arrayList[indexPath.row][@"firstImageUrl"],[ASByrToken shareInstance].accessToken]];
         //    UIImageView * photo = [[UIImageView alloc]init];
         //    [photo sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];

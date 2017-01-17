@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class XQByrArticle;
+@class XQByrArticle,XQByrCollection;
 @interface XQCollectDataCenter : NSObject
 
 - (NSArray * __nullable)fetchCollectListFromLocal:(NSDictionary * __nullable)filters;
 
+- (BOOL)saveCollectDataFromCollections:(NSArray * _Nullable)array;
 - (BOOL)addCollectData:(XQByrArticle * __nonnull)article;
 
 @end
