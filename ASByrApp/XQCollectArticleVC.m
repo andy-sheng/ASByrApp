@@ -7,6 +7,7 @@
 //
 
 #import "XQCollectArticleVC.h"
+#import "ASThreadsController.h"
 #import "XQCollectiArticleCell.h"
 #import "XQCFrameLayout.h"
 #import "XQUserInfo.h"
@@ -63,8 +64,9 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionView.dataSource = self;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addCollectArticle:) name:@"addNewCollectedArticle" object:nil];
-    
-    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateCollectArticle:) name:@"updateCollectedArticle" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(deleteCollectArticle:) name:@"deleteCollectedArticle" object:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -96,7 +98,31 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void)addCollectArticle:(NSNotification *)notis{
-    [_collectDataCenter addCollectData:notis.userInfo[@"article"]];
+    NSLog(@"添加通知激活！");
+    XQByrArticle * article = notis.userInfo[@"article"];
+    [self.collectionApi addCollectionWithBoard:article.board_name aid:[NSString stringWithFormat:@"%ld",(long)article.group_id] successBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"添加收藏请求成功");
+    } failureBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"添加收藏请求失败");
+    }];
+    [self.collectDataCenter addCollectData:article];
+}
+
+- (void)updateCollectArticle:(NSNotification *)notis{
+    NSLog(@"更新通知激活！");
+    XQByrArticle * article = notis.userInfo[@"article"];
+    [self.collectDataCenter updateCollectData:article options:XQCollectionUpdateContent];
+}
+
+- (void)deleteCollectArticle:(NSNotification *)notis{
+    NSLog(@"删除通知激活！");
+    NSString * article = notis.userInfo[@"articleID"];
+    [self.collectionApi deleteCollectionWithAid:article successBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"删除收藏请求成功.");
+    } failureBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"删除收藏请求失败.");
+    }];
+    [self.collectDataCenter deleteCollectData:article];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -133,6 +159,8 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:[self.arrayList[indexPath.row] objectForKey:@"boardName"]                                                                                aid:[[self.arrayList[indexPath.row] objectForKey:@"articleID"] integerValue]];
+    [self.navigationController pushViewController:threadsVC animated:YES];
 }
 
 /*
@@ -235,5 +263,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addNewCollectedArticle" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateNewCollectedArticle" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"deleteCollectedArticle" object:nil];
+
 }
 @end

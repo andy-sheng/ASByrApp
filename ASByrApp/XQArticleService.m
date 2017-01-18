@@ -30,8 +30,9 @@ singleton_implementation(XQArticleService)
 }
 
 - (void)addArticle:(XQByrArticle *)article andParameters:(NSDictionary *)parameters{
-        
-    NSString * sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, boardDescription, content, firstImageUrl, collectTime, author, replyCount) VALUES ('%ld','%@','%@','%@','%@','%@','%@','%@','%ld')",(long)article.aid,article.title,article.board_name,article.board_description,article.content,parameters[@"firstImageUrl"],[NSString stringWithFormat:@"%f",NSTimeIntervalSince1970],parameters[@"userID"],(long)article.reply_count];
+    NSDate * now = [NSDate date];
+    NSTimeInterval nowunix = [now timeIntervalSince1970];
+    NSString * sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, boardDescription, content, firstImageUrl, collectTime, author, replyCount) VALUES ('%ld','%@','%@','%@','%@','%@','%@','%@','%ld')",(long)article.aid,article.title,article.board_name,article.board_description,article.content,parameters[@"firstImageUrl"],[NSString stringWithFormat:@"%f",nowunix],parameters[@"userID"],(long)article.reply_count];
     [[DBManager sharedDBManager]executeNonQuery:sql];
 }
 
@@ -50,7 +51,7 @@ singleton_implementation(XQArticleService)
     NSString __block *sql=@"SELECT * FROM Article ORDER BY articleID";
     if([filterKeys count]!=0){
         [filterKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            sql = [sql stringByAppendingFormat:@"%@ %@",sql, [NSString stringWithFormat:@"and WHERE  %@='%@'",obj,[filters objectForKey:obj]]];
+            sql = [sql stringByAppendingFormat:@" and WHERE  %@='%@'", obj,[filters objectForKey:obj]];
         }];
         return [[DBManager sharedDBManager] executeQuery:sql];
     }else{
@@ -58,4 +59,25 @@ singleton_implementation(XQArticleService)
     }
 }
 
+- (void)updateArticle:(NSString *)articleID andParameters:(NSDictionary *)dic{
+    NSArray * filterKeys = [dic allKeys];
+    NSString __block *sql=@"UPDATE Article set";
+    if([filterKeys count]!=0){
+        [filterKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(idx > 0){
+                sql = [sql stringByAppendingFormat:@" , %@ = '%@' ",obj,[dic objectForKey:obj]];
+            }else{
+                sql = [sql stringByAppendingFormat:@" %@ = '%@' ",obj,[dic objectForKey:obj]];
+            }
+        }];
+    }
+    sql = [sql stringByAppendingFormat:@" WHERE articleID = '%@'",articleID];
+
+    [[DBManager sharedDBManager] executeNonQuery:sql];
+}
+
+- (void)deleteArticle:(NSString *)articleID{
+    NSString * sql = [NSString stringWithFormat:@"delete from Article where articleID = '%@'",articleID];
+    [[DBManager sharedDBManager] executeNonQuery:sql];
+}
 @end

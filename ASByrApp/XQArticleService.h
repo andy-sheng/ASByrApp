@@ -21,4 +21,7 @@
 
 + (NSArray * _Nullable)getArticlesByFilters:(NSDictionary * _Nonnull)filters;
 
+- (void)updateArticle:(NSString * _Nonnull)articleID andParameters:(NSDictionary * _Nonnull)dic;
+
+- (void)deleteArticle:(NSString * _Nonnull)articleID;
 @end

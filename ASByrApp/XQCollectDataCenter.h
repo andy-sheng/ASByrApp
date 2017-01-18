@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, XQCollectionUpdateType){
+    //update after enter the article detail
+    XQCollectionUpdateContent,
+    //update after fetch from the server
+    XQCollectionUpdateReply
+};
+
 @class XQByrArticle,XQByrCollection;
 @interface XQCollectDataCenter : NSObject
 
@@ -16,4 +23,7 @@
 - (BOOL)saveCollectDataFromCollections:(NSArray * _Nullable)array;
 - (BOOL)addCollectData:(XQByrArticle * __nonnull)article;
 
+- (void)updateCollectData:(XQByrArticle * __nonnull)article options:(XQCollectionUpdateType)type;
+
+- (void)deleteCollectData:(NSString * __nonnull)articleID;
 @end

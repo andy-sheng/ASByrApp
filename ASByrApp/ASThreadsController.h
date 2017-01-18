@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+
+typedef NS_ENUM(NSInteger, ASThreadsEnterType){
+    ASThreadsEnterTypeNormal,
+    ASThreadsEnterTypeCollection
+};
+
 @interface ASThreadsController : UIViewController
 
 - (instancetype)initWithWithBoard:(NSString*)board

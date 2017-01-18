@@ -18,6 +18,7 @@
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 #import "ASArticleListVC.h"
+#import "XQCollectArticleVC.h"
 
 #import "XQByrArticle.h"
 #import <YYModel/YYModel.h>
@@ -36,6 +37,7 @@ const NSUInteger replyRow = 2;
 @property(strong, nonatomic) NSString * board;
 @property(assign, nonatomic) NSUInteger aid;
 @property(assign, nonatomic) NSUInteger page;
+@property(assign, nonatomic) ASThreadsEnterType threadType;
 @property(assign, nonatomic) BOOL isLoadThreads;
 
 @property(strong, nonatomic) NSDictionary * articleData;
@@ -82,8 +84,12 @@ const NSUInteger replyRow = 2;
     [self.tableView.mj_header beginRefreshing];
     NSUInteger length = [self.navigationController.viewControllers count];
     //对于从版面列表进来的文章，设置标题栏的属性 added by lxq
-    if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[ASArticleListVC class]])
+    if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[ASArticleListVC class]]){
+        self.threadType = ASThreadsEnterTypeNormal;
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    }else if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[XQCollectArticleVC class]]){
+        self.threadType = ASThreadsEnterTypeCollection;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,41 +123,51 @@ const NSUInteger replyRow = 2;
 }
 
 - (void)moreOperation{
-    NSString * collectBtnTitle = NSLocalizedString(@"收藏文章", nil);
+    NSString * addCollectBtnTitle = NSLocalizedString(@"收藏文章", nil);
     NSString * cancelBtnTitle = NSLocalizedString(@"取消", nil);
+    NSString * deleteCollectBtnTitle = NSLocalizedString(@"取消收藏", nil);
     
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"已取消操作.");
     }];
-    
-    
-    UIAlertAction *collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        NSDictionary* userInfo = @{@"article": _articleEntity};
-        
-        
-        //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
-        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeCustomView;
-        hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
-
-        hud.labelText = @"已收藏";
-        hud.minShowTime = 2;
-        
-        [hud showAnimated:YES whileExecutingBlock:^{
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
-        }];
-//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
-//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//            
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        });
-        
-    }];
-    
     [alertController addAction:cancelAction];
-    [alertController addAction:collectAction];
+
+    if (self.threadType == ASThreadsEnterTypeCollection) {
+        UIAlertAction * deleteCollectAction = [UIAlertAction actionWithTitle:deleteCollectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            NSDictionary* userInfo = @{@"articleID": [NSString stringWithFormat:@"%ld",(long)_articleEntity.group_id]};
+            
+            MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
+            
+            hud.labelText = @"已取消收藏";
+            hud.minShowTime = 2;
+            
+            [hud showAnimated:YES whileExecutingBlock:^{
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"deleteCollectedArticle" object:nil userInfo:userInfo];
+            }];
+        }];
+        [alertController addAction:deleteCollectAction];
+    }else{
+        UIAlertAction * addCollectAction = [UIAlertAction actionWithTitle:addCollectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            NSDictionary* userInfo = @{@"article": _articleEntity};
+            
+            //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
+            MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
+            
+            hud.labelText = @"已收藏";
+            hud.minShowTime = 2;
+            
+            [hud showAnimated:YES whileExecutingBlock:^{
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
+            }];
+        }];
+        [alertController addAction:addCollectAction];
+    }
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -240,6 +256,11 @@ const NSUInteger replyRow = 2;
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
     NSMutableArray *reformedArticles = [NSMutableArray array];
     _articleEntity = [XQByrArticle yy_modelWithJSON:response.response];
+    //更新本地收藏文章的数据库
+    if(self.threadType == ASThreadsEnterTypeCollection){
+        NSDictionary* userInfo = @{@"article": _articleEntity};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCollectedArticle" object:nil userInfo:userInfo];
+    }
     //mainarticle setContent:[NSString stringWithFormat:@"%@",[NSArray arraywith]]
     for (NSDictionary * article in response.response[@"article"]) {
         NSMutableDictionary * tmp = [NSMutableDictionary dictionary];

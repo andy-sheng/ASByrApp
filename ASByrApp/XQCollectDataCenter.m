@@ -81,7 +81,7 @@
     if (article.has_attachment) {
         XQByrAttachment * attachment;
         XQByrFile * file;
-        if(attachment != nil){
+        if(article.attachment != nil){
              attachment = article.attachment;
              file = [NSArray arrayWithArray:attachment.file][0];
         }else{
@@ -112,6 +112,38 @@
     return true;
 }
 
+- (void)updateCollectData:(XQByrArticle *)article options:(XQCollectionUpdateType)type{
+    NSString * articleID = [NSString stringWithFormat:@"%ld",(long)article.group_id];
+    XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)article.article[0]];
+    NSDictionary * parameters;
+    switch (type) {
+        case XQCollectionUpdateContent:
+            if (article.has_attachment) {
+                NSString * firstImageUrl = @"";
+                //NSString * content = @"";
+                XQByrAttachment * attachment;
+                XQByrFile * file;
+                if(article.attachment != nil){
+                    attachment = article.attachment;
+                    file = [NSArray arrayWithArray:attachment.file][0];
+                }else{
+                    attachment = childArticle.attachment;
+                    file = [XQByrFile yy_modelWithDictionary:[NSArray arrayWithArray:attachment.file][0]];
+                }
+                firstImageUrl = file.url;
+                parameters = [NSDictionary dictionaryWithObjectsAndKeys:firstImageUrl,@"firstImageUrl",article.content==nil?childArticle.content:article.content,@"content",article.board_description,@"boardDescription",nil];
+            }else{
+                parameters = [NSDictionary dictionaryWithObjectsAndKeys:article.content==nil?childArticle.content:article.content,@"content",article.board_description,@"boardDescription",nil];
+            }
+            break;
+        case XQCollectionUpdateReply:
+            parameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)article.reply_count],@"replyCount",nil];
+            break;
+    }
+    [_articleService updateArticle:articleID andParameters:parameters];
+}
 
-
+- (void)deleteCollectData:(NSString *)articleID{
+    [_articleService deleteArticle:articleID];
+}
 @end
