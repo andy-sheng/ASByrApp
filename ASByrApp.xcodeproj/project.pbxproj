@@ -17,6 +17,8 @@
 		75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */; };
 		75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2141E1BC6C400B563A7 /* XQArticleService.m */; };
 		75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2161E1BC6C400B563A7 /* XQUserService.m */; };
+		75B7C9C91E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7C9C81E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m */; };
+		75B7C9CD1E45D07700DCD4D1 /* XQThreadsBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7C9CB1E45D07700DCD4D1 /* XQThreadsBodyCell.m */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
@@ -310,6 +312,10 @@
 		75A4C2151E1BC6C400B563A7 /* XQArticleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticleService.h; sourceTree = "<group>"; };
 		75A4C2161E1BC6C400B563A7 /* XQUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserService.m; sourceTree = "<group>"; };
 		75A4C2171E1BC6C400B563A7 /* XQUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserService.h; sourceTree = "<group>"; };
+		75B7C9C71E45AB7500DCD4D1 /* XQThreadsDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQThreadsDetailViewModel.h; sourceTree = "<group>"; };
+		75B7C9C81E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQThreadsDetailViewModel.m; sourceTree = "<group>"; };
+		75B7C9CA1E45D07700DCD4D1 /* XQThreadsBodyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQThreadsBodyCell.h; sourceTree = "<group>"; };
+		75B7C9CB1E45D07700DCD4D1 /* XQThreadsBodyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQThreadsBodyCell.m; sourceTree = "<group>"; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
@@ -686,6 +692,15 @@
 			name = Service;
 			sourceTree = "<group>";
 		};
+		75B7C9C61E45AAEA00DCD4D1 /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				75B7C9C71E45AB7500DCD4D1 /* XQThreadsDetailViewModel.h */,
+				75B7C9C81E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m */,
+			);
+			name = viewmodel;
+			sourceTree = "<group>";
+		};
 		A11FBC751CD50BC50029DAC8 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,6 +713,7 @@
 		A16885D01CC0D22D00338353 /* threads(帖子详情) */ = {
 			isa = PBXGroup;
 			children = (
+				75B7C9C61E45AAEA00DCD4D1 /* viewmodel */,
 				A16885D11CC0D24400338353 /* view */,
 				A16885CD1CBF469300338353 /* ASThreadsController.h */,
 				A16885CE1CBF469300338353 /* ASThreadsController.m */,
@@ -717,6 +733,8 @@
 				A16885E11CC0D51000338353 /* ASThreadsReplyCell.h */,
 				A16885E21CC0D51000338353 /* ASThreadsReplyCell.m */,
 				A16885E31CC0D51000338353 /* ASThreadsReplyCell.xib */,
+				75B7C9CA1E45D07700DCD4D1 /* XQThreadsBodyCell.h */,
+				75B7C9CB1E45D07700DCD4D1 /* XQThreadsBodyCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -1631,8 +1649,10 @@
 				75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
 				75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */,
+				75B7C9CD1E45D07700DCD4D1 /* XQThreadsBodyCell.m in Sources */,
 				A95F63741CDF33970060075E /* XQCollectArticleVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
+				75B7C9C91E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,

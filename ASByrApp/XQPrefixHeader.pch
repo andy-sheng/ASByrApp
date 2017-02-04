@@ -37,4 +37,8 @@
 #define XQByrUserLoginStatusKey @"userLoginStatus"
 #define XQByrFirstLoginStatusKey @"userFirstLogin"
 
+//硬件信息
+#define XQSCREEN_W [UIScreen mainScreen].bounds.size.width
+#define XQSCREEN_H [UIScreen mainScreen].bounds.size.height
+
 #endif /* XQPrefixHeader_pch */

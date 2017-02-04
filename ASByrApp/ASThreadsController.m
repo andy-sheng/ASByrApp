@@ -8,7 +8,8 @@
 
 #import "ASThreadsController.h"
 #import "ASThreadsTitleCell.h"
-#import "ASThreadsBodyCell.h"
+//#import "ASThreadsBodyCell.h"
+#import "XQThreadsBodyCell.h"
 #import "ASThreadsReplyCell.h"
 #import "ASKeyboard.h"
 #import "NSAttributedString+ASUBB.h"
@@ -20,13 +21,12 @@
 #import "ASArticleListVC.h"
 #import "XQCollectArticleVC.h"
 
-#import "XQByrArticle.h"
-#import <YYModel/YYModel.h>
+#import "XQThreadsDetailViewModel.h"
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate, ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate, WKUIDelegate>
 
 @property(strong, nonatomic) UITableView * tableView;
 @property(strong, nonatomic) ASKeyboard * keyboard;
@@ -42,11 +42,12 @@ const NSUInteger replyRow = 2;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
-@property(strong, nonatomic) XQByrArticle * articleEntity;
-
+@property(strong, nonatomic) XQThreadsDetailViewModel * viewModel;
 @end
 
-@implementation ASThreadsController
+@implementation ASThreadsController{
+    NSInteger bodyHeight;
+}
 
 #pragma mark - life cycle
 
@@ -136,7 +137,7 @@ const NSUInteger replyRow = 2;
 
     if (self.threadType == ASThreadsEnterTypeCollection) {
         UIAlertAction * deleteCollectAction = [UIAlertAction actionWithTitle:deleteCollectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            NSDictionary* userInfo = @{@"articleID": [NSString stringWithFormat:@"%ld",(long)_articleEntity.group_id]};
+            NSDictionary* userInfo = @{@"articleID": [NSString stringWithFormat:@"%ld",(long)_viewModel.articleEntity ]};
             
             MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeCustomView;
@@ -152,7 +153,7 @@ const NSUInteger replyRow = 2;
         [alertController addAction:deleteCollectAction];
     }else{
         UIAlertAction * addCollectAction = [UIAlertAction actionWithTitle:addCollectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-            NSDictionary* userInfo = @{@"article": _articleEntity};
+            NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
             
             //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
             MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -197,9 +198,10 @@ const NSUInteger replyRow = 2;
         [cell setupWithTitle:self.replyArticles[0][@"title"]];
         return cell;
     } else if(indexPath.row == bodyRow) {
-        ASThreadsBodyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody" forIndexPath:indexPath];
-        cell.delegate = self;
-        [cell setupWithContent:self.replyArticles[0][@"content"]];
+        XQThreadsBodyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody" forIndexPath:indexPath];
+        cell.webView.navigationDelegate = self;
+        cell.webView.UIDelegate = self;
+        [cell.webView loadHTMLString:[_viewModel getContentHtmlString] baseURL:nil];
         return cell;
     } else {
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
@@ -255,10 +257,10 @@ const NSUInteger replyRow = 2;
 
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
     NSMutableArray *reformedArticles = [NSMutableArray array];
-    _articleEntity = [XQByrArticle yy_modelWithJSON:response.response];
+    _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:response.response[@"article"][0]];
     //更新本地收藏文章的数据库
     if(self.threadType == ASThreadsEnterTypeCollection){
-        NSDictionary* userInfo = @{@"article": _articleEntity};
+        NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCollectedArticle" object:nil userInfo:userInfo];
     }
     //mainarticle setContent:[NSString stringWithFormat:@"%@",[NSArray arraywith]]
@@ -283,7 +285,34 @@ const NSUInteger replyRow = 2;
 
 #pragma mark - ASThreadsBodyCellDelegate
 
+
 #pragma mark - ASThreadsReplyCellDelegate
+
+
+#pragma mark - webview + html
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    XQThreadsBodyCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:bodyRow inSection:0]];
+    [cell.contentView addSubview:webView];
+    [cell.webView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cell.contentView.mas_left).offset(PADDING_TO_CONTENTVIEW);
+        make.top.equalTo(cell.contentView.mas_top).offset(PADDING_TO_CONTENTVIEW);
+        make.right.equalTo(cell.contentView.mas_right).offset(-PADDING_TO_CONTENTVIEW);
+        make.bottom.equalTo(cell.contentView.mas_bottom).offset(-PADDING_TO_CONTENTVIEW);
+    }];
+    [cell updateConstraints];
+    NSLog(@"ooooo");
+    NSLog(@"%f",cell.webView.scrollView.contentSize.height);
+    [cell.webView evaluateJavaScript:@"document.body.offsetHeight;"completionHandler:^(id _Nullable result,NSError *_Nullable error) {
+        NSLog(@"bbbb");
+        NSLog(@"%@",result);
+//        [cell.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.equalTo(result);
+//        }];
+//        [cell updateConstraints];
+        //获取页面高度，并重置webview的frame
+    }];
+}
 
 #pragma mark - getter and setter
 
@@ -295,8 +324,9 @@ const NSUInteger replyRow = 2;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.estimatedRowHeight = 50.0;
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
-        [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
+        //[_tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsReplyCell" bundle:nil] forCellReuseIdentifier:@"threadsReply"];
+        [_tableView registerClass:[XQThreadsBodyCell class] forCellReuseIdentifier:@"threadsBody"];
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         _tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
     }
