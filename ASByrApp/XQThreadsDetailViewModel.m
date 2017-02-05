@@ -38,8 +38,14 @@
 
 #pragma mark - private method
 - (NSString *)getBodyString{
-    NSMutableString * str = [NSMutableString stringWithFormat:@"<br>%@</br>",_articleEntity.content];
-    [str stringByReplacingOccurrencesOfString:@"\n" withString:@"</br><br>"];
+    NSMutableString * str = [NSMutableString string];
+    NSArray * array = [_articleEntity.content componentsSeparatedByString:@"\n"];
+    for (NSString * ss in array) {
+        [str appendFormat:@"<br>%@</br>",ss];
+    }
+    NSLog(@"array length:%lu",(unsigned long)[array count]);
+    NSLog(@"after string:%@",str);
     return str;
 }
+
 @end

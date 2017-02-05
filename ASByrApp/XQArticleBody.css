@@ -1,9 +1,9 @@
 body{
-    margin-left:10;
-    margin-right:10;
+    margin:5 10 20 10px;
+    background-color:#f6f6f6;
 }
+
 #content{
-    background-color:yellow;
-    font-size:30px;
+    font-size:24px;
     color:black;
 }

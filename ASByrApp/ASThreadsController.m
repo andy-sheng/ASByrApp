@@ -8,7 +8,7 @@
 
 #import "ASThreadsController.h"
 #import "ASThreadsTitleCell.h"
-//#import "ASThreadsBodyCell.h"
+#import "ASThreadsBodyCell.h"
 #import "XQWebView.h"
 #import "ASThreadsReplyCell.h"
 #import "ASKeyboard.h"
@@ -26,7 +26,7 @@ const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate, WKUIDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate, WKUIDelegate>
 
 @property(strong, nonatomic) XQWebView * webBodyCell;
 @property(strong, nonatomic) UITableView * tableView;
@@ -215,16 +215,20 @@ const NSUInteger replyRow = 2;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == bodyRow) {
         NSLog(@"load webBodyCell height:%ld",self.webBodyCell.height);
-        return self.webBodyCell.height + 40;
+        return self.webBodyCell.height;
     }
     return CGFLOAT_MIN;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == titleRow || indexPath.section == bodyRow) {
+    if (indexPath.section == titleRow) {
         ASThreadsTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsTitle" forIndexPath:indexPath];
         cell.delegate = self;
         [cell setupWithTitle:_viewModel.title];
+        return cell;
+    }else if(indexPath.section == bodyRow){
+        ASThreadsBodyCell * cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody"];
+        cell.delegate = self;
         return cell;
     }else{
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
@@ -269,7 +273,6 @@ const NSUInteger replyRow = 2;
     if (self.isLoadThreads) {
         [self.tableView.mj_header endRefreshing];
     } else {
-        
         [self.tableView.mj_footer endRefreshing];
     }
 }
@@ -325,12 +328,13 @@ const NSUInteger replyRow = 2;
 #pragma mark - webview + html
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    NSLog(@"ooooo %f",webView.scrollView.contentSize.height);
+    //NSLog(@"ooooo %f",webView.scrollView.contentSize.height);
+#warning 以下代码待完善，当webview没有完全加载完全时返回的高度不是最终高度，会导致显示不全
     if (webView.scrollView.contentSize.height == 0) {
         dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
         dispatch_after(time, dispatch_get_main_queue(),
                        ^{
-                           NSLog(@"ssss %f",webView.scrollView.contentSize.height);
+                           //NSLog(@"ssss %f",webView.scrollView.contentSize.height);
                            self.webBodyCell.height = webView.scrollView.contentSize.height;
 
                            [self.tableView reloadData];
@@ -350,7 +354,7 @@ const NSUInteger replyRow = 2;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.estimatedRowHeight = 50.0;
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
-        //[_tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
+        [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsReplyCell" bundle:nil] forCellReuseIdentifier:@"threadsReply"];
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         _tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
