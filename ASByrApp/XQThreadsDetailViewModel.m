@@ -7,6 +7,11 @@
 //
 
 #import "XQThreadsDetailViewModel.h"
+
+#import <XQByrArticle.h>
+#import <XQByrAttachment.h>
+#import <XQByrFile.h>
+
 #import <YYModel/YYModel.h>
 #import <XQByrArticle.h>
 @implementation XQThreadsDetailViewModel
@@ -45,6 +50,44 @@
     }
     NSLog(@"array length:%lu",(unsigned long)[array count]);
     NSLog(@"after string:%@",str);
+
+    NSArray * files;
+    if (self.articleEntity.has_attachment) {
+        XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)_articleEntity.article[0]];
+            XQByrAttachment * attachment;
+            if(_articleEntity.attachment != nil){
+                attachment = _articleEntity.attachment;
+                files = [NSArray arrayWithArray:attachment.file];
+            }else{
+                attachment = childArticle.attachment;
+                files = [NSArray arrayWithArray:attachment.file];
+            }
+    }
+    
+    if ([files count]>0) {
+        NSInteger fcount = 1;
+        for (NSDictionary * filee in files) {
+            XQByrFile * file = [XQByrFile yy_modelWithJSON:filee];
+            NSMutableString * fileHtml = [NSMutableString string];
+            NSString * subname = [file.name substringFromIndex:file.name.length-4];
+            if ([subname isEqualToString:@".png"] || [subname isEqualToString:@".jpg"] || [subname isEqualToString:@"jpeg"]) {
+                [fileHtml appendString:@"<div class=\"img-parent\">"];
+                /*
+                NSString *onload = @"this.onclick = function() {"
+                "  window.location.href = 'xq://github.com/xiangqianli?src=' +this.src+'&top=' + this.getBoundingClientRect().top + '&whscale=' + this.clientWidth/this.clientHeight ;"
+                "};";
+                 */
+                [fileHtml appendFormat:@"<img src=\"%@%@\">",file.url,@"?oauth_token=f1c5d87cc17d1ab2cda3d71b2183d72f"];
+                [fileHtml appendString:@"</div>"];
+                NSString * searchstr = [NSString stringWithFormat:@"[upload=%ld][/upload]",fcount];
+                if ([str rangeOfString:searchstr options:NSCaseInsensitiveSearch].location!=NSNotFound) {
+                    [str replaceOccurrencesOfString:searchstr withString:fileHtml options:NSCaseInsensitiveSearch range:NSMakeRange(0, str.length)];
+                }else{
+                    [str appendString:fileHtml];
+                }
+            }
+        }
+    }
     return str;
 }
 
