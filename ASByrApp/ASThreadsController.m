@@ -28,6 +28,7 @@ const NSUInteger replyRow = 2;
 
 @interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate, WKUIDelegate>
 
+@property(strong, nonatomic) XQThreadsBodyCell * webBodyCell;
 @property(strong, nonatomic) UITableView * tableView;
 @property(strong, nonatomic) ASKeyboard * keyboard;
 @property(strong, nonatomic) MBProgressHUD * hud;
@@ -39,16 +40,14 @@ const NSUInteger replyRow = 2;
 @property(assign, nonatomic) NSUInteger page;
 @property(assign, nonatomic) ASThreadsEnterType threadType;
 @property(assign, nonatomic) BOOL isLoadThreads;
+@property(assign, nonatomic) BOOL isFirstLoad;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
 @property(strong, nonatomic) XQThreadsDetailViewModel * viewModel;
 @end
 
-@implementation ASThreadsController{
-    NSInteger bodyHeight;
-}
-
+@implementation ASThreadsController
 #pragma mark - life cycle
 
 - (instancetype)initWithWithBoard:(NSString *)board
@@ -184,31 +183,55 @@ const NSUInteger replyRow = 2;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.replyArticles count] == 0 ? 0 : [self.replyArticles count] + 1;
+    if (section == titleRow) {
+        return [self.replyArticles count] == 0 ? 0 : 1;
+    }else if(section == bodyRow){
+        return 0;
+    }else{
+        return [self.replyArticles count] == 0 ? 0 : [self.replyArticles count];
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == bodyRow) {
+        if (_viewModel != nil) {
+//            NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
+//            [_webBodyCell.webView loadRequest:request];
+            NSString * htmlString = [_viewModel getContentHtmlString];
+            NSLog(@"%@",htmlString);
+            [_webBodyCell.webView loadHTMLString:htmlString baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///%@/webresource",[[NSBundle mainBundle] bundlePath]]]];
+        }else{
+            [_webBodyCell.webView loadHTMLString:@"" baseURL:nil];
+        }
+        return _webBodyCell;
+    }
+    return [[UIView alloc]initWithFrame:CGRectZero];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == bodyRow) {
+        NSLog(@"load webBodyCell height:%ld",(NSInteger)self.webBodyCell.height);
+        return self.webBodyCell.height;
+    }
+    return CGFLOAT_MIN;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == titleRow) {
+    if (indexPath.section == titleRow || indexPath.section == bodyRow) {
         ASThreadsTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsTitle" forIndexPath:indexPath];
         cell.delegate = self;
-        [cell setupWithTitle:self.replyArticles[0][@"title"]];
+        [cell setupWithTitle:_viewModel.title];
         return cell;
-    } else if(indexPath.row == bodyRow) {
-        XQThreadsBodyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody" forIndexPath:indexPath];
-        cell.webView.navigationDelegate = self;
-        cell.webView.UIDelegate = self;
-        [cell.webView loadHTMLString:[_viewModel getContentHtmlString] baseURL:nil];
-        return cell;
-    } else {
+    }else{
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
         cell.delegate = self;
-        [cell setupWithFaceurl:self.replyArticles[indexPath.row - 1][@"user"][@"faceurl"]
-                           uid:self.replyArticles[indexPath.row - 1][@"user"][@"uid"]
-                       content:self.replyArticles[indexPath.row - 1][@"content"]];
+        [cell setupWithFaceurl:self.replyArticles[indexPath.row][@"user"][@"faceurl"]
+                           uid:self.replyArticles[indexPath.row][@"user"][@"uid"]
+                       content:self.replyArticles[indexPath.row][@"content"]];
         return cell;
     }
 }
@@ -217,7 +240,6 @@ const NSUInteger replyRow = 2;
 
 - (void)sendAcion:(NSString *)text {
     NSLog(@"post:%@", text);
-
 }
 
 #pragma mark - ASByrArticleResponseDelegate
@@ -235,7 +257,14 @@ const NSUInteger replyRow = 2;
 
 - (void)fetchThreadsResponse:(ASByrResponse *)response {
     //NSLog(@"%@",response.reformedData[0]);
-    self.replyArticles = [self.replyArticles arrayByAddingObjectsFromArray:response.reformedData];
+    if (_isFirstLoad) {
+        for (NSInteger i = 1; i < [response.reformedData count]; i++) {
+            self.replyArticles = [self.replyArticles arrayByAddingObject:response.reformedData[i]];
+        }
+    }else{
+        self.replyArticles = [self.replyArticles arrayByAddingObjectsFromArray:response.reformedData];
+    }
+    
     [self.tableView reloadData];
     if (self.isLoadThreads) {
         [self.tableView.mj_header endRefreshing];
@@ -257,7 +286,12 @@ const NSUInteger replyRow = 2;
 
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
     NSMutableArray *reformedArticles = [NSMutableArray array];
-    _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:response.response[@"article"][0]];
+    if (_viewModel == nil) {
+        _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:response.response[@"article"][0]];
+        _isFirstLoad = true;
+    }else{
+        _isFirstLoad = false;
+    }
     //更新本地收藏文章的数据库
     if(self.threadType == ASThreadsEnterTypeCollection){
         NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
@@ -271,7 +305,6 @@ const NSUInteger replyRow = 2;
         tmp[@"user"] = @{@"faceurl":article[@"user"][@"face_url"], @"uid":article[@"user"][@"id"]};
         [reformedArticles addObject:tmp];
     }
-    
     response.reformedData = reformedArticles;
     return response;
 }
@@ -292,26 +325,20 @@ const NSUInteger replyRow = 2;
 #pragma mark - webview + html
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    XQThreadsBodyCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:bodyRow inSection:0]];
-    [cell.contentView addSubview:webView];
-    [cell.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(cell.contentView.mas_left).offset(PADDING_TO_CONTENTVIEW);
-        make.top.equalTo(cell.contentView.mas_top).offset(PADDING_TO_CONTENTVIEW);
-        make.right.equalTo(cell.contentView.mas_right).offset(-PADDING_TO_CONTENTVIEW);
-        make.bottom.equalTo(cell.contentView.mas_bottom).offset(-PADDING_TO_CONTENTVIEW);
-    }];
-    [cell updateConstraints];
     NSLog(@"ooooo");
-    NSLog(@"%f",cell.webView.scrollView.contentSize.height);
-    [cell.webView evaluateJavaScript:@"document.body.offsetHeight;"completionHandler:^(id _Nullable result,NSError *_Nullable error) {
-        NSLog(@"bbbb");
-        NSLog(@"%@",result);
-//        [cell.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.height.equalTo(result);
-//        }];
-//        [cell updateConstraints];
-        //获取页面高度，并重置webview的frame
-    }];
+    NSLog(@"%f",webView.scrollView.contentSize.height);
+    NSLog(@"%f",self.webBodyCell.contentView.bounds.size.height);
+    NSLog(@"%f",self.webBodyCell.webView.bounds.size.height);
+    NSLog(@"%f",self.webBodyCell.webView.scrollView.bounds.size.height);
+    //self.webBodyCell.height=self.webBodyCell.webView.scrollView.bounds.size.height;
+    //[self.tableView reloadData];
+//    [webView evaluateJavaScript:@"document.body.offsetHeight;" completionHandler:^(id _Nullable result,NSError *_Nullable error) {
+//        NSLog(@"bbbb");
+//        NSLog(@"%@",result);
+//        //self.webBodyCell.height = (NSInteger)result;
+//        self.webBodyCell.height = [result integerValue];
+//    }];
+    
 }
 
 #pragma mark - getter and setter
@@ -326,7 +353,6 @@ const NSUInteger replyRow = 2;
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
         //[_tableView registerNib:[UINib nibWithNibName:@"ASThreadsBodyCell" bundle:nil] forCellReuseIdentifier:@"threadsBody"];
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsReplyCell" bundle:nil] forCellReuseIdentifier:@"threadsReply"];
-        [_tableView registerClass:[XQThreadsBodyCell class] forCellReuseIdentifier:@"threadsBody"];
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         _tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
     }
@@ -354,4 +380,12 @@ const NSUInteger replyRow = 2;
     return _page++;
 }
 
+- (XQThreadsBodyCell *)webBodyCell{
+    if (_webBodyCell == nil) {
+        _webBodyCell = [[XQThreadsBodyCell alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, XQSCREEN_H*0.75)];
+        _webBodyCell.webView.navigationDelegate = self;
+        _webBodyCell.webView.scrollView.scrollEnabled = NO;
+    }
+    return _webBodyCell;
+}
 @end

@@ -12,6 +12,6 @@
 @interface XQThreadsBodyCell : UITableViewCell
 
 @property (strong, nonatomic) WKWebView *webView;
+@property (assign, nonatomic) NSInteger height;
 
-+ (id)newCellWithHtml:(NSString *)html;
 @end

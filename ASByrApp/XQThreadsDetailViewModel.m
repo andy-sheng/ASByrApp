@@ -14,6 +14,7 @@
     self = [super init];
     if (self) {
         _articleEntity = [XQByrArticle yy_modelWithJSON:articelDic];
+        _title = _articleEntity.title;
     }
     return self;
 }
@@ -22,12 +23,13 @@
     NSMutableString *html = [NSMutableString string];
     [html appendString:@"<html>"];
     [html appendString:@"<head>"];
-    [html appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">",[[NSBundle mainBundle] URLForResource:@"XQArticleBody.css" withExtension:nil]];
+    //[html appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">",[[NSBundle mainBundle] URLForResource:@"XQArticleBody.css" withExtension:nil]];
+    [html appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">",@"XQArticleBody.css"];
     [html appendString:@"</head>"];
     
-    [html appendString:@"<body style=\"background:#f6f6f6\">"];
+    [html appendString:@"<body><div id=\"content\">"];
     [html appendString:[self getBodyString]];
-    [html appendString:@"</body>"];
+    [html appendString:@"</divs></body>"];
     
     [html appendString:@"</html>"];
     
