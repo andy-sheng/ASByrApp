@@ -9,7 +9,7 @@
 #import "ASThreadsController.h"
 #import "ASThreadsTitleCell.h"
 //#import "ASThreadsBodyCell.h"
-#import "XQThreadsBodyCell.h"
+#import "XQWebView.h"
 #import "ASThreadsReplyCell.h"
 #import "ASKeyboard.h"
 #import "NSAttributedString+ASUBB.h"
@@ -28,7 +28,7 @@ const NSUInteger replyRow = 2;
 
 @interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate, WKUIDelegate>
 
-@property(strong, nonatomic) XQThreadsBodyCell * webBodyCell;
+@property(strong, nonatomic) XQWebView * webBodyCell;
 @property(strong, nonatomic) UITableView * tableView;
 @property(strong, nonatomic) ASKeyboard * keyboard;
 @property(strong, nonatomic) MBProgressHUD * hud;
@@ -203,9 +203,9 @@ const NSUInteger replyRow = 2;
 //            [_webBodyCell.webView loadRequest:request];
             NSString * htmlString = [_viewModel getContentHtmlString];
             NSLog(@"%@",htmlString);
-            [_webBodyCell.webView loadHTMLString:htmlString baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///%@/webresource",[[NSBundle mainBundle] bundlePath]]]];
+            [_webBodyCell loadHTMLString:htmlString baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///%@/webresource",[[NSBundle mainBundle] bundlePath]]]];
         }else{
-            [_webBodyCell.webView loadHTMLString:@"" baseURL:nil];
+            [_webBodyCell loadHTMLString:@"" baseURL:nil];
         }
         return _webBodyCell;
     }
@@ -214,8 +214,8 @@ const NSUInteger replyRow = 2;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == bodyRow) {
-        NSLog(@"load webBodyCell height:%ld",(NSInteger)self.webBodyCell.height);
-        return self.webBodyCell.height;
+        NSLog(@"load webBodyCell height:%ld",self.webBodyCell.height);
+        return self.webBodyCell.height + 40;
     }
     return CGFLOAT_MIN;
 }
@@ -325,20 +325,19 @@ const NSUInteger replyRow = 2;
 #pragma mark - webview + html
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    NSLog(@"ooooo");
-    NSLog(@"%f",webView.scrollView.contentSize.height);
-    NSLog(@"%f",self.webBodyCell.contentView.bounds.size.height);
-    NSLog(@"%f",self.webBodyCell.webView.bounds.size.height);
-    NSLog(@"%f",self.webBodyCell.webView.scrollView.bounds.size.height);
-    //self.webBodyCell.height=self.webBodyCell.webView.scrollView.bounds.size.height;
-    //[self.tableView reloadData];
-//    [webView evaluateJavaScript:@"document.body.offsetHeight;" completionHandler:^(id _Nullable result,NSError *_Nullable error) {
-//        NSLog(@"bbbb");
-//        NSLog(@"%@",result);
-//        //self.webBodyCell.height = (NSInteger)result;
-//        self.webBodyCell.height = [result integerValue];
-//    }];
-    
+    NSLog(@"ooooo %f",webView.scrollView.contentSize.height);
+    if (webView.scrollView.contentSize.height == 0) {
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
+        dispatch_after(time, dispatch_get_main_queue(),
+                       ^{
+                           NSLog(@"ssss %f",webView.scrollView.contentSize.height);
+                           self.webBodyCell.height = webView.scrollView.contentSize.height;
+
+                           [self.tableView reloadData];
+                       });
+    }else{
+        self.webBodyCell.height = webView.scrollView.contentSize.height;
+    }
 }
 
 #pragma mark - getter and setter
@@ -380,11 +379,10 @@ const NSUInteger replyRow = 2;
     return _page++;
 }
 
-- (XQThreadsBodyCell *)webBodyCell{
+- (XQWebView *)webBodyCell{
     if (_webBodyCell == nil) {
-        _webBodyCell = [[XQThreadsBodyCell alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, XQSCREEN_H*0.75)];
-        _webBodyCell.webView.navigationDelegate = self;
-        _webBodyCell.webView.scrollView.scrollEnabled = NO;
+        _webBodyCell = [[XQWebView alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, 40)];
+        _webBodyCell.navigationDelegate = self;
     }
     return _webBodyCell;
 }

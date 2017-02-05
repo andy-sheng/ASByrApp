@@ -29,7 +29,7 @@
     
     [html appendString:@"<body><div id=\"content\">"];
     [html appendString:[self getBodyString]];
-    [html appendString:@"</divs></body>"];
+    [html appendString:@"</div></body>"];
     
     [html appendString:@"</html>"];
     
@@ -38,6 +38,8 @@
 
 #pragma mark - private method
 - (NSString *)getBodyString{
-    return _articleEntity.content;
+    NSMutableString * str = [NSMutableString stringWithFormat:@"<br>%@</br>",_articleEntity.content];
+    [str stringByReplacingOccurrencesOfString:@"\n" withString:@"</br><br>"];
+    return str;
 }
 @end

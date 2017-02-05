@@ -125,11 +125,10 @@
                 XQByrFile * file;
                 if(article.attachment != nil){
                     attachment = article.attachment;
-                    file = [NSArray arrayWithArray:attachment.file][0];
                 }else{
                     attachment = childArticle.attachment;
-                    file = [XQByrFile yy_modelWithDictionary:[NSArray arrayWithArray:attachment.file][0]];
                 }
+                file = [XQByrFile yy_modelWithDictionary:[NSArray arrayWithArray:attachment.file][0]];
                 firstImageUrl = file.url;
                 parameters = [NSDictionary dictionaryWithObjectsAndKeys:firstImageUrl,@"firstImageUrl",article.content==nil?childArticle.content:article.content,@"content",article.board_description,@"boardDescription",nil];
             }else{
