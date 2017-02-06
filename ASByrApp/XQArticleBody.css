@@ -15,3 +15,13 @@ body{
 .img-parent img{
     width:96%;
 }
+
+.audio-parent{
+    text-align:center;
+}
+
+.audio-parent audio{
+    min-height:100px;
+    width:96%;
+    margin:5px;
+}

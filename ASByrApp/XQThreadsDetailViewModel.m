@@ -28,7 +28,6 @@
     NSMutableString *html = [NSMutableString string];
     [html appendString:@"<html>"];
     [html appendString:@"<head>"];
-    //[html appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">",[[NSBundle mainBundle] URLForResource:@"XQArticleBody.css" withExtension:nil]];
     [html appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">",@"XQArticleBody.css"];
     [html appendString:@"</head>"];
     
@@ -58,9 +57,7 @@
             tcount = false;
         }
     }
-    NSLog(@"array length:%lu",(unsigned long)[array count]);
-    NSLog(@"after string:%@",str);
-
+    
     NSArray * files;
     if (self.articleEntity.has_attachment) {
         XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)_articleEntity.article[0]];
@@ -74,6 +71,7 @@
             }
     }
     
+    //附件处理 支持mp3,jpg,png,jpeg格式
     if ([files count]>0) {
         NSInteger fcount = 0;
         for (NSDictionary * filee in files) {
@@ -83,23 +81,19 @@
             NSString * subname = [file.name substringFromIndex:file.name.length-4];
             if ([subname isEqualToString:@".png"] || [subname isEqualToString:@".jpg"] || [subname isEqualToString:@"jpeg"]) {
                 [fileHtml appendString:@"<div class=\"img-parent\">"];
-                /*
-                NSString *onload = @"this.onclick = function() {"
-                "  window.location.href = 'xq://github.com/xiangqianli?src=' +this.src+'&top=' + this.getBoundingClientRect().top + '&whscale=' + this.clientWidth/this.clientHeight ;"
-                "};";
-                
-                [fileHtml appendFormat:@"<img onload=\"%@\" src=\"%@?oauth_token=%@\"  width=\"%f\">", onload, file.url,[ASByrToken shareInstance].accessToken,XQSCREEN_W];
-                 
-                 */
+    
                 [fileHtml appendFormat:@"<img src=\"%@?oauth_token=%@\">", file.url,[ASByrToken shareInstance].accessToken];
-                
-                [fileHtml appendString:@"</div>"];
-                NSString * searchstr = [NSString stringWithFormat:@"[upload=%ld][/upload]",fcount];
-                if ([str rangeOfString:searchstr options:NSCaseInsensitiveSearch].location!=NSNotFound) {
-                    [str replaceOccurrencesOfString:searchstr withString:fileHtml options:NSCaseInsensitiveSearch range:NSMakeRange(0, str.length)];
-                }else{
-                    [str appendString:fileHtml];
-                }
+            }
+            else if ([subname isEqualToString:@".mp3"]){
+                [fileHtml appendString:@"<div class=\"audio-parent\">"];
+                [fileHtml appendFormat:@"<audio controls=\"controls\" preload=\"auto\" src=\"%@?oauth_token=%@\"></audio>", file.url, [ASByrToken shareInstance].accessToken];
+            }
+            [fileHtml appendString:@"</div>"];
+            NSString * searchstr = [NSString stringWithFormat:@"[upload=%ld][/upload]",fcount];
+            if ([str rangeOfString:searchstr options:NSCaseInsensitiveSearch].location!=NSNotFound) {
+                [str replaceOccurrencesOfString:searchstr withString:fileHtml options:NSCaseInsensitiveSearch range:NSMakeRange(0, str.length)];
+            }else{
+                [str appendString:fileHtml];
             }
         }
     }
