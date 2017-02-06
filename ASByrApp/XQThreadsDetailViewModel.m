@@ -7,7 +7,7 @@
 //
 
 #import "XQThreadsDetailViewModel.h"
-
+#import <ASByrToken.h>
 #import <XQByrArticle.h>
 #import <XQByrAttachment.h>
 #import <XQByrFile.h>
@@ -45,8 +45,18 @@
 - (NSString *)getBodyString{
     NSMutableString * str = [NSMutableString string];
     NSArray * array = [_articleEntity.content componentsSeparatedByString:@"\n"];
+    
+    //避免多个换行
+    BOOL tcount = false;
     for (NSString * ss in array) {
-        [str appendFormat:@"<br>%@</br>",ss];
+        NSString * ts = [NSString stringWithString:ss];
+        if([[ts stringByReplacingOccurrencesOfString:@" " withString:@""] length]==0 && !tcount){
+            tcount = true;
+            [str appendString:@"<br></br>"];
+        }else if ([[ts stringByReplacingOccurrencesOfString:@" " withString:@""] length]>0){
+            [str appendFormat:@"<br>%@</br>",ss];
+            tcount = false;
+        }
     }
     NSLog(@"array length:%lu",(unsigned long)[array count]);
     NSLog(@"after string:%@",str);
@@ -65,8 +75,9 @@
     }
     
     if ([files count]>0) {
-        NSInteger fcount = 1;
+        NSInteger fcount = 0;
         for (NSDictionary * filee in files) {
+            fcount = fcount+1;
             XQByrFile * file = [XQByrFile yy_modelWithJSON:filee];
             NSMutableString * fileHtml = [NSMutableString string];
             NSString * subname = [file.name substringFromIndex:file.name.length-4];
@@ -76,8 +87,12 @@
                 NSString *onload = @"this.onclick = function() {"
                 "  window.location.href = 'xq://github.com/xiangqianli?src=' +this.src+'&top=' + this.getBoundingClientRect().top + '&whscale=' + this.clientWidth/this.clientHeight ;"
                 "};";
+                
+                [fileHtml appendFormat:@"<img onload=\"%@\" src=\"%@?oauth_token=%@\"  width=\"%f\">", onload, file.url,[ASByrToken shareInstance].accessToken,XQSCREEN_W];
+                 
                  */
-                [fileHtml appendFormat:@"<img src=\"%@%@\">",file.url,@"?oauth_token=f1c5d87cc17d1ab2cda3d71b2183d72f"];
+                [fileHtml appendFormat:@"<img src=\"%@?oauth_token=%@\">", file.url,[ASByrToken shareInstance].accessToken];
+                
                 [fileHtml appendString:@"</div>"];
                 NSString * searchstr = [NSString stringWithFormat:@"[upload=%ld][/upload]",fcount];
                 if ([str rangeOfString:searchstr options:NSCaseInsensitiveSearch].location!=NSNotFound) {

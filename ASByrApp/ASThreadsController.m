@@ -74,6 +74,10 @@ const NSUInteger replyRow = 2;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.keyboard];
     [self.view setNeedsUpdateConstraints];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:XQNotificationWebViewLoaded object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshData) name:XQNotificationWebViewLoaded object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -109,6 +113,9 @@ const NSUInteger replyRow = 2;
 }
 
 #pragma mark - private function
+- (void)refreshData{
+    [self.tableView reloadData];
+}
 
 - (void)loadData {
     self.isLoadThreads = YES;
@@ -187,10 +194,10 @@ const NSUInteger replyRow = 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == titleRow) {
-        return [self.replyArticles count] == 0 ? 0 : 1;
-    }else if(section == bodyRow){
-        return 0;
+    if (section == titleRow ){
+        return _viewModel == nil ? 0 : 1;
+    }else if( section == bodyRow) {
+        return 1;
     }else{
         return [self.replyArticles count] == 0 ? 0 : [self.replyArticles count];
     }
@@ -202,7 +209,6 @@ const NSUInteger replyRow = 2;
 //            NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
 //            [_webBodyCell.webView loadRequest:request];
             NSString * htmlString = [_viewModel getContentHtmlString];
-            NSLog(@"%@",htmlString);
             [_webBodyCell loadHTMLString:htmlString baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///%@/webresource",[[NSBundle mainBundle] bundlePath]]]];
         }else{
             [_webBodyCell loadHTMLString:@"" baseURL:nil];
@@ -214,8 +220,7 @@ const NSUInteger replyRow = 2;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == bodyRow) {
-        NSLog(@"load webBodyCell height:%ld",self.webBodyCell.height);
-        return self.webBodyCell.height;
+        return self.webBodyCell.height > 0?self.webBodyCell.height:10;
     }
     return CGFLOAT_MIN;
 }
@@ -229,6 +234,7 @@ const NSUInteger replyRow = 2;
     }else if(indexPath.section == bodyRow){
         ASThreadsBodyCell * cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody"];
         cell.delegate = self;
+        [cell setupWithContent:@""];
         return cell;
     }else{
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
@@ -324,7 +330,7 @@ const NSUInteger replyRow = 2;
 
 #pragma mark - ASThreadsReplyCellDelegate
 
-
+/*
 #pragma mark - webview + html
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
@@ -343,7 +349,7 @@ const NSUInteger replyRow = 2;
         self.webBodyCell.height = webView.scrollView.contentSize.height;
     }
 }
-
+*/
 #pragma mark - getter and setter
 
 - (UITableView *)tableView {
