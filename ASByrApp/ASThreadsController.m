@@ -26,7 +26,7 @@ const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate, WKUIDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate>
 
 @property(strong, nonatomic) XQWebView * webBodyCell;
 @property(strong, nonatomic) UITableView * tableView;
@@ -330,26 +330,9 @@ const NSUInteger replyRow = 2;
 
 #pragma mark - ASThreadsReplyCellDelegate
 
-/*
-#pragma mark - webview + html
 
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    //NSLog(@"ooooo %f",webView.scrollView.contentSize.height);
-#warning 以下代码待完善，当webview没有完全加载完全时返回的高度不是最终高度，会导致显示不全
-    if (webView.scrollView.contentSize.height == 0) {
-        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
-        dispatch_after(time, dispatch_get_main_queue(),
-                       ^{
-                           //NSLog(@"ssss %f",webView.scrollView.contentSize.height);
-                           self.webBodyCell.height = webView.scrollView.contentSize.height;
+#pragma mark - WKWebViewNavigationDelegate
 
-                           [self.tableView reloadData];
-                       });
-    }else{
-        self.webBodyCell.height = webView.scrollView.contentSize.height;
-    }
-}
-*/
 #pragma mark - getter and setter
 
 - (UITableView *)tableView {
