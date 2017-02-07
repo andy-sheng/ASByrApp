@@ -10,6 +10,7 @@
 #import "UIColor+Hex.h"
 #import <UIKit/UIKit.h>
 #import "YYText.h"
+#import <UIImage+AFNetworking.h>
 
 typedef enum {
     ScanNormalChar = 1 << 0,
@@ -75,6 +76,7 @@ typedef enum {
     self = [super init];
     if (self) {
         self.stackStoragy = [[NSMutableArray alloc] init];
+        
         self.tagName = [[NSRegularExpression alloc] initWithPattern:@"(?<=\\[|/| )[0-9a-zA-Z]+(?=\\=|\\])"
                                                             options:NSRegularExpressionCaseInsensitive
                                                               error:nil];
@@ -161,6 +163,109 @@ typedef enum {
 
 
 @implementation NSAttributedString (ASUBB)
+
++ (instancetype)string:(NSString *)ubb {
+    NSMutableString *html = [NSMutableString stringWithString:[NSString stringWithFormat:@"<html><body>%@<body></html>", ubb]];
+    
+    NSRegularExpression *sizeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[size=([0-9]+)\\](.*)\\[/size\\]"
+                                                                             options:NSRegularExpressionCaseInsensitive
+                                                                               error:nil];
+    
+    [sizeReg replaceMatchesInString:html options:0 range:NSMakeRange(0, ubb.length) withTemplate:@"<font size='$1'>$2</font>"];
+    
+    
+    NSRegularExpression *bReg = [NSRegularExpression regularExpressionWithPattern:@"\\[b](.*)\\[/b\\]"
+                                                                          options:NSRegularExpressionCaseInsensitive
+                                                                            error:nil];
+    
+    [bReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<b>$1</b>"];
+   
+    
+    NSRegularExpression *colorReg = [NSRegularExpression regularExpressionWithPattern:@"\\[color=(#[a-zA-Z0-9]*)\\](.*)\\[/color\\]"
+                                                                          options:NSRegularExpressionCaseInsensitive
+                                                                            error:nil];
+    
+    [colorReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<font color='$1'>$2</b>"];
+    
+    
+    NSRegularExpression *codeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[code\\](.*)\\[/code\\]"
+                                                                              options:NSRegularExpressionCaseInsensitive
+                                                                                error:nil];
+    
+    [codeReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"$1"];
+    
+    
+    NSRegularExpression *emailReg = [NSRegularExpression regularExpressionWithPattern:@"\\[email=(.*)\\](.*)\\[/email\\]"
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+    
+    [emailReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<a href='mailto:$1'>$2</a>"];
+    
+    
+    NSRegularExpression *faceReg = [NSRegularExpression regularExpressionWithPattern:@"\\[face=(.*)\\](.*)\\[/face\\]"
+                                                                              options:NSRegularExpressionCaseInsensitive
+                                                                                error:nil];
+    
+    [faceReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<font face='$1'>$2</font>"];
+    
+    
+    NSRegularExpression *iReg = [NSRegularExpression regularExpressionWithPattern:@"\\[i\\](.*)\\[/i\\]"
+                                                                             options:NSRegularExpressionCaseInsensitive
+                                                                               error:nil];
+    
+    [iReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<i>$1</i>"];
+    
+
+    
+    NSRegularExpression *imgReg = [NSRegularExpression regularExpressionWithPattern:@"\\[img=(.*)\\](.*)\\[/img]"
+                                                                             options:NSRegularExpressionCaseInsensitive
+                                                                               error:nil];
+    
+    [imgReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<img src='$1' style='max-width:300px;'/>"];
+    
+    
+    NSRegularExpression *uReg = [NSRegularExpression regularExpressionWithPattern:@"\\[u\\](.*)\\[/u]"
+                                                                             options:NSRegularExpressionCaseInsensitive
+                                                                               error:nil];
+    
+    [uReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<u>$1</u>"];
+    
+    
+    
+    NSRegularExpression *urlReg = [NSRegularExpression regularExpressionWithPattern:@"\\[url=(.*)\\](.*)\\[/url]"
+                                                                             options:NSRegularExpressionCaseInsensitive
+                                                                               error:nil];
+    
+    [urlReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<a href='$1'>$2</a>"];
+    
+    
+    
+    NSRegularExpression *emReg = [NSRegularExpression regularExpressionWithPattern:@"\\[(em[abc]?)([0-9]+)\\]"
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+    
+    [emReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<img src='https://bbs.byr.cn/img/ubb/$1/$2.gif'/>"];
+    
+    
+    NSRegularExpression *brReg = [NSRegularExpression regularExpressionWithPattern:@"\\n"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:nil];
+    
+    [brReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<br/>"];
+    
+
+    
+    NSLog(@"%@", html);
+   
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding]
+                                                                             options:@{
+                                                                                       NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,
+                                                                                       NSCharacterEncodingDocumentAttribute:@(NSUTF8StringEncoding)}
+                                                                  documentAttributes:nil
+                                                                               error:nil];
+    NSLog(@"%@", str);
+    return str;
+}
 
 - (instancetype)initWithUBB:(NSString *)ubb {
     self = [self initWithAttributedString:[self parserUbb:ubb]];
@@ -278,7 +383,12 @@ typedef enum {
                         NSLog(@"delete back tag");
                         NSLog(@"start at:%ld, len:%ld", startPtr, len);
                         ubbStr = [ubbStr stringByReplacingCharactersInRange:NSMakeRange(startPtr, len) withString:@""];
-                        [attrStr replaceCharactersInRange:NSMakeRange(startPtr, len) withString:@""];
+                        if ([tmp[@"tag"][0] isEqualToString:@"img"]) {
+                            [attrStr replaceCharactersInRange:NSMakeRange(startPtr + 1, len) withString:@""];
+                        } else {
+                            [attrStr replaceCharactersInRange:NSMakeRange(startPtr, len) withString:@""];
+                        }
+                        
                         
                         NSLog(@"delete front tag");
                         NSLog(@"start at:%ld, len:%ld", [tmp[@"startPos"] integerValue], [tmp[@"length"] integerValue]);
@@ -313,6 +423,7 @@ typedef enum {
                         range:(NSRange)range
                          tags:(NSArray*)tags
                        values:(NSArray*)values {
+    NSLog(@"%@", tags[0]);
     if ([tags count] == 0) {
         return str;
     }
@@ -325,20 +436,34 @@ typedef enum {
     } else if ([tags[0] isEqualToString:@"email"]) {
     #warning - todo
     } else if ([tags[0] isEqualToString:@"face"]) {
-    #warning - todo
+        
+        [str yy_setFont:[UIFont fontWithName:values[0] size:16] range:range];
+        
     } else if ([tags[0] isEqualToString:@"i"]) {
+        
         CGAffineTransform matrix = CGAffineTransformMake(1, 0, tanf(15 * (CGFloat)M_PI / 180), 1, 0, 0);
         UIFontDescriptor *desc =  [UIFontDescriptor fontDescriptorWithName:[UIFont systemFontOfSize:17].fontName matrix:matrix];
         [str yy_setFont:[UIFont fontWithDescriptor:desc size:17] range:range];
+        
     } else if ([tags[0] isEqualToString:@"img"]) {
+        NSLog(@"location:%ld, length:%ld", range.location, range.length);
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:values[0]]]];
+        
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        [attachment setImage:image];
+        
+        NSAttributedString *imageStr = [NSAttributedString attributedStringWithAttachment:attachment];
+        [str insertAttributedString:imageStr atIndex:range.location];
      #warning - todo
     } else if ([tags[0] isEqualToString:@"mp3"]) {
     #warning - todo
     } else if ([tags[0] isEqualToString:@"map"]) {
     #warning - todo
     } else if ([tags[0] isEqualToString:@"size"]) {
+        
         [str yy_setFont:[UIFont systemFontOfSize:[values[0] integerValue]] range:range];
         NSLog(@"setting size:%ld", [values[0] integerValue]);
+        
     } else if ([tags[0] isEqualToString:@"u"]) {
         [str yy_setUnderlineColor:[UIColor blackColor] range:range];
         [str yy_setUnderlineStyle:NSUnderlineStyleSingle range:range];

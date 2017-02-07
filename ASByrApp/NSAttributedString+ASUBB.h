@@ -12,4 +12,6 @@
 
 - (instancetype)initWithUBB:(NSString*)ubb;
 
++ (instancetype)string:(NSString*)ubb;
+
 @end
