@@ -76,19 +76,19 @@
     NSString * firstImageUrl = @"";
     NSString * userId = @"";
     
-    XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)article.article[0]];
+    XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[article.article firstObject]];
     
     if (article.has_attachment) {
         XQByrAttachment * attachment;
-        XQByrFile * file;
+        NSDictionary * filedic;
         if(article.attachment != nil){
              attachment = article.attachment;
-             file = [NSArray arrayWithArray:attachment.file][0];
+             filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
         }else{
             attachment = childArticle.attachment;
-            file = [XQByrFile yy_modelWithDictionary:[NSArray arrayWithArray:attachment.file][0]];
+            filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
         }
-        firstImageUrl = file.url;
+        firstImageUrl = filedic[@"url"];
     }
     
     //文章正文在子数组中时需要对content单独赋值
@@ -144,5 +144,10 @@
 
 - (void)deleteCollectData:(NSString *)articleID{
     [_articleService deleteArticle:articleID];
+}
+
+- (void)deleteAllCollectData{
+    [_articleService deleteArticle:nil];
+    [_userService deleteAllUser];
 }
 @end

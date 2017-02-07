@@ -66,7 +66,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addCollectArticle:) name:@"addNewCollectedArticle" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateCollectArticle:) name:@"updateCollectedArticle" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(deleteCollectArticle:) name:@"deleteCollectedArticle" object:nil];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -77,10 +76,13 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionApi = [[ASByrCollection alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.collectionApi.responseDelegate = self;
     self.collectionApi.responseReformer = self;
-    [self fentchCollectionsFromInternet:1];
     
     [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
     [self.collectionView reloadData];
+    
+    //每次启动时更新收藏数据库
+    [self fentchCollectionsFromInternet:1];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,9 +93,12 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark private method
 
 - (void)fentchCollectionsFromInternet:(NSInteger)pagenum{
-    //第一次登录时取数据
-    if (![XQUserInfo sharedXQUserInfo].firstLogin) {
-        [self.collectionApi fetchCollectionsWithCount:30 page:pagenum];
+    //每次登录时取数据
+    BOOL x = [XQUserInfo sharedXQUserInfo].firstLogin;
+    NSLog(@"收藏文章取数据 %d",x);
+    if ([XQUserInfo sharedXQUserInfo].firstLogin != TRUE) {
+        [_collectDataCenter deleteAllCollectData];
+        [_collectionApi fetchCollectionsWithCount:30 page:pagenum];
     }
 }
 
@@ -116,13 +121,13 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)deleteCollectArticle:(NSNotification *)notis{
     NSLog(@"删除通知激活！");
-    NSString * article = notis.userInfo[@"articleID"];
-    [self.collectionApi deleteCollectionWithAid:article successBlock:^(NSInteger statusCode, id response) {
+    XQByrArticle * article = notis.userInfo[@"article"];
+    [self.collectionApi deleteCollectionWithAid:[NSString stringWithFormat:@"%ld",(long)article.group_id] successBlock:^(NSInteger statusCode, id response) {
         NSLog(@"删除收藏请求成功.");
     } failureBlock:^(NSInteger statusCode, id response) {
         NSLog(@"删除收藏请求失败.");
     }];
-    [self.collectDataCenter deleteCollectData:article];
+    [self.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id]];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -211,9 +216,9 @@ static NSString * const reuseIdentifier = @"Cell";
     if((NSInteger)response.response[@"pagination"][@"page_current_count"] < (NSInteger)response.response[@"pagination"][@"page_all_count"]) {
         [self fentchCollectionsFromInternet:(NSInteger)response.response[@"pagination"][@"page_current_count"]+1];
     }else{
-        [XQUserInfo sharedXQUserInfo].firstLogin = NO;
+        [XQUserInfo sharedXQUserInfo].firstLogin = TRUE;
         [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
-        [[XQUserInfo sharedXQUserInfo]getDataFromSandbox];
+        [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     }
     response.reformedData = reformedArticles;
     return response;

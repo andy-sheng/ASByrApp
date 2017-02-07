@@ -23,5 +23,5 @@
 
 - (void)updateArticle:(NSString * _Nonnull)articleID andParameters:(NSDictionary * _Nonnull)dic;
 
-- (void)deleteArticle:(NSString * _Nonnull)articleID;
+- (void)deleteArticle:(NSString * _Nullable)articleID;
 @end

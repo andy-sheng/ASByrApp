@@ -17,4 +17,6 @@ singleton_interface(XQUserService)
 - (void)addUser:(XQByrUser *)user;
 
 + (NSDictionary *)getUserById:(NSString *)userId;
+
+- (void)deleteAllUser;
 @end

@@ -26,4 +26,6 @@ typedef NS_ENUM(NSInteger, XQCollectionUpdateType){
 - (void)updateCollectData:(XQByrArticle * __nonnull)article options:(XQCollectionUpdateType)type;
 
 - (void)deleteCollectData:(NSString * __nonnull)articleID;
+
+- (void)deleteAllCollectData;
 @end

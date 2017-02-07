@@ -130,51 +130,45 @@ const NSUInteger replyRow = 2;
 }
 
 - (void)moreOperation{
-    NSString * addCollectBtnTitle = NSLocalizedString(@"收藏文章", nil);
     NSString * cancelBtnTitle = NSLocalizedString(@"取消", nil);
-    NSString * deleteCollectBtnTitle = NSLocalizedString(@"取消收藏", nil);
-    
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"已取消操作.");
     }];
     [alertController addAction:cancelAction];
-
+    
+    NSString * hudtext;
+    NSString * notificationName;
+    NSString * collectBtnTitle;
+    UIAlertAction * collectAction;
     if (self.threadType == ASThreadsEnterTypeCollection) {
-        UIAlertAction * deleteCollectAction = [UIAlertAction actionWithTitle:deleteCollectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            NSDictionary* userInfo = @{@"articleID": [NSString stringWithFormat:@"%ld",(long)_viewModel.articleEntity ]};
-            
-            MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeCustomView;
-            hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
-            
-            hud.labelText = @"已取消收藏";
-            hud.minShowTime = 2;
-            
-            [hud showAnimated:YES whileExecutingBlock:^{
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"deleteCollectedArticle" object:nil userInfo:userInfo];
-            }];
-        }];
-        [alertController addAction:deleteCollectAction];
+        hudtext = @"已取消收藏";
+        collectBtnTitle = NSLocalizedString(@"取消收藏", nil);
+        notificationName = @"deleteCollectedArticle";
     }else{
-        UIAlertAction * addCollectAction = [UIAlertAction actionWithTitle:addCollectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-            NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
-            
-            //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
-            MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeCustomView;
-            hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
-            
-            hud.labelText = @"已收藏";
-            hud.minShowTime = 2;
-            
-            [hud showAnimated:YES whileExecutingBlock:^{
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
-            }];
-        }];
-        [alertController addAction:addCollectAction];
+        hudtext = @"已收藏";
+        collectBtnTitle = NSLocalizedString(@"收藏文章", nil);
+        notificationName = @"addNewCollectedArticle";
     }
+    
+    collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
+        
+        //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
+        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
+        
+        hud.labelText = hudtext;
+        hud.minShowTime = 2;
+        
+        [hud showAnimated:YES whileExecutingBlock:^{
+            [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:nil userInfo:userInfo];
+        }];
+    }];
+    
+    [alertController addAction:collectAction];
     
     [self presentViewController:alertController animated:YES completion:nil];
 }

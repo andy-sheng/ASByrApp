@@ -27,4 +27,8 @@ singleton_implementation(XQUserService)
     return dictionary;
 }
 
+-(void)deleteAllUser{
+    NSString * sql = @"delete from User";
+    [[DBManager sharedDBManager] executeNonQuery:sql];
+}
 @end

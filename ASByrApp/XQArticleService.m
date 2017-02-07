@@ -77,7 +77,12 @@ singleton_implementation(XQArticleService)
 }
 
 - (void)deleteArticle:(NSString *)articleID{
-    NSString * sql = [NSString stringWithFormat:@"delete from Article where articleID = '%@'",articleID];
+    NSString * sql;
+    if (articleID) {
+        sql = [NSString stringWithFormat:@"delete from Article where articleID = '%@'",articleID];
+    }else{
+        sql = @"delete from Article";
+    }
     [[DBManager sharedDBManager] executeNonQuery:sql];
 }
 @end
