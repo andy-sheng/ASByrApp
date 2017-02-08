@@ -53,7 +53,7 @@
             tcount = true;
             [str appendString:@"<br></br>"];
         }else if ([[ts stringByReplacingOccurrencesOfString:@" " withString:@""] length]>0){
-            [str appendFormat:@"<br>%@</br>",ss];
+            [str appendFormat:@"%@</br>",ss];
             tcount = false;
         }
     }

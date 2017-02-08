@@ -25,3 +25,27 @@ body{
     width:96%;
     margin:5px;
 }
+
+p .1{
+    font-size: x-small;
+}
+
+p .2{
+    font-size: small;
+}
+
+p .3{
+    font-size: medium;
+}
+
+p .4{
+    font-size: large;
+}
+
+p .5{
+    font-size: x-large;
+}
+
+p .6{
+    font-size: xx-large;
+}

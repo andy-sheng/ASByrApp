@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, XQCollectionUpdateType){
 };
 
 @class XQByrArticle,XQByrCollection;
+
 @interface XQCollectDataCenter : NSObject
 
 - (NSArray * __nullable)fetchCollectListFromLocal:(NSDictionary * __nullable)filters;
