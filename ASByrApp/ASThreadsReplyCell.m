@@ -14,7 +14,7 @@
 @interface ASThreadsReplyCell()<TTTAttributedLabelDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *faceImage;
 @property (weak, nonatomic) IBOutlet UILabel *uidLabel;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
 @end
 
@@ -22,8 +22,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
-    self.contentLabel.delegate = self;
+//    self.contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+//    self.contentLabel.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -38,16 +38,17 @@
     [self.faceImage setImageWithURL:[NSURL URLWithString:faceUrl]];
     self.uidLabel.text = uid;
     
-    NSAttributedString * str = [[NSAttributedString alloc] initWithUBB:content];
-    [self.contentLabel setText:str];
-    [str enumerateAttribute:NSLinkAttributeName
-                    inRange:NSMakeRange(0, str.length)
-                    options:NSAttributedStringEnumerationReverse
-                 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-                     if (value != nil) {
-                         [self.contentLabel addLinkToURL:value withRange:range];
-                     }
-                 }];
+    //NSAttributedString * str = [[NSAttributedString alloc] initWithUBB:content];
+    NSAttributedString *str = [NSAttributedString string:content];
+    [self.contentLabel setAttributedText:str];
+//    [str enumerateAttribute:NSLinkAttributeName
+//                    inRange:NSMakeRange(0, str.length)
+//                    options:NSAttributedStringEnumerationReverse
+//                 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+//                     if (value != nil) {
+//                         [self.contentLabel addLinkToURL:value withRange:range];
+//                     }
+//                 }];
     self.contentLabel.attributedText = str;
 }
 
