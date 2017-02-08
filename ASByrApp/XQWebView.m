@@ -30,8 +30,9 @@
 //KVO键值观察
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     UIScrollView * scrollView = object;
-    if (fabs(scrollView.contentSize.height-self.height)>5) {
+    if (fabs(scrollView.contentSize.height-self.height)> XQWebviewRefreshThresholdValue) {
         self.height = scrollView.contentSize.height;
+        NSLog(@"webview达到刷新阈值，新高度:%ld，将reload tableview",(long)self.height);
         [[NSNotificationCenter defaultCenter]postNotificationName:XQNotificationWebViewLoaded object:nil];
     }
 }

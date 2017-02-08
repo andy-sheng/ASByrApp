@@ -47,8 +47,10 @@
 #define XQSCREEN_W [UIScreen mainScreen].bounds.size.width
 #define XQSCREEN_H [UIScreen mainScreen].bounds.size.height
 
-
 //通知名称
 #define XQNotificationWebViewLoaded @"XQNotificationWebViewLoaded"
+
+//webview刷新阈值，过小可能界面闪烁
+#define XQWebviewRefreshThresholdValue 3
 
 #endif /* XQPrefixHeader_pch */
