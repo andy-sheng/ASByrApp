@@ -112,7 +112,7 @@
                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                error:nil];
     
-    [sizeReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<font size=\"$10%;\">$2</font>"];
+    [sizeReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<div class=\"xqfont\" id=\"xq$1font\">$2</div>"];
     
     
     NSRegularExpression *bReg = [NSRegularExpression regularExpressionWithPattern:@"\\[b\\](.*?)\\[/b\\]"
