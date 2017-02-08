@@ -165,75 +165,76 @@ typedef enum {
 @implementation NSAttributedString (ASUBB)
 
 + (instancetype)string:(NSString *)ubb {
+    NSLog(@"%@", ubb);
     NSMutableString *html = [NSMutableString stringWithString:[NSString stringWithFormat:@"<html><body>%@<body></html>", ubb]];
     
-    NSRegularExpression *sizeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[size=([0-9]+)\\](.*)\\[/size\\]"
-                                                                             options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *sizeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[size=([0-9]+)\\](.*?)\\[/size\\]"
+                                                                             options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                error:nil];
     
     [sizeReg replaceMatchesInString:html options:0 range:NSMakeRange(0, ubb.length) withTemplate:@"<font size='$1'>$2</font>"];
     
     
-    NSRegularExpression *bReg = [NSRegularExpression regularExpressionWithPattern:@"\\[b](.*)\\[/b\\]"
-                                                                          options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *bReg = [NSRegularExpression regularExpressionWithPattern:@"\\[b\\](.*?)\\[/b\\]"
+                                                                          options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                             error:nil];
     
     [bReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<b>$1</b>"];
    
     
-    NSRegularExpression *colorReg = [NSRegularExpression regularExpressionWithPattern:@"\\[color=(#[a-zA-Z0-9]*)\\](.*)\\[/color\\]"
-                                                                          options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *colorReg = [NSRegularExpression regularExpressionWithPattern:@"\\[color=(#[a-zA-Z0-9]*)\\](.*?)\\[/color\\]"
+                                                                          options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                             error:nil];
     
-    [colorReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<font color='$1'>$2</b>"];
+    [colorReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<font color='$1'>$2</font>"];
     
     
-    NSRegularExpression *codeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[code\\](.*)\\[/code\\]"
-                                                                              options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *codeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[code=[a-zA-Z0-9]+\\](.*?)\\[/code\\]"
+                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators|NSRegularExpressionDotMatchesLineSeparators
                                                                                 error:nil];
     
     [codeReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"$1"];
     
     
-    NSRegularExpression *emailReg = [NSRegularExpression regularExpressionWithPattern:@"\\[email=(.*)\\](.*)\\[/email\\]"
-                                                                            options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *emailReg = [NSRegularExpression regularExpressionWithPattern:@"\\[email=(.*)\\](.*?)\\[/email\\]"
+                                                                            options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                               error:nil];
     
     [emailReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<a href='mailto:$1'>$2</a>"];
     
     
-    NSRegularExpression *faceReg = [NSRegularExpression regularExpressionWithPattern:@"\\[face=(.*)\\](.*)\\[/face\\]"
-                                                                              options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *faceReg = [NSRegularExpression regularExpressionWithPattern:@"\\[face=(.*)\\](.*?)\\[/face\\]"
+                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                 error:nil];
     
     [faceReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<font face='$1'>$2</font>"];
     
     
-    NSRegularExpression *iReg = [NSRegularExpression regularExpressionWithPattern:@"\\[i\\](.*)\\[/i\\]"
-                                                                             options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *iReg = [NSRegularExpression regularExpressionWithPattern:@"\\[i\\](.*?)\\[/i\\]"
+                                                                             options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                error:nil];
     
     [iReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<i>$1</i>"];
     
 
     
-    NSRegularExpression *imgReg = [NSRegularExpression regularExpressionWithPattern:@"\\[img=(.*)\\](.*)\\[/img]"
-                                                                             options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *imgReg = [NSRegularExpression regularExpressionWithPattern:@"\\[img=(.*?)\\](.*?)\\[/img]"
+                                                                             options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                error:nil];
     
     [imgReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<img src='$1' style='max-width:300px;'/>"];
     
     
-    NSRegularExpression *uReg = [NSRegularExpression regularExpressionWithPattern:@"\\[u\\](.*)\\[/u]"
-                                                                             options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *uReg = [NSRegularExpression regularExpressionWithPattern:@"\\[u\\](.*?)\\[/u]"
+                                                                             options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                error:nil];
     
     [uReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<u>$1</u>"];
     
     
     
-    NSRegularExpression *urlReg = [NSRegularExpression regularExpressionWithPattern:@"\\[url=(.*)\\](.*)\\[/url]"
-                                                                             options:NSRegularExpressionCaseInsensitive
+    NSRegularExpression *urlReg = [NSRegularExpression regularExpressionWithPattern:@"\\[url=(.*)\\](.*?)\\[/url]"
+                                                                             options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
                                                                                error:nil];
     
     [urlReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<a href='$1'>$2</a>"];
@@ -263,7 +264,7 @@ typedef enum {
                                                                                        NSCharacterEncodingDocumentAttribute:@(NSUTF8StringEncoding)}
                                                                   documentAttributes:nil
                                                                                error:nil];
-    NSLog(@"%@", str);
+
     return str;
 }
 
