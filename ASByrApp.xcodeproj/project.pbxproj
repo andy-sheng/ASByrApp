@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */; };
 		751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */; };
+		75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */; };
 		75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */; };
 		75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */; };
 		75A4C1E71E1B971D00B563A7 /* XQSelfInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */; };
@@ -297,6 +298,8 @@
 		442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		751C917A1E1FC49900E6A3A5 /* XQCollectDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectDataCenter.h; sourceTree = "<group>"; };
 		751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectDataCenter.m; sourceTree = "<group>"; };
+		75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Extension.h"; sourceTree = "<group>"; };
+		75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Extension.m"; sourceTree = "<group>"; };
 		75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSelfInfoVC.h; sourceTree = "<group>"; };
 		75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQSelfInfoVC.m; sourceTree = "<group>"; };
@@ -882,6 +885,8 @@
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
 				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
 				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
+				75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */,
+				75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -1659,6 +1664,7 @@
 				A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */,
+				75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
 				75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */,
 				A95F63741CDF33970060075E /* XQCollectArticleVC.m in Sources */,

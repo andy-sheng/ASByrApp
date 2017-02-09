@@ -32,11 +32,11 @@
 }
 
 + (void)openDatabase{
-    [[DBManager sharedDBManager]openDb:XQDATABASE_NAME];
+    [[DBManager sharedDBManager] openDb:XQDATABASE_NAME];
 }
 
 + (void)closeDatabase{
-    [[DBManager sharedDBManager]closeDb];
+    [[DBManager sharedDBManager] closeDb];
 }
 
 @end

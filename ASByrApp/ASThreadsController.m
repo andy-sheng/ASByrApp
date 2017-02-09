@@ -22,6 +22,8 @@
 #import "XQCollectArticleVC.h"
 
 #import "XQThreadsDetailViewModel.h"
+
+#import "UIAlertController+Extension.h"
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
@@ -261,12 +263,16 @@ const NSUInteger replyRow = 2;
 
 - (void)fetchThreadsResponse:(ASByrResponse *)response {
     //NSLog(@"%@",response.reformedData[0]);
-    if (_isFirstLoad) {
-        for (NSInteger i = 1; i < [response.reformedData count]; i++) {
-            self.replyArticles = [self.replyArticles arrayByAddingObject:response.reformedData[i]];
+    if (response.isSucceeded) {
+        if (_isFirstLoad) {
+            for (NSInteger i = 1; i < [response.reformedData count]; i++) {
+                self.replyArticles = [self.replyArticles arrayByAddingObject:response.reformedData[i]];
+            }
+        }else{
+            self.replyArticles = [self.replyArticles arrayByAddingObjectsFromArray:response.reformedData];
         }
-    }else{
-        self.replyArticles = [self.replyArticles arrayByAddingObjectsFromArray:response.reformedData];
+    }else{//访问出错：服务器返回错误信息或网络错误
+        [self presentViewController:[UIAlertController alertControllerWithBriefInfo:response.response[@"msg"]] animated:YES completion:nil];
     }
     
     [self.tableView reloadData];
@@ -288,27 +294,29 @@ const NSUInteger replyRow = 2;
 }
 
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
-    NSMutableArray *reformedArticles = [NSMutableArray array];
-    if (_viewModel == nil) {
-        _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:response.response[@"article"][0]];
-        _isFirstLoad = true;
-    }else{
-        _isFirstLoad = false;
+    if (response.isSucceeded) {
+        NSMutableArray *reformedArticles = [NSMutableArray array];
+        if (_viewModel == nil) {
+            _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[[response.response objectForKey:@"article"] firstObject]];
+            _isFirstLoad = true;
+        }else{
+            _isFirstLoad = false;
+        }
+        //更新本地收藏文章的数据库
+        if(self.threadType == ASThreadsEnterTypeCollection){
+            NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCollectedArticle" object:nil userInfo:userInfo];
+        }
+        //mainarticle setContent:[NSString stringWithFormat:@"%@",[NSArray arraywith]]
+        for (NSDictionary * article in [response.response objectForKey:@"article"]) {
+            NSMutableDictionary * tmp = [NSMutableDictionary dictionary];
+            tmp[@"title"] = article[@"title"];
+            tmp[@"content"] = article[@"content"];
+            tmp[@"user"] = @{@"faceurl":article[@"user"][@"face_url"], @"uid":article[@"user"][@"id"]};
+            [reformedArticles addObject:tmp];
+        }
+        response.reformedData = reformedArticles;
     }
-    //更新本地收藏文章的数据库
-    if(self.threadType == ASThreadsEnterTypeCollection){
-        NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCollectedArticle" object:nil userInfo:userInfo];
-    }
-    //mainarticle setContent:[NSString stringWithFormat:@"%@",[NSArray arraywith]]
-    for (NSDictionary * article in response.response[@"article"]) {
-        NSMutableDictionary * tmp = [NSMutableDictionary dictionary];
-        tmp[@"title"] = article[@"title"];
-        tmp[@"content"] = article[@"content"];
-        tmp[@"user"] = @{@"faceurl":article[@"user"][@"face_url"], @"uid":article[@"user"][@"id"]};
-        [reformedArticles addObject:tmp];
-    }
-    response.reformedData = reformedArticles;
     return response;
 }
 
