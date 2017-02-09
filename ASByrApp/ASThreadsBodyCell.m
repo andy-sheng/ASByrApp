@@ -9,10 +9,14 @@
 #import "ASThreadsBodyCell.h"
 #import "NSAttributedString+ASUBB.h"
 #import "TTTAttributedLabel.h"
+#import "ASUbbParser.h"
+#import <YYText.h>
+#import <YYTextParser.h>
+#import <YYLabel.h>
 
 @interface ASThreadsBodyCell()<TTTAttributedLabelDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet YYLabel *contentLabel;
 
 @end
 
@@ -20,8 +24,19 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    ASUbbParser *parser = [[ASUbbParser alloc] init];
+    self.contentLabel.textParser = parser;
+    //self.contentLabel.textParser = [[YYTextSimpleMarkdownParser alloc] init];
+    
+    YYTextLinePositionSimpleModifier *modifier = [YYTextLinePositionSimpleModifier new];
+    modifier.fixedLineHeight = 24;
+    //self.contentLabel.linePositionModifier = modifier;
+    self.contentLabel.numberOfLines = 0;
+    self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.contentLabel.preferredMaxLayoutWidth = [UIScreen mainScreen].bounds.size.width;
 //    self.contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
-//    self.contentLabel.delegate = self;
+    //self.contentLabel.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -32,16 +47,8 @@
 
 - (void)setupWithContent:(NSString *)content {
     //NSAttributedString * str = [[NSAttributedString alloc] initWithUBB:content];
-    NSAttributedString *str = [NSAttributedString string:content];
-    [self.contentLabel setAttributedText:str];
-//    [str enumerateAttribute:NSLinkAttributeName
-//                    inRange:NSMakeRange(0, str.length)
-//                    options:NSAttributedStringEnumerationReverse
-//                 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-//        if (value != nil) {
-//            [self.contentLabel addLinkToURL:value withRange:range];
-//        }
-//    }];
+    
+    self.contentLabel.text = content;
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label
