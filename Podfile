@@ -5,10 +5,10 @@ target 'ASByrApp' do
     pod 'WMPageController'
     pod 'YYText'
     pod 'YYModel'
+    pod 'YYImage'
+    pod 'YYWebImage'
     pod 'Reveal-iOS-SDK', :configurations => ['Debug']
     pod 'Masonry'
     pod 'MBProgressHUD', '~> 0.9.2'
-    pod 'OLImageView'
-    pod 'FLAnimatedImage', '~> 1.0'
     pod 'TTTAttributedLabel'
 end

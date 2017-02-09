@@ -9,12 +9,13 @@
 #import "ASThreadsReplyCell.h"
 #import "NSAttributedString+ASUBB.h"
 #import "UIImageView+AFNetworking.h"
-#import "TTTAttributedLabel.h"
+#import "ASUbbParser.h"
+#import <YYLabel.h>
 
-@interface ASThreadsReplyCell()<TTTAttributedLabelDelegate>
+@interface ASThreadsReplyCell()
 @property (weak, nonatomic) IBOutlet UIImageView *faceImage;
 @property (weak, nonatomic) IBOutlet UILabel *uidLabel;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet YYLabel *contentLabel;
 
 @end
 
@@ -22,8 +23,15 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-//    self.contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
-//    self.contentLabel.delegate = self;
+    ASUbbParser *parser = [[ASUbbParser alloc] init];
+    self.contentLabel.textParser = parser;
+    
+    YYTextLinePositionSimpleModifier *modifier = [YYTextLinePositionSimpleModifier new];
+    modifier.fixedLineHeight = 24;
+    //self.contentLabel.linePositionModifier = modifier;
+    self.contentLabel.numberOfLines = 0;
+    self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.contentLabel.preferredMaxLayoutWidth = [UIScreen mainScreen].bounds.size.width;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,24 +45,8 @@
                  content:(NSString *)content {
     [self.faceImage setImageWithURL:[NSURL URLWithString:faceUrl]];
     self.uidLabel.text = uid;
-    
-    //NSAttributedString * str = [[NSAttributedString alloc] initWithUBB:content];
-    NSAttributedString *str = [NSAttributedString string:content];
-    [self.contentLabel setAttributedText:str];
-//    [str enumerateAttribute:NSLinkAttributeName
-//                    inRange:NSMakeRange(0, str.length)
-//                    options:NSAttributedStringEnumerationReverse
-//                 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-//                     if (value != nil) {
-//                         [self.contentLabel addLinkToURL:value withRange:range];
-//                     }
-//                 }];
-    self.contentLabel.attributedText = str;
+    self.contentLabel.text = content;
 }
 
-- (void)attributedLabel:(TTTAttributedLabel *)label
-   didSelectLinkWithURL:(NSURL *)url {
-    [self.delegate linkClicked:url];
-}
 
 @end
