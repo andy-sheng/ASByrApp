@@ -20,10 +20,10 @@
 #import "MBProgressHUD.h"
 #import "ASArticleListVC.h"
 #import "XQCollectArticleVC.h"
-
 #import "XQThreadsDetailViewModel.h"
 
 #import "UIAlertController+Extension.h"
+
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
@@ -42,7 +42,6 @@ const NSUInteger replyRow = 2;
 @property(assign, nonatomic) NSUInteger page;
 @property(assign, nonatomic) ASThreadsEnterType threadType;
 @property(assign, nonatomic) BOOL isLoadThreads;
-@property(assign, nonatomic) BOOL isFirstLoad;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
@@ -264,7 +263,7 @@ const NSUInteger replyRow = 2;
 - (void)fetchThreadsResponse:(ASByrResponse *)response {
     //NSLog(@"%@",response.reformedData[0]);
     if (response.isSucceeded) {
-        if (_isFirstLoad) {
+        if (_isLoadThreads) {
             for (NSInteger i = 1; i < [response.reformedData count]; i++) {
                 self.replyArticles = [self.replyArticles arrayByAddingObject:response.reformedData[i]];
             }
@@ -296,11 +295,8 @@ const NSUInteger replyRow = 2;
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
     if (response.isSucceeded) {
         NSMutableArray *reformedArticles = [NSMutableArray array];
-        if (_viewModel == nil) {
+        if (_isLoadThreads) {
             _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[[response.response objectForKey:@"article"] firstObject]];
-            _isFirstLoad = true;
-        }else{
-            _isFirstLoad = false;
         }
         //更新本地收藏文章的数据库
         if(self.threadType == ASThreadsEnterTypeCollection){
@@ -312,6 +308,7 @@ const NSUInteger replyRow = 2;
             NSMutableDictionary * tmp = [NSMutableDictionary dictionary];
             tmp[@"title"] = article[@"title"];
             tmp[@"content"] = article[@"content"];
+            
             tmp[@"user"] = @{@"faceurl":article[@"user"][@"face_url"], @"uid":article[@"user"][@"id"]};
             [reformedArticles addObject:tmp];
         }
@@ -342,6 +339,7 @@ const NSUInteger replyRow = 2;
         _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.separatorColor = [UIColor whiteColor];
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.estimatedRowHeight = 50.0;
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
@@ -376,7 +374,7 @@ const NSUInteger replyRow = 2;
 
 - (XQWebView *)webBodyCell{
     if (_webBodyCell == nil) {
-        _webBodyCell = [[XQWebView alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, 40)];
+        _webBodyCell = [[XQWebView alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, 100)];
         _webBodyCell.navigationDelegate = self;
     }
     return _webBodyCell;
