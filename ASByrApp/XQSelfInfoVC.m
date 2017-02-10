@@ -52,10 +52,9 @@
     userInfo.userId = response.reformedData[@"uid"];
     userInfo.userAvatar=[NSData dataWithContentsOfURL:[NSURL URLWithString:response.reformedData[@"uavatar"]]];
     userInfo.loginStatus = YES;
-        
     //保存用户数据到沙盒
     [userInfo setDataIntoSandbox];
-    
+    [userInfo getDataFromSandbox];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self loadDataToView];
     });
@@ -75,9 +74,8 @@
 }
 
 - (void)loadData{
-    [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     //[XQUserInfo sharedXQUserInfo].loginStatus=false;
-    if (![XQUserInfo sharedXQUserInfo].loginStatus) {
+    if (![XQUserInfo sharedXQUserInfo].loginStatus !=YES) {
         self.userApi= [[ASByrUser alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
         self.userApi.responseDelegate = self;
         [self.userApi fetchUserInfoWithReformer:self];
@@ -86,7 +84,6 @@
 }
 
 - (void)loadDataToView{
-    NSLog(@"222222222");
     self.userIdLabel.text=[NSString stringWithFormat:@"论坛ID:%@",[XQUserInfo sharedXQUserInfo].userId];
     self.userNameLabel.text = [NSString stringWithFormat:@"姓名:%@",[XQUserInfo sharedXQUserInfo].userName];
     self.userAvatar.image =[UIImage imageWithData:[XQUserInfo sharedXQUserInfo].userAvatar];

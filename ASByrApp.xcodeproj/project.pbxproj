@@ -8,16 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */; };
+		751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */; };
+		75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */; };
 		75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */; };
 		75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */; };
 		75A4C1E71E1B971D00B563A7 /* XQSelfInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */; };
 		75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */; };
 		75A4C20A1E1BC67D00B563A7 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2071E1BC67D00B563A7 /* DBManager.m */; };
 		75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */; };
-		75A4C2111E1BC6B200B563A7 /* XQArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C20E1E1BC6B200B563A7 /* XQArticle.m */; };
-		75A4C2121E1BC6B200B563A7 /* XQUserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2101E1BC6B200B563A7 /* XQUserEntity.m */; };
 		75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2141E1BC6C400B563A7 /* XQArticleService.m */; };
 		75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2161E1BC6C400B563A7 /* XQUserService.m */; };
+		75B7C9C91E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7C9C81E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m */; };
+		75D4B6F81E46DB24004906B5 /* XQArticleBody.css in Resources */ = {isa = PBXBuildFile; fileRef = 75D4B6F71E46DB24004906B5 /* XQArticleBody.css */; };
+		75D4B6FC1E4746A6004906B5 /* XQWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75D4B6FB1E4746A6004906B5 /* XQWebView.m */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
@@ -293,6 +296,10 @@
 
 /* Begin PBXFileReference section */
 		442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		751C917A1E1FC49900E6A3A5 /* XQCollectDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectDataCenter.h; sourceTree = "<group>"; };
+		751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectDataCenter.m; sourceTree = "<group>"; };
+		75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Extension.h"; sourceTree = "<group>"; };
+		75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Extension.m"; sourceTree = "<group>"; };
 		75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSelfInfoVC.h; sourceTree = "<group>"; };
 		75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQSelfInfoVC.m; sourceTree = "<group>"; };
@@ -305,14 +312,15 @@
 		75A4C2071E1BC67D00B563A7 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		75A4C2081E1BC67D00B563A7 /* XQDatabaseCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDatabaseCreator.h; sourceTree = "<group>"; };
 		75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDatabaseCreator.m; sourceTree = "<group>"; };
-		75A4C20D1E1BC6B200B563A7 /* XQArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticle.h; sourceTree = "<group>"; };
-		75A4C20E1E1BC6B200B563A7 /* XQArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticle.m; sourceTree = "<group>"; };
-		75A4C20F1E1BC6B200B563A7 /* XQUserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserEntity.h; sourceTree = "<group>"; };
-		75A4C2101E1BC6B200B563A7 /* XQUserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserEntity.m; sourceTree = "<group>"; };
 		75A4C2141E1BC6C400B563A7 /* XQArticleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticleService.m; sourceTree = "<group>"; };
 		75A4C2151E1BC6C400B563A7 /* XQArticleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticleService.h; sourceTree = "<group>"; };
 		75A4C2161E1BC6C400B563A7 /* XQUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserService.m; sourceTree = "<group>"; };
 		75A4C2171E1BC6C400B563A7 /* XQUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserService.h; sourceTree = "<group>"; };
+		75B7C9C71E45AB7500DCD4D1 /* XQThreadsDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQThreadsDetailViewModel.h; sourceTree = "<group>"; };
+		75B7C9C81E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQThreadsDetailViewModel.m; sourceTree = "<group>"; };
+		75D4B6F71E46DB24004906B5 /* XQArticleBody.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = XQArticleBody.css; sourceTree = "<group>"; };
+		75D4B6FA1E4746A6004906B5 /* XQWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQWebView.h; sourceTree = "<group>"; };
+		75D4B6FB1E4746A6004906B5 /* XQWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQWebView.m; sourceTree = "<group>"; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
@@ -636,6 +644,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		751C91781E1FC3E300E6A3A5 /* DataCenter */ = {
+			isa = PBXGroup;
+			children = (
+				751C917A1E1FC49900E6A3A5 /* XQCollectDataCenter.h */,
+				751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */,
+			);
+			name = DataCenter;
+			sourceTree = "<group>";
+		};
 		75A4C1E21E1B970000B563A7 /* Personal(设置) */ = {
 			isa = PBXGroup;
 			children = (
@@ -659,25 +676,14 @@
 		75A4C2051E1BC65600B563A7 /* Sqlite */ = {
 			isa = PBXGroup;
 			children = (
+				751C91781E1FC3E300E6A3A5 /* DataCenter */,
 				75A4C2131E1BC6B800B563A7 /* Service */,
-				75A4C20C1E1BC6A600B563A7 /* Entity */,
 				75A4C2061E1BC67D00B563A7 /* DBManager.h */,
 				75A4C2071E1BC67D00B563A7 /* DBManager.m */,
 				75A4C2081E1BC67D00B563A7 /* XQDatabaseCreator.h */,
 				75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */,
 			);
 			name = Sqlite;
-			sourceTree = "<group>";
-		};
-		75A4C20C1E1BC6A600B563A7 /* Entity */ = {
-			isa = PBXGroup;
-			children = (
-				75A4C20D1E1BC6B200B563A7 /* XQArticle.h */,
-				75A4C20E1E1BC6B200B563A7 /* XQArticle.m */,
-				75A4C20F1E1BC6B200B563A7 /* XQUserEntity.h */,
-				75A4C2101E1BC6B200B563A7 /* XQUserEntity.m */,
-			);
-			name = Entity;
 			sourceTree = "<group>";
 		};
 		75A4C2131E1BC6B800B563A7 /* Service */ = {
@@ -689,6 +695,23 @@
 				75A4C2171E1BC6C400B563A7 /* XQUserService.h */,
 			);
 			name = Service;
+			sourceTree = "<group>";
+		};
+		75B7C9C61E45AAEA00DCD4D1 /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				75B7C9C71E45AB7500DCD4D1 /* XQThreadsDetailViewModel.h */,
+				75B7C9C81E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m */,
+			);
+			name = viewmodel;
+			sourceTree = "<group>";
+		};
+		75D4B6F91E4702FA004906B5 /* webresouce */ = {
+			isa = PBXGroup;
+			children = (
+				75D4B6F71E46DB24004906B5 /* XQArticleBody.css */,
+			);
+			name = webresouce;
 			sourceTree = "<group>";
 		};
 		A11FBC751CD50BC50029DAC8 /* model */ = {
@@ -703,6 +726,7 @@
 		A16885D01CC0D22D00338353 /* threads(帖子详情) */ = {
 			isa = PBXGroup;
 			children = (
+				75B7C9C61E45AAEA00DCD4D1 /* viewmodel */,
 				A16885D11CC0D24400338353 /* view */,
 				A16885CD1CBF469300338353 /* ASThreadsController.h */,
 				A16885CE1CBF469300338353 /* ASThreadsController.m */,
@@ -722,6 +746,8 @@
 				A16885E11CC0D51000338353 /* ASThreadsReplyCell.h */,
 				A16885E21CC0D51000338353 /* ASThreadsReplyCell.m */,
 				A16885E31CC0D51000338353 /* ASThreadsReplyCell.xib */,
+				75D4B6FA1E4746A6004906B5 /* XQWebView.h */,
+				75D4B6FB1E4746A6004906B5 /* XQWebView.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -751,6 +777,7 @@
 		A16E1A3A1CAD6B9500F7C1FA /* ASByrApp */ = {
 			isa = PBXGroup;
 			children = (
+				75D4B6F91E4702FA004906B5 /* webresouce */,
 				75A4C2051E1BC65600B563A7 /* Sqlite */,
 				75A4C1E21E1B970000B563A7 /* Personal(设置) */,
 				A16E1A7A1CB246C000F7C1FA /* common */,
@@ -858,6 +885,8 @@
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
 				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
 				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
+				75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */,
+				75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -1333,6 +1362,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75D4B6F81E46DB24004906B5 /* XQArticleBody.css in Resources */,
 				A16E1A781CAEBACE00F7C1FA /* top10.png in Resources */,
 				A1C004071CEC189100AA6B53 /* emc2.gif in Resources */,
 				A1C004AD1CEC189100AA6B53 /* em57.gif in Resources */,
@@ -1630,16 +1660,16 @@
 				A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */,
 				A95F637F1CE016850060075E /* XQCFrameLayout.m in Sources */,
 				75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */,
-				75A4C2111E1BC6B200B563A7 /* XQArticle.m in Sources */,
-				75A4C2121E1BC6B200B563A7 /* XQUserEntity.m in Sources */,
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
 				A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */,
+				75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
 				75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */,
 				A95F63741CDF33970060075E /* XQCollectArticleVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
+				75B7C9C91E45AB7500DCD4D1 /* XQThreadsDetailViewModel.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
@@ -1649,12 +1679,14 @@
 				A1BFB6451CC4CDED00FE5CA1 /* ASSectionListVC.m in Sources */,
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
+				751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */,
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
 				A95F637A1CDF814F0060075E /* XQCollectiArticleCell.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A192A1581CE32AE40024C694 /* ASTop10SeperatorCell.m in Sources */,
+				75D4B6FC1E4746A6004906B5 /* XQWebView.m in Sources */,
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A91776281CC76CE500ED84B3 /* XQBoardModel.m in Sources */,
 				A95F63821CE427610060075E /* XQCLayoutAttributes.m in Sources */,

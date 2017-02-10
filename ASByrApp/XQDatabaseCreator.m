@@ -27,16 +27,16 @@
 }
 
 + (void)createArticleTable{
-    NSString *sql=@"CREATE TABLE Article (articleID text PRIMARY KEY,title text,boardName text,boardDescription text,content text, firstImageUrl text, collectTime text, author text REFERENCES User (userID) )";
+    NSString *sql=@"CREATE TABLE Article (articleID text PRIMARY KEY,title text,boardName text,boardDescription text,content text, firstImageUrl text,replyCount text, collectTime text, author text REFERENCES User (userID) )";
     [[DBManager sharedDBManager] executeNonQuery:sql];
 }
 
 + (void)openDatabase{
-    [[DBManager sharedDBManager]openDb:XQDATABASE_NAME];
+    [[DBManager sharedDBManager] openDb:XQDATABASE_NAME];
 }
 
 + (void)closeDatabase{
-    [[DBManager sharedDBManager]closeDb];
+    [[DBManager sharedDBManager] closeDb];
 }
 
 @end

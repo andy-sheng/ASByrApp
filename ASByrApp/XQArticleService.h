@@ -8,16 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "XQSingleton.h"
-@class XQArticle;
+@class XQByrArticle, XQByrCollection;
 @interface XQArticleService : NSObject
 
-+ (NSArray *)getAllArticles;
++ (NSArray * _Nullable)getAllArticles;
 
-- (void)addArticle:(XQArticle *)article;
+- (void)addArticle:(XQByrArticle * _Nonnull)article andParameters:(NSDictionary * _Nonnull)parameters;
 
-- (void)removeArticle:(XQArticle *)article;
+- (void)addArticleWithCollection:(XQByrCollection * _Nonnull )article andParameters:(NSDictionary * _Nonnull)parameters;
 
-- (void)modifyArticle:(XQArticle *)article;
++ (NSDictionary * _Nullable)getArticleById:(NSString * __nonnull)articleID;
 
-+ (XQArticle *)getArticleById:(NSString *)articleID;
++ (NSArray * _Nullable)getArticlesByFilters:(NSDictionary * _Nonnull)filters;
+
+- (void)updateArticle:(NSString * _Nonnull)articleID andParameters:(NSDictionary * _Nonnull)dic;
+
+- (void)deleteArticle:(NSString * _Nullable)articleID;
 @end

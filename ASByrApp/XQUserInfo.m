@@ -8,28 +8,25 @@
 
 #import "XQUserInfo.h"
 
-#define UserId @"userId"
-#define UserName @"userName"
-#define UserAvatar @"userFace"
-#define UserLoginStatus @"userLoginStatus"
-
 @implementation XQUserInfo
 singleton_implementation(XQUserInfo);
 
 -(void)getDataFromSandbox{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    self.userId = [defaults objectForKey:UserId];
-    self.userName = [defaults objectForKey:UserName];
-    self.userAvatar = [defaults objectForKey:UserAvatar];
-    self.loginStatus = [defaults objectForKey:UserLoginStatus];
+    self.userId = [defaults objectForKey:XQByrUserIdKey];
+    self.userName = [defaults objectForKey:XQByrUserNameKey];
+    self.userAvatar = [defaults objectForKey:XQByrUserAvatarKey];
+    self.loginStatus = [defaults objectForKey:XQByrUserLoginStatusKey];
+    self.firstLogin = [defaults objectForKey:XQByrFirstLoginStatusKey];
 }
 
 - (void)setDataIntoSandbox{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.userId forKey:UserId];
-    [defaults setObject:self.userName forKey:UserName];
-    [defaults setObject:self.userAvatar forKey:UserAvatar];
-    [defaults setBool:self.loginStatus forKey:UserLoginStatus];
+    [defaults setObject:self.userId forKey:XQByrUserIdKey];
+    [defaults setObject:self.userName forKey:XQByrUserNameKey];
+    [defaults setObject:self.userAvatar forKey:XQByrUserAvatarKey];
+    [defaults setBool:self.loginStatus forKey:XQByrUserLoginStatusKey];
+    [defaults setBool:self.firstLogin forKey:XQByrFirstLoginStatusKey];
     [defaults synchronize];
 }
 @end

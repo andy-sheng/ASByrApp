@@ -1,4 +1,4 @@
-//
+///
 //  DBManager.m
 //  ASByrApp
 //
@@ -7,7 +7,6 @@
 //
 
 #import "DBManager.h"
-#import "XQArticle.h"
 @implementation DBManager
 singleton_implementation(DBManager)
 
@@ -66,7 +65,9 @@ singleton_implementation(DBManager)
             for (int i=0; i<columnCount; i++) {
                 const char *name= sqlite3_column_name(stmt, i);//取得列名
                 const unsigned char *value= sqlite3_column_text(stmt, i);//取得某列的值
-                dic[[NSString stringWithUTF8String:name]]=[NSString stringWithUTF8String:(const char *)value];
+                if (value) {
+                    dic[[NSString stringWithUTF8String:name]]=[NSString stringWithUTF8String:(const char *)value];
+                }
             }
             [rows addObject:dic];
         }

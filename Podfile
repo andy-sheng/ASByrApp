@@ -11,4 +11,5 @@ target 'ASByrApp' do
     pod 'Masonry'
     pod 'MBProgressHUD', '~> 0.9.2'
     pod 'TTTAttributedLabel'
+    pod 'SDWebImage', '~>3.8'
 end

@@ -1,0 +1,67 @@
+body{
+    margin:5 10 20 10px;
+    background-color:#f6f6f6;
+}
+
+#content{
+    font-size:22px;
+    color:black;
+}
+
+.img-parent{
+    text-align:center;
+}
+
+.img-parent img{
+    width:96%;
+}
+
+.audio-parent{
+    text-align:center;
+}
+
+.audio-parent audio{
+    min-height:100px;
+    width:96%;
+    margin:5px;
+}
+
+#content .xqfont{
+    display:inline;
+}
+
+#xq1font{
+    font-size: 22px;
+}
+
+#xq2font{
+    font-size: 22px;
+}
+
+#xq3font{
+    font-size: 34px;
+}
+
+#xq4font{
+    font-size: 40px;
+}
+
+#xq5font{
+    font-size: 46px;
+}
+
+#xq6font{
+    font-size: 52px;
+}
+
+#xq7font{
+    font-size: 58px;
+}
+
+#xq8font{
+    font-size: 64px;
+}
+
+#xq9font{
+    font-size: 70px;
+}

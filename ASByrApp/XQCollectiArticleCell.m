@@ -46,7 +46,7 @@
         self.wapDownView = wapDownView;
         [self.wapView addSubview:wapDownView];
         
-        self.firstImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fire"]];
+        self.firstImageView = [[UIImageView alloc]initWithFrame:self.wapUpView.bounds];
         [self.wapUpView addSubview:self.firstImageView];
         
         UILabel * titleLabel=[UILabel new];
@@ -65,7 +65,7 @@
         boardNameLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:10];
         [self.wapUpView addSubview:boardNameLabel];
         
-        self.userImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fire"]];
+        self.userImageView = [[UIImageView alloc]initWithFrame:self.wapDownView.bounds];
         self.userImageView.layer.masksToBounds=YES;
         self.userImageView.layer.cornerRadius=IMAGE_WIDTH/2;
         self.userImageView.layer.borderWidth =1;
@@ -159,7 +159,7 @@
     self.titleLabel.text = [dict[@"title"] copy];
     self.boardNameLabel.text = [dict[@"boardName"] copy];
     self.userNameLabel.text = [dict[@"userName"] copy];
-    self.replyCount.text = [NSString stringWithFormat:@"%@.R",dict[@"replyCount"]];
+    self.replyCount.text = [NSString stringWithFormat:@"%@条回复",dict[@"replyCount"]];
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{

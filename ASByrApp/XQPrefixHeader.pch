@@ -9,6 +9,12 @@
 #ifndef XQPrefixHeader_pch
 #define XQPrefixHeader_pch
 
+//NSLog宏定义
+#ifdef DEBUG
+#define NSLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+#else
+#define NSLog(format, ...)
+#endif
 //一些适用于全局的宏
 
 #define D_MINUTE 60
@@ -25,5 +31,26 @@
 #define COLLECTION_FILE @"XQCollection"
 
 #define XQDATABASE_NAME @"XQByrDatabase.db"
+
+#define XQCOLLECTION_FIRST_IMAGE @"fire"
+
+#define XQCOLLECTION_PROFILE_IMAGE @"blank"
+
+//用于沙盒中存储登录用户信息
+#define XQByrUserIdKey @"userId"
+#define XQByrUserNameKey @"userName"
+#define XQByrUserAvatarKey @"userFace"
+#define XQByrUserLoginStatusKey @"userLoginStatus"
+#define XQByrFirstLoginStatusKey @"userFirstLogin"
+
+//硬件信息
+#define XQSCREEN_W [UIScreen mainScreen].bounds.size.width
+#define XQSCREEN_H [UIScreen mainScreen].bounds.size.height
+
+//通知名称
+#define XQNotificationWebViewLoaded @"XQNotificationWebViewLoaded"
+
+//webview刷新阈值，过小可能界面闪烁
+#define XQWebviewRefreshThresholdValue 3
 
 #endif /* XQPrefixHeader_pch */

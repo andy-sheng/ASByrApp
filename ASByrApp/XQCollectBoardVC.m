@@ -104,4 +104,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 */
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addNewCollectedBoard" object:nil];
+}
 @end

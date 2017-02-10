@@ -9,15 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "XQSingleton.h"
 
-@class XQUserEntity;
+@class XQByrUser;
 
 @interface XQUserService : NSObject
 singleton_interface(XQUserService)
 
-- (void)addUser:(XQUserEntity *)user;
+- (void)addUser:(XQByrUser *)user;
 
-- (void)removeUser:(XQUserEntity *)user;
-- (void)removeUserById:(NSString *)userId;
++ (NSDictionary *)getUserById:(NSString *)userId;
 
-- (XQUserEntity *)getUserById:(NSString *)userId;
+- (void)deleteAllUser;
 @end
