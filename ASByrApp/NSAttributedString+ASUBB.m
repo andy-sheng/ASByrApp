@@ -165,7 +165,7 @@ typedef enum {
 @implementation NSAttributedString (ASUBB)
 
 + (instancetype)string:(NSString *)ubb {
-    NSLog(@"%@", ubb);
+    //NSLog(@"%@", ubb);
     NSMutableString *html = [NSMutableString stringWithString:[NSString stringWithFormat:@"<html><body>%@<body></html>", ubb]];
     
     NSRegularExpression *sizeReg = [NSRegularExpression regularExpressionWithPattern:@"\\[size=([0-9]+)\\](.*?)\\[/size\\]"
@@ -256,7 +256,7 @@ typedef enum {
     
 
     
-    NSLog(@"%@", html);
+    //NSLog(@"%@", html);
    
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding]
                                                                              options:@{

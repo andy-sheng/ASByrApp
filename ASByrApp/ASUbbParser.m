@@ -9,11 +9,11 @@
 #import "ASUbbParser.h"
 #import "UIColor+Hex.h"
 
-#import <NSAttributedString+YYText.h>
-#import <YYTextUtilities.h>
-#import <YYTextAttribute.h>
-#import <YYImage.h>
-#import <YYWebImage.h>
+#import "NSAttributedString+YYText.h"
+#import "YYTextUtilities.h"
+#import "YYTextAttribute.h"
+#import "YYImage.h"
+#import "YYWebImage.h"
 
 @implementation ASUbbParser {
     UIFont *_font;

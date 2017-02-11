@@ -13,6 +13,9 @@
 #import "ASThreadsController.h"
 #import "ASByrToken.h"
 #import "ASByrWidget.h"
+#import "XQByrArticle.h"
+#import "XQByrUser.h"
+#import "YYModel.h"
 
 #define END_REFRESHING [self.tableView.mj_header endRefreshing];
 
@@ -66,10 +69,10 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row % 2 == 0) {
         ASTop10Cell *cell = (ASTop10Cell*)[tableView dequeueReusableCellWithIdentifier:@"ASTop10Cell"];
-        [cell setupWithface:self.top10[indexPath.row / 2][@"user"][@"face"]
-                        uid:self.top10[indexPath.row / 2][@"user"][@"uid"]
-                      title:self.top10[indexPath.row / 2][@"title"]
-                    content:self.top10[indexPath.row / 2][@"content"]
+        [cell setupWithface:((XQByrArticle*)self.top10[indexPath.row / 2]).user.face_url
+                        uid:((XQByrArticle*)self.top10[indexPath.row / 2]).user.uid
+                      title:((XQByrArticle*)self.top10[indexPath.row / 2]).title
+                    content:((XQByrArticle*)self.top10[indexPath.row / 2]).content
                         num:indexPath.row / 2 + 1];
         return cell;
     } else {
@@ -90,8 +93,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%ld", indexPath.row);
     if (indexPath.row % 2 == 0) {
-        ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:self.top10[indexPath.row / 2][@"board"]
-                                                                                    aid:[self.top10[indexPath.row / 2][@"aid"] integerValue]];
+        ASThreadsController *threadsVC = [[ASThreadsController alloc] initWithWithBoard:((XQByrArticle*)self.top10[indexPath.row / 2]).board_name
+                                                                                    aid:((XQByrArticle*)self.top10[indexPath.row / 2]).aid];
         [self.navigationController pushViewController:threadsVC animated:YES];
     }
 }
@@ -157,19 +160,20 @@
 - (ASByrResponse*)commenReformer:(ASByrResponse*)response {
     if (response.statusCode >= 200 && response.statusCode < 300) {
         NSMutableArray * reformedData = [[NSMutableArray alloc] init];
-        for (NSDictionary* article in response.response[@"article"]) {
-            NSMutableDictionary * reformedArticle = [[NSMutableDictionary alloc] init];
-            reformedArticle[@"title"]   = article[@"title"];
-            reformedArticle[@"aid"]     = article[@"id"];
-            reformedArticle[@"content"] = article[@"content"];
-            reformedArticle[@"board"]   = article[@"board_name"];
-            if ([article objectForKey:@"user"] != nil && [article objectForKey:@"user"] != [NSNull null]) {
-                reformedArticle[@"user"]    = @{@"face": [article[@"user"] objectForKey:@"face_url"] ?: @"",
-                                                @"uid": [article[@"user"] objectForKey:@"id"] ?: @""};
-            } else {
-                reformedArticle[@"user"]    = @{@"face": @"",
-                                                @"uid": @"unknown" };
-            }
+        for (id article in response.response[@"article"]) {
+            XQByrArticle *reformedArticle = [XQByrArticle yy_modelWithJSON:article];
+//            NSMutableDictionary * reformedArticle = [[NSMutableDictionary alloc] init];
+//            reformedArticle[@"title"]   = article[@"title"];
+//            reformedArticle[@"aid"]     = article[@"id"];
+//            reformedArticle[@"content"] = article[@"content"];
+//            reformedArticle[@"board"]   = article[@"board_name"];
+//            if ([article objectForKey:@"user"] != nil && [article objectForKey:@"user"] != [NSNull null]) {
+//                reformedArticle[@"user"]    = @{@"face": [article[@"user"] objectForKey:@"face_url"] ?: @"",
+//                                                @"uid": [article[@"user"] objectForKey:@"id"] ?: @""};
+//            } else {
+//                reformedArticle[@"user"]    = @{@"face": @"",
+//                                                @"uid": @"unknown" };
+//            }
             
             [reformedData addObject:reformedArticle];
         }
