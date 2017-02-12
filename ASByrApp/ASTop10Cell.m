@@ -66,8 +66,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    _drawBorder = YES;
-    NSLog(@"awake");
+    
+    self.faceView.layer.masksToBounds = YES;
+    self.faceView.layer.cornerRadius = 15;
+    self.faceView.layer.borderWidth = 1;
+    self.faceView.layer.borderColor = FACE_BORDER_COLOR.CGColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

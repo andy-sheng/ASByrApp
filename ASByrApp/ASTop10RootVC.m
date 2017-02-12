@@ -35,7 +35,7 @@
         [self setupTitlesAndControllers];
         self.showOnNavigationBar = YES;
         self.menuBGColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.00];
-        self.titleColorSelected = [UIColor colorWithRed:0.00 green:0.63 blue:0.95 alpha:1.00];
+        self.titleColorSelected = MAIN_BLUE;
     }
     return self;
 }

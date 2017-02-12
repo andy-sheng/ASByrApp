@@ -16,20 +16,20 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="207"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nZ4-U0-vmx" id="Cx3-oE-bEk">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="206"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="207"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1k-qN-Ikz">
-                        <rect key="frame" x="8" y="66" width="584" height="20"/>
+                        <rect key="frame" x="8" y="46" width="584" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="igT-Ds-wYX">
-                        <rect key="frame" x="8" y="8" width="50" height="50"/>
+                        <rect key="frame" x="8" y="8" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="6sU-pK-EXF"/>
-                            <constraint firstAttribute="height" constant="50" id="8lc-hF-nr4"/>
+                            <constraint firstAttribute="width" constant="30" id="6sU-pK-EXF"/>
+                            <constraint firstAttribute="height" constant="30" id="8lc-hF-nr4"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Rq-M6-9NO">
@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="简要内容" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMR-rP-1FI">
-                        <rect key="frame" x="8" y="94" width="584" height="81"/>
+                        <rect key="frame" x="8" y="74" width="584" height="101"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.76070314645767212" green="0.76083242893218994" blue="0.7606850266456604" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -64,8 +64,8 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7z2-Zw-n49">
-                        <rect key="frame" x="66" y="24" width="46" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="46" y="16" width="37" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.75899439099999999" green="0.75899439099999999" blue="0.75899439099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

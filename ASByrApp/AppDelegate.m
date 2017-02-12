@@ -53,7 +53,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = tabBarVC;
     
-    self.window.tintColor = [UIColor colorWithRed:0.00 green:0.63 blue:0.95 alpha:1.00];
+    self.window.tintColor = MAIN_BLUE;
     
     //打开数据库
     [XQDatabaseCreator createDatabase];
