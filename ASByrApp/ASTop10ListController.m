@@ -44,7 +44,8 @@
         self.top10Type = top10Type;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 100.0;
-        [self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg3.png"]]];
+        //[self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg3.png"]]];
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:0.97 green:0.97 blue:0.96 alpha:1.00]];
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10Cell" bundle:nil] forCellReuseIdentifier:@"ASTop10Cell"];
         [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10SeperatorCell" bundle:nil] forCellReuseIdentifier:@"ASTop10SeperatorCell"];
@@ -62,6 +63,10 @@
     //self.widgerApi
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.top10 count] * 2 - 1;
 }
@@ -74,6 +79,7 @@
                       title:((XQByrArticle*)self.top10[indexPath.row / 2]).title
                     content:((XQByrArticle*)self.top10[indexPath.row / 2]).content
                         num:indexPath.row / 2 + 1];
+        [cell setupWithArticle:((XQByrArticle*)self.top10[indexPath.row / 2]) num:indexPath.row / 2 + 1];
         return cell;
     } else {
         ASTop10SeperatorCell *cell = (ASTop10SeperatorCell*)[tableView dequeueReusableCellWithIdentifier:@"ASTop10SeperatorCell"];
@@ -86,7 +92,7 @@
     if (indexPath.row % 2 == 0) {
         return UITableViewAutomaticDimension;
     } else {
-        return 30;
+        return 5;
     }
 }
 

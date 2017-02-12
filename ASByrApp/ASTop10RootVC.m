@@ -33,6 +33,9 @@
     self = [super init];
     if (self) {
         [self setupTitlesAndControllers];
+        self.showOnNavigationBar = YES;
+        self.menuBGColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.00];
+        self.titleColorSelected = [UIColor colorWithRed:0.00 green:0.63 blue:0.95 alpha:1.00];
     }
     return self;
 }
@@ -117,6 +120,7 @@
         _manageTop10Btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                         target:self
                                                                         action:@selector(manageTop10)];
+       // _manageTop10Btn.tintColor = [UIColor colorWithRed:0.00 green:0.63 blue:0.95 alpha:1.00];
     }
     return _manageTop10Btn;
 }

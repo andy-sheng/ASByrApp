@@ -205,7 +205,7 @@ const NSUInteger replyRow = 2;
     if (section == titleRow ){
         return _viewModel == nil ? 0 : 1;
     }else if( section == bodyRow) {
-        return 1;
+        return 0;
     }else{
         return [self.replyArticles count] == 0 ? 0 : [self.replyArticles count];
     }

@@ -24,7 +24,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Override point for customization after application launch
+    
     [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     
     ASTop10RootVC *top10VC = [[ASTop10RootVC alloc] init];
@@ -48,14 +49,11 @@
                                  [[UINavigationController alloc] initWithRootViewController:sectionVC],
                                  [[UINavigationController alloc]
                                   initWithRootViewController:settingVC]];
-//    tabBarVC.viewControllers = @[top10VC,
-//                                 likeVC,
-//                                 sectionVC,
-//                                 settingVC];
-    
+
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = tabBarVC;
-   // self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:tabBarVC];
+    
+    self.window.tintColor = [UIColor colorWithRed:0.00 green:0.63 blue:0.95 alpha:1.00];
     
     //打开数据库
     [XQDatabaseCreator createDatabase];
