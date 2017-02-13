@@ -168,7 +168,8 @@ const NSUInteger replyRow = 2;
     }
     
     collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
+        
+        NSDictionary* userInfo = @{@"article": self.viewModel.articleEntity};
         
         MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
@@ -306,6 +307,7 @@ const NSUInteger replyRow = 2;
         NSMutableArray *reformedArticles = [NSMutableArray array];
         if (_isLoadThreads) {
             _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[[response.response objectForKey:@"article"] firstObject]];
+            _viewModel.articleEntity.reply_count = (NSInteger)[response.response objectForKey:@"reply_count"];
         }
         //更新本地收藏文章的数据库
         if(self.threadType == ASThreadsEnterTypeCollection){
@@ -388,5 +390,12 @@ const NSUInteger replyRow = 2;
         _webBodyCell.navigationDelegate = self;
     }
     return _webBodyCell;
+}
+
+- (XQThreadsDetailViewModel *)viewModel{
+    if (_viewModel == nil) {
+        _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:self.aid],@"group_id",self.board,@"board_name",nil]];
+    }
+    return _viewModel;
 }
 @end
