@@ -1,5 +1,5 @@
 target 'ASByrApp' do
-    pod 'ASByr', :git => 'git@github.com:andy-sheng/ASByr.git'
+    pod 'ASByr', :git => 'https://github.com/andy-sheng/ASByr.git'
     pod 'AFNetworking'
     pod 'MJRefresh'
     pod 'WMPageController'
