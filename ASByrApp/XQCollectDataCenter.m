@@ -74,7 +74,6 @@
 
 - (BOOL)addCollectData:(XQByrArticle *)article{
     NSString * firstImageUrl = @"";
-    NSString * userId = @"";
     
     XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[article.article firstObject]];
     
@@ -99,9 +98,7 @@
     XQByrUser * user = [[XQByrUser alloc]init];
     if ([article.user isKindOfClass:[XQByrUser class]]){
         user = article.user;
-        userId = user.uid;
     }else{
-        userId = (NSString *)article.user;
         user.face_url = @"";
         user.uid = (NSString *)article.user;
     }

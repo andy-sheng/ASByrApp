@@ -25,26 +25,30 @@
                     boardDescrip:(NSString *)descirp
                      boardParent:(NSString *)parentName
                       boardColor:(NSString *)color{
-    self.name=[name copy];
-    self.descip=[descirp copy];
-    self.parentName=[parentName copy];
+    if (self = [super init]) {
+        self.name=[name copy];
+        self.descip=[descirp copy];
+        self.parentName=[parentName copy];
+    }
     return self;
 };
 
 - (instancetype) initWithOnlyName:(NSString *)name{
-    self.name=[name copy];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"color_board" ofType:@"plist"];;
-    NSLog(@"color_board文件路径%@",filePath);
-    NSDictionary * dict = [[NSDictionary alloc]initWithContentsOfFile:filePath];
-    self.color=[dict objectForKey:name];
-    //=======若版面颜色未对应上，则取第363位颜色“030303”======
-    if (self.color==nil) {
-        self.color=@"030303";
+    if (self = [super init]) {
+        self.name=[name copy];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"color_board" ofType:@"plist"];;
+        NSLog(@"color_board文件路径%@",filePath);
+        NSDictionary * dict = [[NSDictionary alloc]initWithContentsOfFile:filePath];
+        self.color=[dict objectForKey:name];
+        //=======若版面颜色未对应上，则取第363位颜色“030303”======
+        if (self.color==nil) {
+            self.color=@"030303";
+        }
+        //ASByrBoard *netBoard =[[ASByrBoard alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
+        NSLog(@"版面颜色：%@",self.color);
+        self.descip=@"";
+        self.parentName=@"";
     }
-    //ASByrBoard *netBoard =[[ASByrBoard alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
-    NSLog(@"版面颜色：%@",self.color);
-    self.descip=@"";
-    self.parentName=@"";
     return self;
 }
 
