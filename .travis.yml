@@ -3,3 +3,6 @@ osx_image: xcode8.2
 cache: cocoapods
 xcode_workspace: ASByrApp.xcworkspace
 xcode_scheme: ASByrApp
+before_install:
+- brew update
+- brew upgrade xctool
