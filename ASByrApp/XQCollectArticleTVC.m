@@ -86,7 +86,7 @@ static NSString * const reuseIdentifier = @"collectCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 139;
+    return 127;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -112,9 +112,7 @@ static NSString * const reuseIdentifier = @"collectCell";
     
     NSString * profileImageUrl = [self.arrayList[indexPath.row] objectForKey:@"profileImageUrl"];
     if(profileImageUrl && ![profileImageUrl isEqual:@""]){
-        [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:profileImageUrl]placeholderImage:[UIImage imageNamed:XQCOLLECTION_PROFILE_IMAGE] options:SDWebImageRefreshCached];
-    }else{
-        [cell.firstImageView setImage:[UIImage imageNamed:XQCOLLECTION_PROFILE_IMAGE]];
+        [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:profileImageUrl] placeholderImage:[UIImage imageNamed:XQCOLLECTION_PROFILE_IMAGE] options:SDWebImageRefreshCached];
     }
 
     // Configure the cell...

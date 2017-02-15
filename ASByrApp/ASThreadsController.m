@@ -19,7 +19,7 @@
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 #import "ASArticleListVC.h"
-#import "XQCollectArticleVC.h"
+#import "XQCollectArticleTVC.h"
 #import "XQThreadsDetailViewModel.h"
 #import "UIAlertController+Extension.h"
 
@@ -43,7 +43,7 @@ const NSUInteger replyRow = 2;
 @property(strong, nonatomic) MBProgressHUD *endHud;
 
 @property(strong, nonatomic) ASByrArticle * articleApi;
-@property(strong, nonatomic) NSString * board;
+@property(copy, nonatomic) NSString * board;
 @property(assign, nonatomic) NSUInteger aid;
 @property(assign, nonatomic) NSUInteger page;
 @property(assign, nonatomic) ASThreadsEnterType threadType;
@@ -62,7 +62,7 @@ const NSUInteger replyRow = 2;
                               aid:(NSUInteger)aid {
     self = [super init];
     if (self) {
-        self.board = board;
+        self.board = [board copy];
         self.aid = aid;
         self.page = 1;
         self.isLoadThreads = YES;
@@ -83,7 +83,6 @@ const NSUInteger replyRow = 2;
     [self.view addSubview:self.keyboard];
     [self.view setNeedsUpdateConstraints];
     
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:XQNotificationWebViewLoaded object:nil];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshData) name:XQNotificationWebViewLoaded object:nil];
 }
@@ -99,7 +98,7 @@ const NSUInteger replyRow = 2;
     if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[ASArticleListVC class]]){
         self.threadType = ASThreadsEnterTypeNormal;
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    }else if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[XQCollectArticleVC class]]){
+    }else if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[XQCollectArticleTVC class]]){
         self.threadType = ASThreadsEnterTypeCollection;
     }
 }
@@ -178,9 +177,12 @@ const NSUInteger replyRow = 2;
         hud.labelText = hudtext;
         hud.minShowTime = 2;
         
-        [hud showAnimated:YES whileExecutingBlock:^{
-            [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:nil userInfo:userInfo];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [hud showAnimated:YES whileExecutingBlock:^{
+                [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:nil userInfo:userInfo];
+            }];
+        });
+        
     }];
     
     [alertController addAction:collectAction];
@@ -307,7 +309,7 @@ const NSUInteger replyRow = 2;
         NSMutableArray *reformedArticles = [NSMutableArray array];
         if (_isLoadThreads) {
             _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[[response.response objectForKey:@"article"] firstObject]];
-            _viewModel.articleEntity.reply_count = (NSInteger)[response.response objectForKey:@"reply_count"];
+            _viewModel.articleEntity.reply_count = [XQByrArticle yy_modelWithJSON:response.response].reply_count;
         }
         //更新本地收藏文章的数据库
         if(self.threadType == ASThreadsEnterTypeCollection){
@@ -397,5 +399,11 @@ const NSUInteger replyRow = 2;
         _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:self.aid],@"group_id",self.board,@"board_name",nil]];
     }
     return _viewModel;
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:XQNotificationWebViewLoaded object:nil];
+
+    NSLog(@"asthreadscontroller will be dealloced.");
 }
 @end

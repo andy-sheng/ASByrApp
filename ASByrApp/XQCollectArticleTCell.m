@@ -28,7 +28,7 @@
         [self.contentView addSubview:wapDownView];
 
         UIImageView * imView=[UIImageView new];
-        self.firstImageView=imView;
+        self.userImageView=imView;
         [self.imageView removeFromSuperview];
         imView.layer.masksToBounds=YES;
         imView.layer.cornerRadius=IMAGE_WIDTH/2;
@@ -56,6 +56,8 @@
         
         UILabel * titleLabel = [UILabel new];
         self.titleLabel = titleLabel;
+        titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        titleLabel.numberOfLines = 2;
         [wapDownView addSubview:titleLabel];
         
         [wapView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -99,15 +101,15 @@
         }];
         
         [firstImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(wapDownView.mas_left).offset(PADDING_WITHIN);
-            make.top.equalTo(wapDownView.mas_top).offset(PADDING_WITHIN);
-            make.size.mas_equalTo(CGSizeMake(72, 72));
+            make.left.equalTo(wapDownView.mas_left).offset(2*PADDING_WITHIN);
+            make.top.equalTo(wapDownView.mas_top);
+            make.size.mas_equalTo(CGSizeMake(60, 60));
+           
         }];
         
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(wapDownView.mas_top).offset(PADDING_WITHIN);
-            make.left.equalTo(firstImageView.mas_right).offset(PADDING_TO_CONTENTVIEW);
-            make.bottom.equalTo(wapDownView).offset(-PADDING_WITHIN);
+            make.top.equalTo(firstImageView.mas_top);
+            make.left.equalTo(firstImageView.mas_right).offset(3*PADDING_TO_CONTENTVIEW);
             make.right.equalTo(wapDownView).offset(-PADDING_WITHIN);
         }];
         
