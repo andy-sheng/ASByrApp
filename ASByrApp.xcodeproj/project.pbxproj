@@ -19,6 +19,8 @@
 		75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2141E1BC6C400B563A7 /* XQArticleService.m */; };
 		75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2161E1BC6C400B563A7 /* XQUserService.m */; };
 		75D4B6F81E46DB24004906B5 /* XQArticleBody.css in Resources */ = {isa = PBXBuildFile; fileRef = 75D4B6F71E46DB24004906B5 /* XQArticleBody.css */; };
+		75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */; };
+		75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
@@ -319,6 +321,10 @@
 		75A4C2161E1BC6C400B563A7 /* XQUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserService.m; sourceTree = "<group>"; };
 		75A4C2171E1BC6C400B563A7 /* XQUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserService.h; sourceTree = "<group>"; };
 		75D4B6F71E46DB24004906B5 /* XQArticleBody.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = XQArticleBody.css; sourceTree = "<group>"; };
+		75EF74371E54928E008D3E2C /* XQCollectArticleTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTVC.h; sourceTree = "<group>"; };
+		75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleTVC.m; sourceTree = "<group>"; };
+		75EF743A1E5492A3008D3E2C /* XQCollectArticleTCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTCell.h; sourceTree = "<group>"; };
+		75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleTCell.m; sourceTree = "<group>"; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
@@ -1198,6 +1204,8 @@
 				A95F637E1CE016850060075E /* XQCFrameLayout.m */,
 				A95F63801CE427610060075E /* XQCLayoutAttributes.h */,
 				A95F63811CE427610060075E /* XQCLayoutAttributes.m */,
+				75EF74371E54928E008D3E2C /* XQCollectArticleTVC.h */,
+				75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */,
 			);
 			name = "Collection(收藏)";
 			sourceTree = "<group>";
@@ -1205,6 +1213,8 @@
 		A95F637B1CDF81570060075E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				75EF743A1E5492A3008D3E2C /* XQCollectArticleTCell.h */,
+				75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */,
 				A95F63781CDF814F0060075E /* XQCollectiArticleCell.h */,
 				A95F63791CDF814F0060075E /* XQCollectiArticleCell.m */,
 			);
@@ -1260,7 +1270,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A16E1A651CAD6B9500F7C1FA /* Build configuration list for PBXNativeTarget "ASByrApp" */;
 			buildPhases = (
-				84D790877FB20FEE82CAF062 /* 📦 Check Pods Manifest.lock */,
+				84D790877FB20FEE82CAF062 /* [CP] Check Pods Manifest.lock */,
 				953444F165896642E160EA12 /* [CP] Check Pods Manifest.lock */,
 				A16E1A341CAD6B9500F7C1FA /* Sources */,
 				A16E1A351CAD6B9500F7C1FA /* Frameworks */,
@@ -1638,19 +1648,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84D790877FB20FEE82CAF062 /* 📦 Check Pods Manifest.lock */ = {
+		84D790877FB20FEE82CAF062 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		953444F165896642E160EA12 /* [CP] Check Pods Manifest.lock */ = {
@@ -1705,6 +1715,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */,
 				75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */,
 				A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */,
 				A95F637F1CE016850060075E /* XQCFrameLayout.m in Sources */,
@@ -1722,6 +1733,7 @@
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
+				75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */,
 				A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */,
 				A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */,
 				75A4C20A1E1BC67D00B563A7 /* DBManager.m in Sources */,
