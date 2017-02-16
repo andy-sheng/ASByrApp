@@ -18,7 +18,7 @@
 
 @interface ASThreadsBodyCell : UITableViewCell
 
-@property(nonatomic, strong) id <ASThreadsBodyCellDelegate> delegate;
+@property(nonatomic, weak) id <ASThreadsBodyCellDelegate> delegate;
 
 - (void)setupWithContent:(NSString*)content;
 
