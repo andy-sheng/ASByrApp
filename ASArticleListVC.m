@@ -63,6 +63,7 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithHexString:[self.lastViewBoard getColor]]];
     self.boardApi = [[ASByrBoard alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.boardApi.responseDelegate = self;
+    self.boardApi.responseReformer = self;
     [self updateBarTheme];
 }
 
@@ -153,7 +154,7 @@
     [super loadData];
     //[self.tableView.mj_header beginRefreshing];
     self.page=1;
-    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName pageNumber:self.page];
+    [self.boardApi fetchBoard:self.boardName pageNumber:self.page];
     //[self.tableView.mj_header endRefreshing];
 }
 
@@ -161,7 +162,7 @@
     //self.isLoaded=NO;
     self.page++;
     NSLog(@"%lu",(long)self.page);
-    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName pageNumber:self.page];
+    [self.boardApi fetchBoard:self.boardName pageNumber:self.page];
 }
 
 

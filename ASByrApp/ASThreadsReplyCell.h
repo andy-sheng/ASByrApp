@@ -18,7 +18,7 @@
 
 @interface ASThreadsReplyCell : UITableViewCell
 
-@property(nonatomic, strong) id <ASThreadsReplyCellDelegate> delegate;
+@property(nonatomic, weak) id <ASThreadsReplyCellDelegate> delegate;
 
 - (void)setupWithFaceurl:(NSString*) faceUrl
                      uid:(NSString*) uid

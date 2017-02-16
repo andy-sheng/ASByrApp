@@ -60,6 +60,7 @@
     self.widgerApi = [[ASByrWidget alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     NSLog(@"%@", [ASByrToken shareInstance].accessToken);
     self.widgerApi.responseDelegate = self;
+    self.widgerApi.responseReformer = self;
     //self.widgerApi
 }
 
@@ -119,7 +120,7 @@
             [self.widgerApi fetchRecommendWithReformer:self];
             break;
         default:
-            [self.widgerApi fetchTop10WithReformer:self];
+            [self.widgerApi fetchTop10];
             break;
     }
 }
