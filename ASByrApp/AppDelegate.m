@@ -9,8 +9,7 @@
 #import "AppDelegate.h"
 #import "ASTop10RootVC.h"
 #import "ASArticleListVC.h"
-#import "XQCollectArticleVC.h"
-#import "XQCFrameLayout.h"
+#import "XQCollectArticleTVC.h"
 #import "XQSelfInfoVC.h"
 #import "WMPageController.h"
 #import "XQDatabaseCreator.h"
@@ -36,12 +35,11 @@
     UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"gear"] selectedImage:nil];
     
     top10VC.tabBarItem = top10Tab;
-    XQCFrameLayout * layout = [[XQCFrameLayout alloc]init];
-    UIViewController *likeVC = [[XQCollectArticleVC alloc]initWithCollectionViewLayout:layout];
+    UIViewController *likeVC = [[XQCollectArticleTVC alloc]init];
     likeVC.tabBarItem = likeTab;
     UIViewController *sectionVC = [[ASArticleListVC alloc] init];
     sectionVC.tabBarItem = sectionTab;
-    XQSelfInfoVC* settingVC = [[UIStoryboard storyboardWithName:@"XQSelfInfoVC" bundle:nil]instantiateViewControllerWithIdentifier:@"userInfo"];
+    XQSelfInfoVC* settingVC = [[UIStoryboard storyboardWithName:@"XQSelfInfoVC" bundle:[NSBundle mainBundle]]instantiateViewControllerWithIdentifier:@"userInfo"];
     settingVC.tabBarItem = settingTab;
     
     tabBarVC.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:top10VC],

@@ -40,7 +40,7 @@
         
         UILabel * titleLabel=[UILabel new];
         self.titleLabel = titleLabel;
-        titleLabel.font = [UIFont systemFontOfSize:20];
+        titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         titleLabel.numberOfLines=0;
         titleLabel.preferredMaxLayoutWidth=[UIScreen mainScreen].bounds.size.width-2*PADDING_TO_CONTENTVIEW;
         [wapView addSubview:titleLabel];
