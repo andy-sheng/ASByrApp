@@ -32,7 +32,7 @@ const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
 
 @property(strong, nonatomic) XQWebView * webBodyCell;
 @property(strong, nonatomic) UITableView * tableView;
@@ -166,11 +166,12 @@ const NSUInteger replyRow = 2;
         notificationName = @"addNewCollectedArticle";
     }
     
+    NSDictionary* userInfo = @{@"article": self.viewModel.articleEntity};
+
+    __weak ASThreadsController * weakself = self;
     collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         
-        NSDictionary* userInfo = @{@"article": self.viewModel.articleEntity};
-        
-        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:weakself.view animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
         hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
         
@@ -389,7 +390,8 @@ const NSUInteger replyRow = 2;
 - (XQWebView *)webBodyCell{
     if (_webBodyCell == nil) {
         _webBodyCell = [[XQWebView alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, 100)];
-        _webBodyCell.navigationDelegate = self;
+        _webBodyCell.navigationDelegate = nil;
+        _webBodyCell.UIDelegate = nil;
     }
     return _webBodyCell;
 }
