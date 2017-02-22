@@ -14,9 +14,11 @@ singleton_interface(XQUserInfo);
 
 @property (copy, nonatomic) NSString * userId;
 @property (copy, nonatomic) NSString * userName;
-@property (copy, nonatomic) NSData * userAvatar;
+@property (copy, nonatomic) NSString * userAvatar;
 @property (assign, nonatomic) BOOL loginStatus;
 @property (assign, nonatomic) BOOL firstLogin;
+@property (copy, nonatomic) NSString * latestCollectTime;
+@property (copy, nonatomic) NSString * lastViewBoard;
 
 - (void)getDataFromSandbox;
 

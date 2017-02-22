@@ -125,8 +125,6 @@ static NSString * const reuseIdentifier = @"collectCell";
 
 - (void)fentchCollections{
     //每次登录时取数据
-    BOOL x = [XQUserInfo sharedXQUserInfo].firstLogin;
-    NSLog(@"收藏文章取数据 %d",x);
     if ([XQUserInfo sharedXQUserInfo].firstLogin != TRUE) {
         [_collectDataCenter deleteAllCollectDataWithBlock:nil];
         [_collectionApi fetchCollectionsWithCount:30 page:1];
@@ -193,8 +191,6 @@ static NSString * const reuseIdentifier = @"collectCell";
         [_collectionApi fetchCollectionsWithCount:30 page:(NSInteger)response.response[@"pagination"][@"page_current_count"]+1];
     }else{
         [XQUserInfo sharedXQUserInfo].firstLogin = TRUE;
-        [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
-        [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     }
     response.reformedData = reformedArticles;
     return response;
