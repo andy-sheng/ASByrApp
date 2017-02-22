@@ -67,11 +67,7 @@ static NSString * const reuseIdentifier = @"collectCell";
     self.collectionApi.responseDelegate = self;
     self.collectionApi.responseReformer = self;
     
-    [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
-    
-    [self.tableView reloadData];
-    
-    [self fentchCollectionsFromInternet:1];
+    [self fentchCollections];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -126,14 +122,28 @@ static NSString * const reuseIdentifier = @"collectCell";
 }
 
 #pragma mark private method
-- (void)fentchCollectionsFromInternet:(NSInteger)pagenum{
+
+- (void)fentchCollections{
     //每次登录时取数据
     BOOL x = [XQUserInfo sharedXQUserInfo].firstLogin;
     NSLog(@"收藏文章取数据 %d",x);
     if ([XQUserInfo sharedXQUserInfo].firstLogin != TRUE) {
-        [_collectDataCenter deleteAllCollectData];
-        [_collectionApi fetchCollectionsWithCount:30 page:pagenum];
+        [_collectDataCenter deleteAllCollectDataWithBlock:nil];
+        [_collectionApi fetchCollectionsWithCount:30 page:1];
+    }else{
+        [self fentchCollectionsFromLocalWithFilters:nil];
     }
+}
+
+- (void)fentchCollectionsFromLocalWithFilters:(NSDictionary *)filters{
+    __weak typeof(self) _self = self;
+    [_collectDataCenter fetchCollectListFromLocal:filters withBlock:^(NSArray * _Nullable objects) {
+        __strong typeof(_self) self = _self;
+        [self.arrayList setArray:objects];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
 }
 
 - (void)addCollectArticle:(NSNotification *)notis{
@@ -144,13 +154,13 @@ static NSString * const reuseIdentifier = @"collectCell";
     } failureBlock:^(NSInteger statusCode, id response) {
         NSLog(@"添加收藏请求失败");
     }];
-    [self.collectDataCenter addCollectData:article];
+    [self.collectDataCenter addCollectData:article withBlock:nil];
 }
 
 - (void)updateCollectArticle:(NSNotification *)notis{
     NSLog(@"更新通知激活！");
     XQByrArticle * article = notis.userInfo[@"article"];
-    [self.collectDataCenter updateCollectData:article options:XQCollectionUpdateContent];
+    [self.collectDataCenter updateCollectData:article options:XQCollectionUpdateContent withBlock:nil];
 }
 
 - (void)deleteCollectArticle:(NSNotification *)notis{
@@ -161,15 +171,14 @@ static NSString * const reuseIdentifier = @"collectCell";
     } failureBlock:^(NSInteger statusCode, id response) {
         NSLog(@"删除收藏请求失败.");
     }];
-    [self.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id]];
+    [self.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id] withBlock:nil];
 }
 
 #pragma mark ASByrCollectionResponseDelegate
 - (void)fentchCollectionsResponse:(ASByrResponse *)response{
     NSArray * array = [NSArray arrayWithArray:response.reformedData];
-    [_collectDataCenter saveCollectDataFromCollections:array];
-    [self.arrayList setArray:[_collectDataCenter fetchCollectListFromLocal:nil]];
-    [self.tableView reloadData];
+    [_collectDataCenter saveCollectDataFromCollections:array withBlock:nil];
+    [self fentchCollectionsFromLocalWithFilters:nil];
 }
 
 #pragma mark ASByrCollectionResponseReformer
@@ -181,7 +190,7 @@ static NSString * const reuseIdentifier = @"collectCell";
     }
     
     if((NSInteger)response.response[@"pagination"][@"page_current_count"] < (NSInteger)response.response[@"pagination"][@"page_all_count"]) {
-        [self fentchCollectionsFromInternet:(NSInteger)response.response[@"pagination"][@"page_current_count"]+1];
+        [_collectionApi fetchCollectionsWithCount:30 page:(NSInteger)response.response[@"pagination"][@"page_current_count"]+1];
     }else{
         [XQUserInfo sharedXQUserInfo].firstLogin = TRUE;
         [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
