@@ -19,39 +19,53 @@
 
 
 @interface XQCollectDataCenter()
+
 @property (strong, nonatomic) XQUserService * userService;
 @property (strong, nonatomic) XQArticleService * articleService;
 
 @end
 
-@implementation XQCollectDataCenter
+@implementation XQCollectDataCenter{
+    dispatch_queue_t _queue;
+}
+
 - (instancetype)init{
     if(self = [super init]){
-        self.userService = [[XQUserService alloc]init];
-        self.articleService = [[XQArticleService alloc]init];
+        _userService = [[XQUserService alloc]init];
+        _articleService = [[XQArticleService alloc]init];
+        _queue = dispatch_queue_create("com.BUPT.ASByrApp.collect.database", DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
 }
 
-- (NSArray *)fetchCollectListFromLocal:(NSDictionary * __nullable)filters{
+- (void)fetchCollectListFromLocal:(NSDictionary * __nullable)filters withBlock:(void(^__nullable)( NSArray * __nullable objects))block{
     //暂时不考虑处理横向切片(将有图的帖子和无图的帖子分开)的情况
-    NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[XQArticleService getArticlesByFilters:filters]];
-    for (NSInteger i = 0; i < [articleArray count]; i++) {
-        NSMutableDictionary * articleDic = [NSMutableDictionary dictionaryWithDictionary:articleArray[i]];
-        if ([articleDic objectForKey:@"author"]) {
-            NSString * userID = articleDic[@"author"];
-            NSDictionary * userDic = [XQUserService getUserById:userID];
-            [articleDic addEntriesFromDictionary:userDic];
-        }else{
-            articleDic[@"userName"] = @"unknown";
+    __weak typeof(self) _self = self;
+    dispatch_async(_queue, ^{
+        __strong typeof(_self) self = _self;
+        NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[self.articleService getArticlesByFilters:filters]];
+        for (NSInteger i = 0; i < [articleArray count]; i++) {
+            NSMutableDictionary * articleDic = [NSMutableDictionary dictionaryWithDictionary:articleArray[i]];
+            if ([articleDic objectForKey:@"author"]) {
+                NSString * userID = articleDic[@"author"];
+                NSDictionary * userDic = [self.userService getUserById:userID];
+                [articleDic addEntriesFromDictionary:userDic];
+            }else{
+                articleDic[@"userName"] = @"unknown";
+            }
+            articleArray[i] = articleDic;
         }
-        articleArray[i] = articleDic;
-    }
-    return articleArray;
+        if(block) block(articleArray);
+    });
 }
 
-- (BOOL)saveCollectDataFromCollections:(NSArray *)array{
-    if (array != nil && [array count] >0) {
+- (void)saveCollectDataFromCollections:(NSArray *)array withBlock:(void (^ _Nullable)(void))block{
+    if (array == nil || [array count] == 0) {
+        return;
+    }
+    __weak typeof(self) _self = self;
+    dispatch_async(_queue, ^{
+        __strong typeof(_self) self = _self;
         for (NSInteger i = 0; i < [array count]; i++) {
             
             XQByrCollection* collection = (XQByrCollection *)[array objectAtIndex:i];
@@ -63,53 +77,61 @@
                     user.uid = (NSString *)collection.user;
                     user.user_name = @"";
                 }
-                [_userService addUser:user];
+                [self.userService addUser:user];
             }
             NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",nil];
-            [_articleService addArticleWithCollection:(XQByrCollection *)[array objectAtIndex:i] andParameters:dic];
+            [self.articleService addArticleWithCollection:(XQByrCollection *)[array objectAtIndex:i] andParameters:dic];
+            if (block) block();
         }
-    }
-    return true;
+    });
 }
 
-- (BOOL)addCollectData:(XQByrArticle *)article{
-    NSString * firstImageUrl = @"";
+- (void)addCollectData:(XQByrArticle *)article withBlock:(void (^ _Nullable)(void))block{
+    __weak typeof(self) _self = self;
+    dispatch_async(_queue, ^{
+        __strong typeof(_self) self = _self;
+
+        NSString * firstImageUrl = @"";
     
-    XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[article.article firstObject]];
+        XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[article.article firstObject]];
     
-    if (article.has_attachment) {
-        XQByrAttachment * attachment;
-        NSDictionary * filedic;
-        if(article.attachment != nil){
-             attachment = article.attachment;
-             filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
+        if (article.has_attachment) {
+            XQByrAttachment * attachment;
+            NSDictionary * filedic;
+            if(article.attachment != nil){
+                attachment = article.attachment;
+                filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
+            }else{
+                attachment = childArticle.attachment;
+                filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
+            }
+            firstImageUrl = filedic[@"url"];
+        }
+    
+        //文章正文在子数组中时需要对content单独赋值
+        if(article.content == nil){
+            article.content = childArticle.content;
+        }
+    
+        XQByrUser * user = [[XQByrUser alloc]init];
+        if ([article.user isKindOfClass:[XQByrUser class]]){
+            user = article.user;
         }else{
-            attachment = childArticle.attachment;
-            filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
+            user.face_url = @"";
+            user.uid = (NSString *)article.user;
         }
-        firstImageUrl = filedic[@"url"];
-    }
+        [self.userService addUser:user];
     
-    //文章正文在子数组中时需要对content单独赋值
-    if(article.content == nil){
-        article.content = childArticle.content;
-    }
-    
-    XQByrUser * user = [[XQByrUser alloc]init];
-    if ([article.user isKindOfClass:[XQByrUser class]]){
-        user = article.user;
-    }else{
-        user.face_url = @"";
-        user.uid = (NSString *)article.user;
-    }
-    [_userService addUser:user];
-    
-    NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",firstImageUrl,@"firstImageUrl", nil];
-    [_articleService addArticle:article andParameters:parameters];
-    return true;
+        NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",firstImageUrl,@"firstImageUrl", nil];
+        [self.articleService addArticle:article andParameters:parameters];
+        if (block) block();
+    });
 }
 
-- (void)updateCollectData:(XQByrArticle *)article options:(XQCollectionUpdateType)type{
+- (void)updateCollectData:(XQByrArticle *)article options:(XQCollectionUpdateType)type withBlock:(void (^ _Nullable)(void))block{
+    __weak typeof(self) _self = self;
+    dispatch_async(_queue, ^{
+        __strong typeof(_self) self = _self;
     NSString * articleID = [NSString stringWithFormat:@"%ld",(long)article.group_id];
     NSDictionary * parameters;
     switch (type) {
@@ -123,24 +145,41 @@
                 
                 file = [XQByrFile yy_modelWithDictionary:[NSArray arrayWithArray:attachment.file][0]];
                 firstImageUrl = file.url;
-                parameters = [NSDictionary dictionaryWithObjectsAndKeys:firstImageUrl,@"firstImageUrl",article.content,@"content",article.board_description,@"boardDescription",[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
+                parameters = [NSDictionary dictionaryWithObjectsAndKeys:firstImageUrl,@"firstImageUrl",article.board_description,@"boardDescription",[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
             }else{
-                parameters = [NSDictionary dictionaryWithObjectsAndKeys:article.content,@"content",article.board_description,@"boardDescription",[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
+                parameters = [NSDictionary dictionaryWithObjectsAndKeys:article.board_description,@"boardDescription",[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
             }
             break;
         case XQCollectionUpdateReply:
             parameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
             break;
     }
-    [_articleService updateArticle:articleID andParameters:parameters];
+    [self.articleService updateArticle:articleID andParameters:parameters];
+    if (block) block();
+
+    });
 }
 
-- (void)deleteCollectData:(NSString *)articleID{
-    [_articleService deleteArticle:articleID];
+- (void)deleteCollectData:(NSString *)articleID withBlock:(void (^ _Nullable)(NSString * articleID))block{
+    __weak typeof(self) _self = self;
+    dispatch_async(_queue, ^{
+        __strong typeof(_self) self = _self;
+        [self.articleService deleteArticle:articleID];
+        if (block) {
+            block(articleID);
+        }
+    });
 }
 
-- (void)deleteAllCollectData{
-    [_articleService deleteArticle:nil];
-    [_userService deleteAllUser];
+- (void)deleteAllCollectDataWithBlock:(void (^)(void))block{
+    __weak typeof(self) _self = self;
+    dispatch_async(_queue, ^{
+        __strong typeof(_self) self = _self;
+        [self.articleService deleteArticle:nil];
+        [self.userService deleteAllUser];
+        if (block) {
+            block();
+        }
+    });
 }
 @end

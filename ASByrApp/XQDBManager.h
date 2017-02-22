@@ -1,19 +1,18 @@
 //
-//  DBManager.h
+//  XQDBManager.h
 //  ASByrApp
 //
-//  Created by lxq on 16/9/2.
-//  Copyright © 2016年 andy. All rights reserved.
+//  Created by lixiangqian on 17/2/22.
+//  Copyright © 2017年 andy. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
 #import "XQSingleton.h"
-@class XQArticle;
 
-@interface DBManager : NSObject
+@interface XQDBManager : NSObject
 
-singleton_interface(DBManager)
+singleton_interface(XQDBManager)
 
 @property (nonatomic) sqlite3 *database;
 

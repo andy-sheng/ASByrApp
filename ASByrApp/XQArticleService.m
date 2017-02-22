@@ -7,55 +7,55 @@
 //
 
 #import "XQArticleService.h"
-#import "DBManager.h"
+#import "XQDBManager.h"
 #import <XQByrArticle.h>
 #import <XQByrCollection.h>
-@implementation XQArticleService
-singleton_implementation(XQArticleService)
 
-+ (NSArray * __nullable)getAllArticles{
+@implementation XQArticleService
+
+- (NSArray * __nullable)getAllArticles{
     NSString *sql=@"SELECT * FROM Article ORDER BY articleID";
-    NSArray *rows= [[DBManager sharedDBManager] executeQuery:sql];
+    NSArray *rows= [[XQDBManager sharedXQDBManager] executeQuery:sql];
     return rows;
 }
 
 - (void)addArticleWithCollection:(XQByrCollection *)article andParameters:(NSDictionary * _Nonnull)parameters{
     NSString * sql;
     if(parameters[@"userID"]){
-        sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, author, replyCount) VALUES ('%@','%@','%@','%@','%@','%@')",article.gid,article.title,article.bname,article.createdTime,parameters[@"userID"],article.num];
+        sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, author, replyCount, state) VALUES ('%@','%@','%@','%@','%@','%@','%ld')",article.gid,article.title,article.bname,article.createdTime,parameters[@"userID"],article.num, (long)XQByrCollectionSyncNew];
     }else{
         sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, replyCount) VALUES ('%@','%@','%@','%@','%@')",article.gid,article.title,article.bname,article.createdTime,article.num];
     }
-    [[DBManager sharedDBManager]executeNonQuery:sql];
+    [[XQDBManager sharedXQDBManager]executeNonQuery:sql];
 }
 
 - (void)addArticle:(XQByrArticle *)article andParameters:(NSDictionary *)parameters{
     NSDate * now = [NSDate date];
     NSTimeInterval nowunix = [now timeIntervalSince1970];
-    NSString * sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, boardDescription, content, firstImageUrl, collectTime, author, replyCount) VALUES ('%ld','%@','%@','%@','%@','%@','%@','%@','%ld')",(long)article.aid,article.title,article.board_name,article.board_description,article.content,parameters[@"firstImageUrl"],[NSString stringWithFormat:@"%f",nowunix],parameters[@"userID"],(long)article.reply_count];
-    [[DBManager sharedDBManager]executeNonQuery:sql];
+    NSString * sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, boardDescription,  firstImageUrl, collectTime, author, replyCount, state) VALUES ('%ld','%@','%@','%@','%@','%@','%@','%ld','%ld')",(long)article.aid,article.title,article.board_name,article.board_description,parameters[@"firstImageUrl"],[NSString stringWithFormat:@"%f",nowunix],parameters[@"userID"],(long)article.reply_count,(long)XQByrCollectionSyncNormal];
+    [[XQDBManager sharedXQDBManager]executeNonQuery:sql];
 }
 
-+ (NSDictionary *)getArticleById:(NSString *)articleID{
+- (NSDictionary *)getArticleById:(NSString *)articleID{
     NSDictionary * dictionary = [NSDictionary dictionary];
     NSString * sql = [NSString stringWithFormat:@"SELECT * FROM Article WHERE articleID='%@'", articleID];
-    NSArray * rows = [[DBManager sharedDBManager] executeQuery:sql];
+    NSArray * rows = [[XQDBManager sharedXQDBManager] executeQuery:sql];
     if(rows && rows.count>0){
         dictionary = (NSDictionary *)rows[0];
     }
     return dictionary;
 }
 
-+ (NSArray *)getArticlesByFilters:(NSDictionary * __nonnull)filters{
+- (NSArray *)getArticlesByFilters:(NSDictionary * __nonnull)filters{
     NSArray * filterKeys = [filters allKeys];
     NSString __block *sql=@"SELECT * FROM Article ORDER BY articleID";
     if([filterKeys count]!=0){
         [filterKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             sql = [sql stringByAppendingFormat:@" and WHERE  %@='%@'", obj,[filters objectForKey:obj]];
         }];
-        return [[DBManager sharedDBManager] executeQuery:sql];
+        return [[XQDBManager sharedXQDBManager] executeQuery:sql];
     }else{
-        return [XQArticleService getAllArticles];
+        return [self getAllArticles];
     }
 }
 
@@ -73,7 +73,7 @@ singleton_implementation(XQArticleService)
     }
     sql = [sql stringByAppendingFormat:@" WHERE articleID = '%@'",articleID];
 
-    [[DBManager sharedDBManager] executeNonQuery:sql];
+    [[XQDBManager sharedXQDBManager] executeNonQuery:sql];
 }
 
 - (void)deleteArticle:(NSString *)articleID{
@@ -83,6 +83,7 @@ singleton_implementation(XQArticleService)
     }else{
         sql = @"delete from Article";
     }
-    [[DBManager sharedDBManager] executeNonQuery:sql];
+    [[XQDBManager sharedXQDBManager] executeNonQuery:sql];
 }
+
 @end
