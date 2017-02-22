@@ -36,13 +36,6 @@
 
 #define XQCOLLECTION_PROFILE_IMAGE @"blank"
 
-//用于沙盒中存储登录用户信息
-#define XQByrUserIdKey @"userId"
-#define XQByrUserNameKey @"userName"
-#define XQByrUserAvatarKey @"userFace"
-#define XQByrUserLoginStatusKey @"userLoginStatus"
-#define XQByrFirstLoginStatusKey @"userFirstLogin"
-
 //硬件信息
 #define XQSCREEN_W [UIScreen mainScreen].bounds.size.width
 #define XQSCREEN_H [UIScreen mainScreen].bounds.size.height

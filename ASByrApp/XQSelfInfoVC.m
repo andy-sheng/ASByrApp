@@ -8,9 +8,12 @@
 
 #import "XQSelfInfoVC.h"
 #import "XQUserInfo.h"
+#import "YYWebImage.h"
+#import <YYModel.h>
 #import <ASByrToken.h>
 #import <ASByrUser.h>
-#import <UIImage+AFNetworking.h>
+#import <XQByrUser.h>
+
 @interface XQSelfInfoVC()<UITableViewDataSource, UITableViewDelegate,ASByrUserResponseDelegate,ASByrUserResponseReformer>
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userIdLabel;
@@ -37,48 +40,42 @@
     UITableViewCell * staticCellQ = [self.tableView cellForRowAtIndexPath:indexPath];
     if (staticCellQ == _clearCacheCell) {
         [XQUserInfo sharedXQUserInfo].loginStatus = NO;
-        
-        [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
-        [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 #pragma mark <ASByrUserResponseDelegate>
 -(void)fetchUserResponse:(ASByrResponse *)response{
+    if (response.isSucceeded) {
+        XQByrUser * user = [XQByrUser yy_modelWithJSON:response.response];
+        //保存数据到单例
+        XQUserInfo * userInfo = [XQUserInfo sharedXQUserInfo];
+        userInfo.userName = user.user_name;
+        userInfo.userId = user.uid;
+        userInfo.userAvatar = user.face_url;
+        userInfo.loginStatus = YES;
+        
+    }else{
+        XQUserInfo * userInfo = [XQUserInfo sharedXQUserInfo];
+        userInfo.userName = @"";
+        userInfo.userId = @"";
+        userInfo.userAvatar = @"";
+    }
     
-    //保存数据到单例
-    XQUserInfo * userInfo = [XQUserInfo sharedXQUserInfo];
-    userInfo.userName = response.reformedData[@"uname"];
-    userInfo.userId = response.reformedData[@"uid"];
-    userInfo.userAvatar=[NSData dataWithContentsOfURL:[NSURL URLWithString:response.reformedData[@"uavatar"]]];
-    userInfo.loginStatus = YES;
-    //保存用户数据到沙盒
-    [userInfo setDataIntoSandbox];
-    [userInfo getDataFromSandbox];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadDataToView];
-    });
+    [self loadDataToView];
 }
 
 #pragma mark <ASByrUserResponseReformer>
 - (ASByrResponse *)reformUserResponse:(ASByrResponse *)response{
-    NSDictionary * userInfo = [NSDictionary dictionaryWithDictionary:response.response];
-    NSMutableDictionary * reformedData = [[NSMutableDictionary alloc]init];
-    reformedData[@"uname"]=[userInfo objectForKey:@"user_name"];
-    reformedData[@"uid"]=[userInfo objectForKey:@"id"];
-    NSLog(@"%@",userInfo[@"face_url"]);
-    reformedData[@"uavatar"]=userInfo[@"face_url"]?:@"";
-    response.reformedData=[reformedData copy];
-    response.isSucceeded=YES;
     return response;
 }
 
 - (void)loadData{
     //[XQUserInfo sharedXQUserInfo].loginStatus=false;
-    if (![XQUserInfo sharedXQUserInfo].loginStatus !=YES) {
+    if ([XQUserInfo sharedXQUserInfo].loginStatus !=YES) {
         self.userApi= [[ASByrUser alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
         self.userApi.responseDelegate = self;
-        [self.userApi fetchUserInfoWithReformer:self];
+        self.userApi.responseReformer = self;
+        [self.userApi fetchUserInfo];
     }else
         [self loadDataToView];
 }
@@ -86,7 +83,7 @@
 - (void)loadDataToView{
     self.userIdLabel.text=[NSString stringWithFormat:@"论坛ID:%@",[XQUserInfo sharedXQUserInfo].userId];
     self.userNameLabel.text = [NSString stringWithFormat:@"姓名:%@",[XQUserInfo sharedXQUserInfo].userName];
-    self.userAvatar.image =[UIImage imageWithData:[XQUserInfo sharedXQUserInfo].userAvatar];
+    self.userAvatar.yy_imageURL = [NSURL URLWithString:[XQUserInfo sharedXQUserInfo].userAvatar];
 }
 
 @end
