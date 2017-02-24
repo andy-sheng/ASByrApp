@@ -176,6 +176,7 @@ static NSString * const reuseIdentifier = @"collectCell";
 - (void)fentchCollectionsResponse:(ASByrResponse *)response{
     NSArray * array = [NSArray arrayWithArray:response.reformedData];
     [_collectDataCenter saveCollectDataFromCollections:array withBlock:nil];
+    ////////========
     [self fentchCollectionsFromLocalWithFilters:nil];
 }
 
