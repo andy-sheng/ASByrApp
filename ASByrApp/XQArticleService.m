@@ -20,11 +20,12 @@
 }
 
 - (void)addArticleWithCollection:(XQByrCollection *)article andParameters:(NSDictionary * _Nonnull)parameters{
-    NSString * sql;
+    NSMutableString * sql = [NSMutableString string];
     if(parameters[@"userID"]){
-        sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, author, replyCount, state) VALUES ('%@','%@','%@','%@','%@','%@','%ld')",article.gid,article.title,article.bname,article.createdTime,parameters[@"userID"],article.num, (long)XQByrCollectionSyncNew];
+        [sql setString:[NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, author, replyCount, state) VALUES ('%@','%@','%@','%@','%@','%@','%ld')",article.gid,article.title,article.bname,article.createdTime,parameters[@"userID"],article.num,(long)XQByrCollectionSyncNew]];
+    
     }else{
-        sql = [NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, replyCount) VALUES ('%@','%@','%@','%@','%@')",article.gid,article.title,article.bname,article.createdTime,article.num];
+        [sql setString:[NSString stringWithFormat:@"INSERT INTO Article (articleID, title, boardName, collectTime, replyCount) VALUES ('%@','%@','%@','%@','%@')",article.gid,article.title,article.bname,article.createdTime,article.num]];
     }
     [[XQDBManager sharedXQDBManager]executeNonQuery:sql];
 }

@@ -18,6 +18,8 @@
 #import <YYModel/YYModel.h>
 
 
+#define XQDatabaseLock() dispatch_semaphore_wait(self->_lock, DISPATCH_TIME_FOREVER)
+#define XQDatabaseUnlock() dispatch_semaphore_signal(self->_lock)
 @interface XQCollectDataCenter()
 
 @property (strong, nonatomic) XQUserService * userService;
@@ -27,6 +29,7 @@
 
 @implementation XQCollectDataCenter{
     dispatch_queue_t _queue;
+    dispatch_semaphore_t _lock;
 }
 
 - (instancetype)init{
@@ -34,6 +37,7 @@
         _userService = [[XQUserService alloc]init];
         _articleService = [[XQArticleService alloc]init];
         _queue = dispatch_queue_create("com.BUPT.ASByrApp.collect.database", DISPATCH_QUEUE_CONCURRENT);
+        _lock = dispatch_semaphore_create(1);
     }
     return self;
 }
@@ -43,12 +47,18 @@
     __weak typeof(self) _self = self;
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
+        
+        XQDatabaseLock();
         NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[self.articleService getArticlesByFilters:filters]];
+        XQDatabaseUnlock();
+        
         for (NSInteger i = 0; i < [articleArray count]; i++) {
             NSMutableDictionary * articleDic = [NSMutableDictionary dictionaryWithDictionary:articleArray[i]];
             if ([articleDic objectForKey:@"author"]) {
                 NSString * userID = articleDic[@"author"];
+                XQDatabaseLock();
                 NSDictionary * userDic = [self.userService getUserById:userID];
+                XQDatabaseUnlock();
                 [articleDic addEntriesFromDictionary:userDic];
             }else{
                 articleDic[@"userName"] = @"unknown";
@@ -77,12 +87,16 @@
                     user.uid = (NSString *)collection.user;
                     user.user_name = @"";
                 }
+                XQDatabaseLock();
                 [self.userService addUser:user];
+                XQDatabaseUnlock();
             }
             NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",nil];
+            XQDatabaseLock();
             [self.articleService addArticleWithCollection:(XQByrCollection *)[array objectAtIndex:i] andParameters:dic];
-            if (block) block();
+            XQDatabaseUnlock();
         }
+        if (block) block();
     });
 }
 
@@ -120,10 +134,14 @@
             user.face_url = @"";
             user.uid = (NSString *)article.user;
         }
+        XQDatabaseLock();
         [self.userService addUser:user];
-    
+        XQDatabaseUnlock();
+        
         NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",firstImageUrl,@"firstImageUrl", nil];
+        XQDatabaseLock();
         [self.articleService addArticle:article andParameters:parameters];
+        XQDatabaseUnlock();
         if (block) block();
     });
 }
@@ -154,7 +172,9 @@
             parameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
             break;
     }
+    XQDatabaseLock();
     [self.articleService updateArticle:articleID andParameters:parameters];
+    XQDatabaseUnlock();
     if (block) block();
 
     });
@@ -164,7 +184,9 @@
     __weak typeof(self) _self = self;
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
+        XQDatabaseLock();
         [self.articleService deleteArticle:articleID];
+        XQDatabaseUnlock();
         if (block) {
             block(articleID);
         }
@@ -175,8 +197,10 @@
     __weak typeof(self) _self = self;
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
+        XQDatabaseLock();
         [self.articleService deleteArticle:nil];
         [self.userService deleteAllUser];
+        XQDatabaseUnlock();
         if (block) {
             block();
         }
