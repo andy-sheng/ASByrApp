@@ -9,6 +9,16 @@
 #import "ASTop10Cell.h"
 #import "UIImageView+AFNetworking.h"
 
+@interface ASBorderLayer : CALayer
+
+
+@end
+
+@implementation ASBorderLayer
+
+@end
+
+
 @interface UILabel(Border)
 
 - (void)setBorderWithWidth:(CGFloat)width
@@ -27,17 +37,25 @@
 
 - (void)setRightBorderWithWidth:(CGFloat)width color:(UIColor *)color {
     self.clipsToBounds = YES;
-    CALayer *rightBorder = [CALayer layer];
+    ASBorderLayer *rightBorder = [ASBorderLayer layer];
     rightBorder.borderWidth = width;
     rightBorder.borderColor = color.CGColor;
     rightBorder.frame = CGRectMake(-1, -1, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) + 2);
     [self.layer addSublayer:rightBorder];
 }
+
+- (void)layoutSublayersOfLayer:(CALayer *)layer {
+    [super layoutSublayersOfLayer:layer];
+    NSArray<CALayer*> *layers = layer.sublayers;
+    for (CALayer*aLayer in layers) {
+        if ([aLayer isMemberOfClass:[ASBorderLayer class]]) {
+            aLayer.frame = CGRectMake(-1, -1, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) + 2);
+        }
+    }
+}
 @end
 
-@interface ASTop10Cell() {
-    BOOL _drawBorder;
-}
+@interface ASTop10Cell()
 
 @property (weak, nonatomic) IBOutlet UIImageView *faceView;
 @property (weak, nonatomic) IBOutlet UILabel *uidLabel;
@@ -71,7 +89,11 @@
     self.faceView.layer.cornerRadius = 15;
     self.faceView.layer.borderWidth = 1;
     self.faceView.layer.borderColor = FACE_BORDER_COLOR.CGColor;
+    
+    [self.idCountLabel setRightBorderWithWidth:1 color:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00]];
+    [self.replyCountLabel setRightBorderWithWidth:1 color:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00]];
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -109,17 +131,8 @@
     self.replyCountLabel.attributedText = replyCountStr;
 
     self.numLabel.text = [NSString stringWithFormat:@"%ld", num];
-    [self.idCountLabel setRightBorderWithWidth:1 color:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00]];
-    
-    [self.replyCountLabel setRightBorderWithWidth:1 color:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00]];
-//    if (_drawBorder) {
-//        NSLog(@"draw");
-//        [self.idCountLabel setRightBorderWithWidth:1 color:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00]];
-//        
-//        [self.replyCountLabel setRightBorderWithWidth:1 color:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00]];
-//        _drawBorder = NO;
-//    }
 }
+
 #pragma mark - setter and getter
 
 
