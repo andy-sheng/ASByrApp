@@ -12,7 +12,6 @@
 #import "XQCollectArticleTVC.h"
 #import "XQSelfInfoVC.h"
 #import "WMPageController.h"
-#import "XQDatabaseCreator.h"
 
 #import "XQUserInfo.h"
 @interface AppDelegate ()
@@ -53,8 +52,6 @@
     
     self.window.tintColor = MAIN_BLUE;
     
-    //打开数据库
-    [XQDatabaseCreator createDatabase];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -71,7 +68,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     //关闭数据库
-    [XQDatabaseCreator closeDatabase];
+    //[XQDatabaseCreator closeDatabase];
     //存储用户数据
     [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
 }
@@ -79,7 +76,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //打开数据库
-    [XQDatabaseCreator openDatabase];
+    //[XQDatabaseCreator openDatabase];
     //获得用户数据
     [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     

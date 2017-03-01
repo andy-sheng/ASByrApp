@@ -7,8 +7,8 @@
 //
 
 #import "XQCollectDataCenter.h"
-#import "XQArticleService.h"
-#import "XQUserService.h"
+#import "XQByrUserTable.h"
+#import "XQByrArticleTable.h"
 
 #import <XQByrArticle.h>
 #import <XQByrAttachment.h>
@@ -22,8 +22,8 @@
 #define XQDatabaseUnlock() dispatch_semaphore_signal(self->_lock)
 @interface XQCollectDataCenter()
 
-@property (strong, nonatomic) XQUserService * userService;
-@property (strong, nonatomic) XQArticleService * articleService;
+@property (strong, nonatomic) XQByrUserTable * userService;
+@property (strong, nonatomic) XQByrArticleTable * articleService;
 
 @end
 
@@ -34,8 +34,8 @@
 
 - (instancetype)init{
     if(self = [super init]){
-        _userService = [[XQUserService alloc]init];
-        _articleService = [[XQArticleService alloc]init];
+        _userService = [[XQByrUserTable alloc]init];
+        _articleService = [[XQByrArticleTable alloc]init];
         _queue = dispatch_queue_create("com.BUPT.ASByrApp.collect.database", DISPATCH_QUEUE_CONCURRENT);
         _lock = dispatch_semaphore_create(1);
     }
@@ -44,41 +44,44 @@
 
 - (void)fetchCollectListFromLocal:(NSDictionary * __nullable)filters withBlock:(void(^__nullable)( NSArray * __nullable objects))block{
     //暂时不考虑处理横向切片(将有图的帖子和无图的帖子分开)的情况
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
-        
-        XQDatabaseLock();
-        NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[self.articleService getArticlesByFilters:filters]];
-        XQDatabaseUnlock();
-        
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
+//        
+//        XQDatabaseLock();
+        NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[self.articleService findAllRecord]];
+//        XQDatabaseUnlock();
+    
         for (NSInteger i = 0; i < [articleArray count]; i++) {
-            NSMutableDictionary * articleDic = [NSMutableDictionary dictionaryWithDictionary:articleArray[i]];
-            if ([articleDic objectForKey:@"author"]) {
-                NSString * userID = articleDic[@"author"];
-                XQDatabaseLock();
-                NSDictionary * userDic = [self.userService getUserById:userID];
-                XQDatabaseUnlock();
-                [articleDic addEntriesFromDictionary:userDic];
+            XQByrCollection * articleDic = articleArray[i];
+            if ([articleDic valueForKey:@"user"]) {
+                NSString * userID = [articleDic valueForKey:@"user"];
+//                XQDatabaseLock();
+                XQByrUser * userDic = (XQByrUser *)[self.userService findRecordByPrimaryValue:userID];
+//                XQDatabaseUnlock();
+                [articleDic setUser:userDic];
             }else{
-                articleDic[@"userName"] = @"unknown";
+                XQByrUser * user = [[XQByrUser alloc]init];
+                user.user_name = @"unknown";
+                [articleDic setUser:user];
             }
             articleArray[i] = articleDic;
         }
         if(block) block(articleArray);
-    });
+//    });
 }
 
 - (void)saveCollectDataFromCollections:(NSArray *)array withBlock:(void (^ _Nullable)(void))block{
     if (array == nil || [array count] == 0) {
         return;
     }
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
         for (NSInteger i = 0; i < [array count]; i++) {
             
             XQByrCollection* collection = (XQByrCollection *)[array objectAtIndex:i];
+            collection.fristImageUrl = @"";
             XQByrUser * user = [[XQByrUser alloc]init];
             if (collection.user){
                 if([collection.user isKindOfClass:[XQByrUser class]]){
@@ -87,46 +90,25 @@
                     user.uid = (NSString *)collection.user;
                     user.user_name = @"";
                 }
-                XQDatabaseLock();
-                [self.userService addUser:user];
-                XQDatabaseUnlock();
+//                XQDatabaseLock();
+                [self.userService insertRecord:user];
+//                XQDatabaseUnlock();
             }
-            NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",nil];
-            XQDatabaseLock();
-            [self.articleService addArticleWithCollection:(XQByrCollection *)[array objectAtIndex:i] andParameters:dic];
-            XQDatabaseUnlock();
+            //collection.user = user;
+//            XQDatabaseLock();
+            [self.articleService insertRecord:collection];
+//            XQDatabaseUnlock();
         }
         if (block) block();
-    });
+//    });
 }
 
 - (void)addCollectData:(XQByrArticle *)article withBlock:(void (^ _Nullable)(void))block{
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
 
-        NSString * firstImageUrl = @"";
-    
-        XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[article.article firstObject]];
-    
-        if (article.has_attachment) {
-            XQByrAttachment * attachment;
-            NSDictionary * filedic;
-            if(article.attachment != nil){
-                attachment = article.attachment;
-                filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
-            }else{
-                attachment = childArticle.attachment;
-                filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
-            }
-            firstImageUrl = filedic[@"url"];
-        }
-    
-        //文章正文在子数组中时需要对content单独赋值
-        if(article.content == nil){
-            article.content = childArticle.content;
-        }
-    
+        XQByrCollection * collection = [self p_articleToCollection:article];
         XQByrUser * user = [[XQByrUser alloc]init];
         if ([article.user isKindOfClass:[XQByrUser class]]){
             user = article.user;
@@ -134,76 +116,87 @@
             user.face_url = @"";
             user.uid = (NSString *)article.user;
         }
-        XQDatabaseLock();
-        [self.userService addUser:user];
-        XQDatabaseUnlock();
-        
-        NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",firstImageUrl,@"firstImageUrl", nil];
-        XQDatabaseLock();
-        [self.articleService addArticle:article andParameters:parameters];
-        XQDatabaseUnlock();
+//        XQDatabaseLock();
+        [self.userService insertRecord:user];
+//        XQDatabaseUnlock();
+        collection.user = user;
+//        XQDatabaseLock();
+        [self.articleService insertRecord:collection];
+//        XQDatabaseUnlock();
         if (block) block();
-    });
+//    });
 }
 
 - (void)updateCollectData:(XQByrArticle *)article options:(XQCollectionUpdateType)type withBlock:(void (^ _Nullable)(void))block{
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
-    NSString * articleID = [NSString stringWithFormat:@"%ld",(long)article.group_id];
-    NSDictionary * parameters;
-    switch (type) {
-        case XQCollectionUpdateContent:
-            if (article.has_attachment) {
-                NSString * firstImageUrl = @"";
-                //NSString * content = @"";
-                XQByrAttachment * attachment;
-                XQByrFile * file;
-                attachment = article.attachment;
-                
-                file = [XQByrFile yy_modelWithDictionary:[NSArray arrayWithArray:attachment.file][0]];
-                firstImageUrl = file.url;
-                parameters = [NSDictionary dictionaryWithObjectsAndKeys:firstImageUrl,@"firstImageUrl",article.board_description,@"boardDescription",[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
-            }else{
-                parameters = [NSDictionary dictionaryWithObjectsAndKeys:article.board_description,@"boardDescription",[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
-            }
-            break;
-        case XQCollectionUpdateReply:
-            parameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:article.reply_count],@"replyCount",nil];
-            break;
-    }
-    XQDatabaseLock();
-    [self.articleService updateArticle:articleID andParameters:parameters];
-    XQDatabaseUnlock();
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
+    XQByrCollection * collection = [self p_articleToCollection:article];
+    
+//    XQDatabaseLock();
+    [self.articleService updateRecord:collection];
+//    XQDatabaseUnlock();
     if (block) block();
 
-    });
+//    });
 }
 
 - (void)deleteCollectData:(NSString *)articleID withBlock:(void (^ _Nullable)(NSString * articleID))block{
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
-        XQDatabaseLock();
-        [self.articleService deleteArticle:articleID];
-        XQDatabaseUnlock();
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
+//        XQDatabaseLock();
+    XQByrCollection * collection = [[XQByrCollection alloc]init];
+    collection.gid = articleID;
+    [self.articleService deleteRecord:collection];
+//        XQDatabaseUnlock();
         if (block) {
             block(articleID);
         }
-    });
+//    });
 }
 
 - (void)deleteAllCollectDataWithBlock:(void (^)(void))block{
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
-        XQDatabaseLock();
-        [self.articleService deleteArticle:nil];
-        [self.userService deleteAllUser];
-        XQDatabaseUnlock();
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
+//        XQDatabaseLock();
+        //[self.articleService deleteArticle:nil];
+        //[self.userService deleteAllUser];
+//        XQDatabaseUnlock();
         if (block) {
             block();
         }
-    });
+//    });
 }
+
+#pragma mark private method
+- (XQByrCollection *)p_articleToCollection:(XQByrArticle *)article{
+
+    XQByrCollection * collection = [[XQByrCollection alloc]init];
+    
+    XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[article.article firstObject]];
+    
+    if (article.has_attachment) {
+        XQByrAttachment * attachment;
+        NSDictionary * filedic;
+        if(article.attachment != nil){
+            attachment = article.attachment;
+            filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
+        }else{
+            attachment = childArticle.attachment;
+            filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
+        }
+        collection.fristImageUrl = filedic[@"url"];
+    }
+    
+    collection.state = 2;
+    collection.replyCount = article.reply_count;
+    collection.gid = [NSString stringWithFormat:@"%ld",(long)article.group_id];
+    collection.bname = article.board_name;
+    collection.title = article.title;
+    collection.postTime = [NSString stringWithFormat:@"%ld",(long)article.post_time];
+    return collection;
+}
+
 @end
