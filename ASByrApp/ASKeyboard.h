@@ -35,7 +35,11 @@
 
 @property(strong, nonatomic) UIButton * moreBtn;
 
+@property(strong, nonatomic) NSDictionary * context;
+
 - (void)pop;
+
+- (void)popWithContext:(NSDictionary*) context;
 
 - (void)hide;
 

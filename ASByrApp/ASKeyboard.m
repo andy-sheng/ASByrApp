@@ -118,6 +118,11 @@
     [self.textView becomeFirstResponder];
 }
 
+- (void)popWithContext:(NSDictionary *)context {
+    self.context = context;
+    [self pop];
+}
+
 - (void)hide {
     [self.textView resignFirstResponder];
     CGRect frame = self.frame;

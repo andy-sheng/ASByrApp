@@ -41,6 +41,7 @@ const NSUInteger replyRow = 2;
 @property(strong, nonatomic) UIBarButtonItem * moreOperBtn;
 
 @property(strong, nonatomic) MBProgressHUD *endHud;
+@property(nonatomic, strong) MBProgressHUD *replyStatusHud;
 
 @property(strong, nonatomic) ASByrArticle * articleApi;
 @property(copy, nonatomic) NSString * board;
@@ -50,7 +51,7 @@ const NSUInteger replyRow = 2;
 @property(assign, nonatomic) BOOL isLoadThreads;
 
 @property(strong, nonatomic) NSDictionary * articleData;
-@property(strong, nonatomic) NSArray * replyArticles;
+@property(strong, nonatomic) NSMutableArray<XQByrArticle*> * replyArticles;
 @property(strong, nonatomic) XQByrPagination *pagination;
 @property(strong, nonatomic) XQThreadsDetailViewModel * viewModel;
 @end
@@ -62,7 +63,7 @@ const NSUInteger replyRow = 2;
                               aid:(NSUInteger)aid {
     self = [super init];
     if (self) {
-        self.board = [board copy];
+        self.board = board;
         self.aid = aid;
         self.page = 1;
         self.isLoadThreads = YES;
@@ -127,17 +128,16 @@ const NSUInteger replyRow = 2;
 - (void)loadData {
     self.isLoadThreads = YES;
     //[self.articleApi fetchArticleWithBoard:self.board aid:self.aid];
+    [self.replyArticles removeAllObjects];
     self.page = 1;
     [self.articleApi fetchThreadsWithBoard:self.board aid:self.aid page:self.page];
 }
 
 - (void)moreData {
-    NSLog(@"%ld", self.page);
     self.isLoadThreads = NO;
     if (self.pagination.page_all_count == self.page) {
         [self.endHud show:YES];
         [self.endHud hide:YES afterDelay:1];
-        NSLog(@"nomore");
         return;
     }
     [self.articleApi fetchThreadsWithBoard:self.board aid:self.aid page:++self.page];
@@ -195,8 +195,7 @@ const NSUInteger replyRow = 2;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    NSLog(@"pop");
-    [self.keyboard pop];
+    [self.keyboard popWithContext:@{@"reid":@(self.replyArticles[indexPath.row].aid)}];
 }
 
 #pragma mark - Table view data source
@@ -249,9 +248,9 @@ const NSUInteger replyRow = 2;
     }else{
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
         cell.delegate = self;
-        [cell setupWithFaceurl:((XQByrArticle*)self.replyArticles[indexPath.row]).user.face_url
-                           uid:((XQByrArticle*)self.replyArticles[indexPath.row]).user.uid
-                       content:((XQByrArticle*)self.replyArticles[indexPath.row]).content];
+        [cell setupWithFaceurl:self.replyArticles[indexPath.row].user.face_url
+                           uid:self.replyArticles[indexPath.row].user.uid
+                       content:self.replyArticles[indexPath.row].content];
         return cell;
     }
 }
@@ -259,7 +258,18 @@ const NSUInteger replyRow = 2;
 #pragma mark - ASKeyBoardDelegate
 
 - (void)sendAcion:(NSString *)text {
-    NSLog(@"post:%@", text);
+    NSInteger reid = [self.keyboard.context[@"reid"] integerValue];
+    NSLog(@"%ld", reid);
+    __weak typeof(self) weakSelf = self;
+    [self.articleApi postArticleWithBoard:self.board title:@"" content:text reid:reid successBlock:^(NSInteger statusCode, id response) {
+        weakSelf.replyStatusHud.labelText = @"回复成功";
+        [weakSelf.replyStatusHud show:YES];
+        [weakSelf.replyStatusHud hide:YES afterDelay:1];
+    } failureBlock:^(NSInteger statusCode, id response) {
+        weakSelf.replyStatusHud.labelText = @"回复失败";
+        [weakSelf.replyStatusHud show:YES];
+        [weakSelf.replyStatusHud hide:YES afterDelay:1];
+    }];
 }
 
 #pragma mark - ASByrArticleResponseDelegate
@@ -279,10 +289,10 @@ const NSUInteger replyRow = 2;
     if (response.isSucceeded) {
         if (_isLoadThreads) {
             for (NSInteger i = 1; i < [response.reformedData count]; i++) {
-                self.replyArticles = [self.replyArticles arrayByAddingObject:response.reformedData[i]];
+                [self.replyArticles addObject:response.reformedData[i]];
             }
         }else{
-            self.replyArticles = [self.replyArticles arrayByAddingObjectsFromArray:response.reformedData];
+            [self.replyArticles addObjectsFromArray:response.reformedData];
         }
     }else{//访问出错：服务器返回错误信息或网络错误
         [self presentViewController:[UIAlertController alertControllerWithBriefInfo:response.response[@"msg"]] animated:YES completion:nil];
@@ -385,6 +395,14 @@ const NSUInteger replyRow = 2;
         _endHud.labelText = @"到底了";
     }
     return _endHud;
+}
+
+- (MBProgressHUD *)replyStatusHud {
+    if (_replyStatusHud == nil) {
+        _replyStatusHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _replyStatusHud.mode = MBProgressHUDModeText;
+    }
+    return _replyStatusHud;
 }
 
 - (XQWebView *)webBodyCell{
