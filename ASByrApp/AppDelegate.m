@@ -24,7 +24,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
-    
+
     [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     
     ASTop10RootVC *top10VC = [[ASTop10RootVC alloc] init];
