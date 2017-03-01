@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         self.test = NO;
-        self.oath = [[ASByrOAth2 alloc] initWithAppkey:@"dcaea32813eca7e0a547728b73ab060a"
+        self.oath = [[ASByrOAth2 alloc] initWithAppkey:@"2ac98e0ff352ee2f594cf808d0ade250"
                                            redirectUri:[NSURL URLWithString:@"http://bbs.byr.cn/oauth2/callback"]
                                                appleId:@""
                                               bundleId:@""];

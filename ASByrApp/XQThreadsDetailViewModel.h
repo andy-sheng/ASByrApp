@@ -14,9 +14,9 @@
 
 @property(strong, nonatomic) XQByrArticle * articleEntity;
 
-@property(assign, nonatomic) NSString * title;
-
-- (instancetype)initWithArticleDic:(NSDictionary *)articelDic;
+@property(copy, nonatomic) NSString * title;
 
 - (NSString *)getContentHtmlString;
+
+- (void)setArticleEntity:(NSDictionary *)articleEntity replyCount:(NSInteger)replyCount;
 @end

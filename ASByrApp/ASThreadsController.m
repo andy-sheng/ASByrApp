@@ -300,8 +300,7 @@ const NSUInteger replyRow = 2;
     if (response.isSucceeded) {
         NSMutableArray *reformedArticles = [NSMutableArray array];
         if (_isLoadThreads) {
-            _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[[response.response objectForKey:@"article"] firstObject]];
-            _viewModel.articleEntity.reply_count = [XQByrArticle yy_modelWithJSON:response.response].reply_count;
+            [self.viewModel setArticleEntity:[[response.response objectForKey:@"article"] firstObject] replyCount:[XQByrArticle yy_modelWithJSON:response.response].reply_count];
         }
         //更新本地收藏文章的数据库
         if(self.threadType == ASThreadsEnterTypeCollection){
@@ -402,8 +401,9 @@ const NSUInteger replyRow = 2;
 }
 
 - (XQThreadsDetailViewModel *)viewModel{
+    NSLog(@"进入懒加载");
     if (_viewModel == nil) {
-        _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:self.aid],@"group_id",self.board,@"board_name",nil]];
+        _viewModel = [[XQThreadsDetailViewModel alloc]init];
     }
     return _viewModel;
 }
