@@ -18,7 +18,7 @@
 
 @interface ASThreadsTitleCell : UITableViewCell
 
-@property(nonatomic, strong) id <ASThreadsTitleCellDelegate> delegate;
+@property(nonatomic, weak) id <ASThreadsTitleCellDelegate> delegate;
 
 - (void)setupWithTitle:(NSString*) title;
 

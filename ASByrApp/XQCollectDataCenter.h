@@ -19,14 +19,16 @@ typedef NS_ENUM(NSInteger, XQCollectionUpdateType){
 
 @interface XQCollectDataCenter : NSObject
 
-- (NSArray * __nullable)fetchCollectListFromLocal:(NSDictionary * __nullable)filters;
+- (void)fetchCollectListFromLocal:(NSDictionary * __nullable)filters withBlock:(void(^__nullable)(NSArray * __nullable objects))block;
 
-- (BOOL)saveCollectDataFromCollections:(NSArray * _Nullable)array;
-- (BOOL)addCollectData:(XQByrArticle * __nonnull)article;
+- (void)saveCollectDataFromCollections:(NSArray * _Nullable)array withBlock:(void(^__nullable)(void))block;
 
-- (void)updateCollectData:(XQByrArticle * __nonnull)article options:(XQCollectionUpdateType)type;
+- (void)addCollectData:(XQByrArticle * __nonnull)article withBlock:(void(^__nullable)(void))block;
 
-- (void)deleteCollectData:(NSString * __nonnull)articleID;
+- (void)updateCollectData:(XQByrArticle * __nonnull)article options:(XQCollectionUpdateType)type withBlock:(void(^__nullable)(void))block;
 
-- (void)deleteAllCollectData;
+- (void)deleteCollectData:(NSString * __nonnull)articleID withBlock:(void(^__nullable)(NSString * __nonnull articleID))block;
+
+- (void)deleteAllCollectDataWithBlock:(void(^__nullable)(void))block;
+
 @end

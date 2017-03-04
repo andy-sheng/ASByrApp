@@ -63,6 +63,7 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithHexString:[self.lastViewBoard getColor]]];
     self.boardApi = [[ASByrBoard alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
     self.boardApi.responseDelegate = self;
+    self.boardApi.responseReformer = self;
     [self updateBarTheme];
 }
 
@@ -134,12 +135,12 @@
     //设置按钮和标题为白色
     //[[UIBarButtonItem appearance]setTintColor:[UIColor whiteColor]];
     
-    self.addPostBtn = [[UIBarButtonItem alloc] initWithTitle:@"发帖" style:UIBarButtonItemStyleDone target:self action:@selector(addPost)];
+    self.addPostBtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStyleDone target:self action:@selector(addPost)];
     self.addPostBtn.image = [UIImage imageNamed:@"edit"];
     [self.addPostBtn setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem = self.addPostBtn;
     
-    self.sectionListBtn = [[UIBarButtonItem alloc] initWithTitle:@"版面" style:UIBarButtonItemStylePlain target:self action:@selector(listSection)];
+    self.sectionListBtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(listSection)];
     self.sectionListBtn.image = [UIImage imageNamed:@"list2"];
     [self.sectionListBtn setTintColor:[UIColor whiteColor]];
     self.navigationItem.rightBarButtonItem = self.sectionListBtn;
@@ -153,7 +154,7 @@
     [super loadData];
     //[self.tableView.mj_header beginRefreshing];
     self.page=1;
-    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName pageNumber:self.page];
+    [self.boardApi fetchBoard:self.boardName pageNumber:self.page];
     //[self.tableView.mj_header endRefreshing];
 }
 
@@ -161,7 +162,7 @@
     //self.isLoaded=NO;
     self.page++;
     NSLog(@"%lu",(long)self.page);
-    [self.boardApi fetchBoardWithReformer:self boardName:self.boardName pageNumber:self.page];
+    [self.boardApi fetchBoard:self.boardName pageNumber:self.page];
 }
 
 

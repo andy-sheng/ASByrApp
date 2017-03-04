@@ -21,7 +21,7 @@
 
 @interface ASKeyboard : UIView
 
-@property(strong, nonatomic) id<ASKeyBoardDelegate> delegate;
+@property(weak, nonatomic) id<ASKeyBoardDelegate> delegate;
 
 @property(strong, nonatomic) UIView * inputView;
 

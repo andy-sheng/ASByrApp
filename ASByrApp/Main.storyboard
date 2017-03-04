@@ -1,57 +1,39 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Test View Controller-->
-        <scene sceneID="uyK-Cj-mip">
+        <scene sceneID="qEe-QO-11S">
             <objects>
-                <viewController storyboardIdentifier="test" id="uH9-PE-LEF" customClass="TestViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="test" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w1u-0Y-BDh" customClass="TestViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="afx-al-LGg"/>
-                        <viewControllerLayoutGuide type="bottom" id="ult-wm-CZo"/>
+                        <viewControllerLayoutGuide type="top" id="vfn-qE-1Tm"/>
+                        <viewControllerLayoutGuide type="bottom" id="oIE-Rk-iIc"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="48m-Id-NeR">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="view" contentMode="scaleToFill" id="6Xv-9w-RNa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="21i-7u-zFI">
-                                <rect key="frame" x="11" y="479" width="30" height="30"/>
-                                <state key="normal" title="pop"/>
-                                <connections>
-                                    <action selector="popup:" destination="uH9-PE-LEF" eventType="touchUpInside" id="A0j-PU-zKL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wha-If-5e8">
-                                <rect key="frame" x="20" y="523" width="30" height="30"/>
-                                <state key="normal" title="hide"/>
-                                <connections>
-                                    <action selector="hide:" destination="uH9-PE-LEF" eventType="touchUpInside" id="zmY-2V-ABg"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRb-E5-igb" customClass="TTTAttributedLabel">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="2e0-z1-OEd">
+                                <rect key="frame" x="86" y="171" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="KRb-E5-igb" firstAttribute="top" secondItem="48m-Id-NeR" secondAttribute="top" id="KAZ-j9-4sJ"/>
-                            <constraint firstItem="KRb-E5-igb" firstAttribute="leading" secondItem="48m-Id-NeR" secondAttribute="leading" id="fFv-q6-Ulh"/>
-                            <constraint firstAttribute="trailing" secondItem="KRb-E5-igb" secondAttribute="trailing" id="w7M-6z-YW6"/>
-                        </constraints>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <connections>
-                        <outlet property="testLabel" destination="KRb-E5-igb" id="DOL-u7-UA7"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="31u-Py-0Ew" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jnd-a0-lPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="486" y="374"/>
+            <point key="canvasLocation" x="311" y="248"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeholder.jpg" width="100" height="100"/>
+    </resources>
 </document>

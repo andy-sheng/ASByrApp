@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "XQByrArticle.h"
+#import "XQByrUser.h"
+
 @interface ASTop10Cell : UITableViewCell
 
 - (void)setupWithface:(NSString*) faceUrl
@@ -16,4 +19,7 @@
               content:(NSString*) content
                   num:(NSUInteger)num;
 
+- (void)setupWithArticle:(XQByrArticle*)article
+                     num:(NSUInteger)num;
+    
 @end

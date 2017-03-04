@@ -23,6 +23,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.faceImage.layer.masksToBounds = YES;
+    self.faceImage.layer.cornerRadius = 15;
+    self.faceImage.layer.borderWidth = 1;
+    self.faceImage.layer.borderColor = FACE_BORDER_COLOR.CGColor;
+    
     ASUbbParser *parser = [[ASUbbParser alloc] init];
     self.contentLabel.textParser = parser;
     

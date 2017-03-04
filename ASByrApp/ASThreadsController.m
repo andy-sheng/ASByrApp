@@ -19,16 +19,20 @@
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 #import "ASArticleListVC.h"
-#import "XQCollectArticleVC.h"
+#import "XQCollectArticleTVC.h"
 #import "XQThreadsDetailViewModel.h"
-
 #import "UIAlertController+Extension.h"
+
+#import "YYModel.h"
+#import "XQByrArticle.h"
+#import "XQByrUser.h"
+#import "XQByrPagination.h"
 
 const NSUInteger titleRow = 0;
 const NSUInteger bodyRow  = 1;
 const NSUInteger replyRow = 2;
 
-@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate, WKNavigationDelegate>
+@interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
 
 @property(strong, nonatomic) XQWebView * webBodyCell;
 @property(strong, nonatomic) UITableView * tableView;
@@ -36,8 +40,10 @@ const NSUInteger replyRow = 2;
 @property(strong, nonatomic) MBProgressHUD * hud;
 @property(strong, nonatomic) UIBarButtonItem * moreOperBtn;
 
+@property(strong, nonatomic) MBProgressHUD *endHud;
+
 @property(strong, nonatomic) ASByrArticle * articleApi;
-@property(strong, nonatomic) NSString * board;
+@property(copy, nonatomic) NSString * board;
 @property(assign, nonatomic) NSUInteger aid;
 @property(assign, nonatomic) NSUInteger page;
 @property(assign, nonatomic) ASThreadsEnterType threadType;
@@ -45,6 +51,7 @@ const NSUInteger replyRow = 2;
 
 @property(strong, nonatomic) NSDictionary * articleData;
 @property(strong, nonatomic) NSArray * replyArticles;
+@property(strong, nonatomic) XQByrPagination *pagination;
 @property(strong, nonatomic) XQThreadsDetailViewModel * viewModel;
 @end
 
@@ -55,7 +62,7 @@ const NSUInteger replyRow = 2;
                               aid:(NSUInteger)aid {
     self = [super init];
     if (self) {
-        self.board = board;
+        self.board = [board copy];
         self.aid = aid;
         self.page = 1;
         self.isLoadThreads = YES;
@@ -76,7 +83,6 @@ const NSUInteger replyRow = 2;
     [self.view addSubview:self.keyboard];
     [self.view setNeedsUpdateConstraints];
     
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:XQNotificationWebViewLoaded object:nil];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshData) name:XQNotificationWebViewLoaded object:nil];
 }
@@ -92,7 +98,7 @@ const NSUInteger replyRow = 2;
     if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[ASArticleListVC class]]){
         self.threadType = ASThreadsEnterTypeNormal;
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    }else if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[XQCollectArticleVC class]]){
+    }else if([[self.navigationController.viewControllers objectAtIndex:(length-2)] isKindOfClass:[XQCollectArticleTVC class]]){
         self.threadType = ASThreadsEnterTypeCollection;
     }
 }
@@ -126,8 +132,15 @@ const NSUInteger replyRow = 2;
 }
 
 - (void)moreData {
+    NSLog(@"%ld", self.page);
     self.isLoadThreads = NO;
-    [self.articleApi fetchThreadsWithBoard:self.board aid:self.aid page:self.page];
+    if (self.pagination.page_all_count == self.page) {
+        [self.endHud show:YES];
+        [self.endHud hide:YES afterDelay:1];
+        NSLog(@"nomore");
+        return;
+    }
+    [self.articleApi fetchThreadsWithBoard:self.board aid:self.aid page:++self.page];
 }
 
 - (void)moreOperation{
@@ -153,20 +166,24 @@ const NSUInteger replyRow = 2;
         notificationName = @"addNewCollectedArticle";
     }
     
+    NSDictionary* userInfo = @{@"article": self.viewModel.articleEntity};
+
+    __weak ASThreadsController * weakself = self;
     collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
         
-        //[[NSNotificationCenter defaultCenter]postNotificationName:@"addNewCollectedArticle" object:nil userInfo:userInfo];
-        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:weakself.view animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
         hud.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"success"]];
         
         hud.labelText = hudtext;
         hud.minShowTime = 2;
         
-        [hud showAnimated:YES whileExecutingBlock:^{
-            [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:nil userInfo:userInfo];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [hud showAnimated:YES whileExecutingBlock:^{
+                [[NSNotificationCenter defaultCenter]postNotificationName:notificationName object:nil userInfo:userInfo];
+            }];
+        });
+        
     }];
     
     [alertController addAction:collectAction];
@@ -192,7 +209,7 @@ const NSUInteger replyRow = 2;
     if (section == titleRow ){
         return _viewModel == nil ? 0 : 1;
     }else if( section == bodyRow) {
-        return 1;
+        return 0;
     }else{
         return [self.replyArticles count] == 0 ? 0 : [self.replyArticles count];
     }
@@ -201,8 +218,6 @@ const NSUInteger replyRow = 2;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == bodyRow) {
         if (_viewModel != nil) {
-//            NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
-//            [_webBodyCell.webView loadRequest:request];
             NSString * htmlString = [_viewModel getContentHtmlString];
             [_webBodyCell loadHTMLString:htmlString baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///%@/webresource",[[NSBundle mainBundle] bundlePath]]]];
         }else{
@@ -234,9 +249,9 @@ const NSUInteger replyRow = 2;
     }else{
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
         cell.delegate = self;
-        [cell setupWithFaceurl:self.replyArticles[indexPath.row][@"user"][@"faceurl"]
-                           uid:self.replyArticles[indexPath.row][@"user"][@"uid"]
-                       content:self.replyArticles[indexPath.row][@"content"]];
+        [cell setupWithFaceurl:((XQByrArticle*)self.replyArticles[indexPath.row]).user.face_url
+                           uid:((XQByrArticle*)self.replyArticles[indexPath.row]).user.uid
+                       content:((XQByrArticle*)self.replyArticles[indexPath.row]).content];
         return cell;
     }
 }
@@ -261,7 +276,6 @@ const NSUInteger replyRow = 2;
 }
 
 - (void)fetchThreadsResponse:(ASByrResponse *)response {
-    //NSLog(@"%@",response.reformedData[0]);
     if (response.isSucceeded) {
         if (_isLoadThreads) {
             for (NSInteger i = 1; i < [response.reformedData count]; i++) {
@@ -285,9 +299,8 @@ const NSUInteger replyRow = 2;
 #pragma mark - ASByrArticleResponseReformer
 
 - (ASByrResponse*)reformArticleResponse:(ASByrResponse *)response {
-    NSMutableDictionary *reformedArticle = [NSMutableDictionary dictionary];
-    reformedArticle[@"title"] = response.response[@"title"];
-    reformedArticle[@"content"] = response.response[@"content"];
+    NSLog(@"%@", response);
+    XQByrArticle *reformedArticle = [XQByrArticle yy_modelWithJSON:response.response];
     response.reformedData = reformedArticle;
     return response;
 }
@@ -297,19 +310,16 @@ const NSUInteger replyRow = 2;
         NSMutableArray *reformedArticles = [NSMutableArray array];
         if (_isLoadThreads) {
             _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[[response.response objectForKey:@"article"] firstObject]];
+            _viewModel.articleEntity.reply_count = [XQByrArticle yy_modelWithJSON:response.response].reply_count;
         }
         //更新本地收藏文章的数据库
         if(self.threadType == ASThreadsEnterTypeCollection){
             NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
             [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCollectedArticle" object:nil userInfo:userInfo];
         }
-        //mainarticle setContent:[NSString stringWithFormat:@"%@",[NSArray arraywith]]
-        for (NSDictionary * article in [response.response objectForKey:@"article"]) {
-            NSMutableDictionary * tmp = [NSMutableDictionary dictionary];
-            tmp[@"title"] = article[@"title"];
-            tmp[@"content"] = article[@"content"];
-            
-            tmp[@"user"] = @{@"faceurl":article[@"user"][@"face_url"], @"uid":article[@"user"][@"id"]};
+        self.pagination = [XQByrPagination yy_modelWithJSON:[response.response objectForKey:@"pagination"]];
+        for (id article in [response.response objectForKey:@"article"]) {
+            XQByrArticle *tmp = [XQByrArticle yy_modelWithJSON:article];
             [reformedArticles addObject:tmp];
         }
         response.reformedData = reformedArticles;
@@ -339,7 +349,7 @@ const NSUInteger replyRow = 2;
         _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.separatorColor = [UIColor whiteColor];
+        //_tableView.separatorColor = [UIColor whiteColor];
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.estimatedRowHeight = 50.0;
         [_tableView registerNib:[UINib nibWithNibName:@"ASThreadsTitleCell" bundle:nil] forCellReuseIdentifier:@"threadsTitle"];
@@ -368,15 +378,34 @@ const NSUInteger replyRow = 2;
     return _hud;
 }
 
-- (NSUInteger)page {
-    return _page++;
+- (MBProgressHUD *)endHud {
+    if (_endHud == nil) {
+        _endHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _endHud.mode = MBProgressHUDModeText;
+        _endHud.labelText = @"到底了";
+    }
+    return _endHud;
 }
 
 - (XQWebView *)webBodyCell{
     if (_webBodyCell == nil) {
         _webBodyCell = [[XQWebView alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, 100)];
-        _webBodyCell.navigationDelegate = self;
+        _webBodyCell.navigationDelegate = nil;
+        _webBodyCell.UIDelegate = nil;
     }
     return _webBodyCell;
+}
+
+- (XQThreadsDetailViewModel *)viewModel{
+    if (_viewModel == nil) {
+        _viewModel = [[XQThreadsDetailViewModel alloc]initWithArticleDic:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:self.aid],@"group_id",self.board,@"board_name",nil]];
+    }
+    return _viewModel;
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:XQNotificationWebViewLoaded object:nil];
+
+    NSLog(@"asthreadscontroller will be dealloced.");
 }
 @end

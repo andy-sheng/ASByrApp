@@ -65,7 +65,7 @@
     
     NSArray * files;
     if (self.articleEntity.has_attachment) {
-        XQByrArticle * childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)_articleEntity.article[0]];
+        XQByrArticle  *childArticle = [XQByrArticle yy_modelWithDictionary:(NSDictionary *)[_articleEntity.article firstObject]];
             XQByrAttachment * attachment;
             if(_articleEntity.attachment != nil){
                 attachment = _articleEntity.attachment;
