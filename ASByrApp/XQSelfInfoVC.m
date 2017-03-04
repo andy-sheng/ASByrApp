@@ -74,8 +74,8 @@
     if ([XQUserInfo sharedXQUserInfo].loginStatus !=YES) {
         self.userApi= [[ASByrUser alloc]initWithAccessToken:[ASByrToken shareInstance].accessToken];
         self.userApi.responseDelegate = self;
-        self.userApi.responseReformer = self;
-        [self.userApi fetchUserInfo];
+        //self.userApi.responseReformer = self;
+        [self.userApi fetchUserInfoWithReformer:self];
     }else
         [self loadDataToView];
 }
