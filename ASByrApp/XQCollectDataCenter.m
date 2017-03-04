@@ -194,12 +194,14 @@
 }
 
 - (void)deleteAllCollectDataWithBlock:(void (^)(void))block{
-    __weak typeof(self) _self = self;
+    __weak typeof(self) wself = self;
     dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
+        __strong typeof(wself) sself = wself;
         XQDatabaseLock();
-        [self.articleService deleteArticle:nil];
-        [self.userService deleteAllUser];
+        if (sself != nil) {
+            [sself.articleService deleteArticle:nil];
+            [sself.userService deleteAllUser];
+        }
         XQDatabaseUnlock();
         if (block) {
             block();
