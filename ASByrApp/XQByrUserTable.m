@@ -14,6 +14,10 @@
 @end
 @implementation XQByrUserTable
 
++ (NSArray *)getForeignColumnInfo{
+    return [NSArray arrayWithObjects:@"uid",@"user_name",@"face_url",nil];
+}
+
 #pragma mark XQTableBaseExecutorProtocol
 - (NSString *)databaseName{
     return XQByrDatabaseName;

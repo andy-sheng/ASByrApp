@@ -8,7 +8,7 @@
 
 #import "XQTableBaseExecutor.h"
 #import "XQDataBaseQuery.h"
-
+#import <objc/runtime.h>
 
 @interface XQTableBaseExecutor()
 
@@ -28,6 +28,11 @@
         if (dataBaseQuery) {
             [dataBaseQuery createTable:self.tableProtocol.tableName tableColumn:self.tableProtocol.tableColumnInfo];
         }
+        if ([_tableProtocol respondsToSelector:@selector(bindForeignClass)]) {
+            Class cl = NSClassFromString(self.tableProtocol.foreignClassName);
+            id ftTableColumn = 
+            //[dataBaseQuery createView:self.tableProtocol.tableName fTableColumn:self.tableProtocol.tableColumnInfo ftTableColumn:];
+        }
         _databaseQuery = dataBaseQuery;
     }else{
         NSLog(@"Create Database Error: Persistance table must comform to protocal XQTableBaseExecutorProtocal.");
@@ -42,13 +47,6 @@
         NSString * o = [record valueForKey:key];
         NSLog(@"%@",key);
         if (o!=nil) {
-            NSLog(@"%@",o);
-            NSRegularExpression * regularFirst = [NSRegularExpression regularExpressionWithPattern:@".*FOREGIN KEY.*" options:NSRegularExpressionCaseInsensitive error:nil];
-            if([regularFirst numberOfMatchesInString:obj options:NSMatchingReportCompletion range:NSMakeRange(0, [obj count])] > 0){
-                NSRegularExpression * regularSecond = [NSRegularExpression regularExpressionWithPattern:@"\\(.*?\\)" options:NSRegularExpressionCaseInsensitive error:nil];
-                NSTextCheckingResult * result = [regularSecond firstMatchInString:obj options:NSMatchingReportCompletion range:NSMakeRange(0, [obj count])];
-                result
-            }
             [dictionary setObject:o forKey:key];
         }
     }];
@@ -78,5 +76,8 @@
 - (id)findRecordByPrimaryValue:(NSString *)primaryValue{
     return [self.databaseQuery fetchDataAtTable:_tableProtocol.tableName ofClass:_tableProtocol.tableClass primaryKey:_tableProtocol.primaryKey primaryValue:primaryValue];
 }
+
+#pragma mark -- private method
+
 
 @end

@@ -138,6 +138,27 @@ NSString * const XQByrDatabaseName = @"XQByrDatabase.db";
     }
 }
 
+- (void)createView:(NSString *)fTableName fTableColumn:(NSArray *)fTableColumn ftTableName:(NSString *)ftTableName ftTableColumn:(NSArray *)ftTableColumn{
+    
+}
 #pragma mark private method
+- (BOOL)p_hasForeignKey:(NSString *)str{
+    NSRegularExpression * regularFirst = [NSRegularExpression regularExpressionWithPattern:@".*FOREGIN KEY.*" options:NSRegularExpressionCaseInsensitive error:nil];
+    if([regularFirst numberOfMatchesInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str   length])] > 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+- (NSString *)p_findForeignTableName:(NSString *)str{
+    NSRegularExpression * regularSecond = [NSRegularExpression regularExpressionWithPattern:@"\\(.*?\\)" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSTextCheckingResult * result = [regularSecond firstMatchInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str length])];
+    if (result.range.length > 0) {
+        return [str substringWithRange:result.range];
+    }else{
+        return @"";
+    }
+}
 
 @end

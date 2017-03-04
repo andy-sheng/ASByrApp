@@ -30,4 +30,6 @@ extern NSString * const XQByrDatabaseName;
 
 - (void)deleteDataAtTable:(NSString *)tableName primaryKey:(NSString *)primaryKey keyValue:(NSString *)keyValue;
 
+- (void)createView:(NSString *)fTableName fTableColumn:(NSDictionary*)fTableColumn ftTableColumn:(NSArray *)ftTableColumn;
+
 @end

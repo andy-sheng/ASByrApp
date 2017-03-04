@@ -23,6 +23,10 @@
 
 - (NSString *)primaryKey;
 
+@optional
+
+- (NSString *)foreignClassName;
+
 @end
 
 @interface XQTableBaseExecutor : NSObject
@@ -38,4 +42,5 @@
 - (NSArray *)findAllRecord;
 
 - (id)findRecordByPrimaryValue:(NSString *)primaryValue;
+
 @end

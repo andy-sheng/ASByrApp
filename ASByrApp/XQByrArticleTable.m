@@ -7,6 +7,7 @@
 //
 
 #import "XQByrArticleTable.h"
+#import "XQByrUserTable.h"
 #import <XQByrCollection.h>
 
 @interface XQByrArticleTable()<XQTableBaseExecutorProtocol>
@@ -34,7 +35,7 @@
              @"firstImageUrl":@"text",
              @"replyCount":@"text",
              @"state":@"text",
-             @"user":@"text FOREIGN KEY PREFERENCES User ( uid )"
+             @"user":@"text FOREIGN KEY PREFERENCES User (uid)"
              };
 }
 
@@ -44,6 +45,10 @@
 
 - (Class)tableClass{
     return [XQByrCollection class];
+}
+
+- (NSString *)foreignClassName{
+    return @"XQByrUserTable";
 }
 
 @end
