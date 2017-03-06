@@ -73,9 +73,9 @@
     if (array == nil || [array count] == 0) {
         return;
     }
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
+//    __weak typeof(self) _self = self;
+//    dispatch_async(_queue, ^{
+//        __strong typeof(_self) self = _self;
         for (NSInteger i = 0; i < [array count]; i++) {
             
             XQByrCollection* collection = (XQByrCollection *)[array objectAtIndex:i];
@@ -87,17 +87,17 @@
                     user.uid = (NSString *)collection.user;
                     user.user_name = @"";
                 }
-                XQDatabaseLock();
+                //XQDatabaseLock();
                 [self.userService addUser:user];
-                XQDatabaseUnlock();
+                //XQDatabaseUnlock();
             }
             NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:user.uid,@"userID",nil];
-            XQDatabaseLock();
+            //XQDatabaseLock();
             [self.articleService addArticleWithCollection:(XQByrCollection *)[array objectAtIndex:i] andParameters:dic];
-            XQDatabaseUnlock();
+            //XQDatabaseUnlock();
         }
         if (block) block();
-    });
+    //});
 }
 
 - (void)addCollectData:(XQByrArticle *)article withBlock:(void (^ _Nullable)(void))block{

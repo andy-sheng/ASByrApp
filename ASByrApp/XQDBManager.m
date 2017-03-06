@@ -8,7 +8,11 @@
 
 #import "XQDBManager.h"
 
-@implementation XQDBManager
+static const char * kDBQueueName = "db_queue";
+
+@implementation XQDBManager {
+    dispatch_queue_t _dbQue;
+}
 
 singleton_implementation(XQDBManager)
 
@@ -18,6 +22,7 @@ singleton_implementation(XQDBManager)
     if((manager = [super init]))
     {
         [manager openDb:XQDATABASE_NAME];
+        _dbQue = dispatch_queue_create(kDBQueueName, DISPATCH_QUEUE_SERIAL);
     }
     return manager;
 }
@@ -46,13 +51,15 @@ singleton_implementation(XQDBManager)
 }
 
 -(void)executeNonQuery:(NSString *)sql{
-    char *error;
-    //单步执行sql语句，用于插入、修改、删除
-    if (SQLITE_OK!=sqlite3_exec(_database, sql.UTF8String, NULL, NULL,&error)) {
-        NSLog(@"执行SQL语句过程中发生错误！错误信息：%s",error);
-        //落掉这一句会memory leak
-        sqlite3_free(error);
-    }
+    dispatch_async(_dbQue, ^{
+        char *error;
+        //单步执行sql语句，用于插入、修改、删除
+        if (SQLITE_OK!=sqlite3_exec(_database, sql.UTF8String, NULL, NULL,&error)) {
+            NSLog(@"执行SQL语句过程中发生错误！错误信息：%s",error);
+            //落掉这一句会memory leak
+            sqlite3_free(error);
+        } 
+    });
 }
 
 -(NSArray *)executeQuery:(NSString *)sql{
