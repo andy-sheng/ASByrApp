@@ -37,6 +37,7 @@
     NSRegularExpression *_regexU;
     NSRegularExpression *_regexUrl;
     NSRegularExpression *_regexUpload;
+    NSRegularExpression *_regexTag;
 }
 
 - (instancetype)init {
@@ -86,8 +87,11 @@
     _regexUrl = regexp("(\\[url=(.*)\\])(.*?)(\\[/url\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
     _regexUpload = regexp("(\\[upload=([0-9]+)\\])(.*?)(\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    
+    _regexTag = regexp("(\\[.*?\\])|(\\[/.*?\\])|(\\[em[abc]?[0-9]+\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
 #undef regexp
 }
+
 - (BOOL)parseText:(NSMutableAttributedString *)text selectedRange:(NSRangePointer)selectedRange {
     NSLog(@"parser:%@", text.string);
     if (text.length == 0) return NO;
@@ -201,6 +205,9 @@
         
         
     }];
+    
+    
+    [_regexTag replaceMatchesInString:text.mutableString options:0 range:NSMakeRange(0, text.length) withTemplate:@""];
     
     return YES;
 }
