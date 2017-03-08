@@ -16,51 +16,65 @@ PODS:
     - AFNetworking/NSURLSession
   - ASByr (0.1.0):
     - AFNetworking
-  - FLAnimatedImage (1.0.12)
-  - Masonry (1.0.0)
+  - Masonry (1.0.2)
   - MBProgressHUD (0.9.2)
-  - MJRefresh (3.1.0)
-  - OLImageView (1.5.1):
-    - OLImageView/Core (= 1.5.1)
-  - OLImageView/Core (1.5.1)
+  - MJRefresh (3.1.12)
   - Reveal-iOS-SDK (1.6.2)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - TTTAttributedLabel (2.0.0)
-  - WMPageController (1.5.0)
-  - YYModel (1.0.3)
-  - YYText (1.0.5)
+  - WMPageController (2.2.1)
+  - YYCache (1.0.4)
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
+  - YYModel (1.0.4)
+  - YYText (1.0.7)
+  - YYWebImage (1.0.5):
+    - YYCache
+    - YYImage
 
 DEPENDENCIES:
   - AFNetworking
-  - ASByr (from `../ASByr`)
-  - FLAnimatedImage (~> 1.0)
+  - ASByr (from `https://github.com/andy-sheng/ASByr.git`)
   - Masonry
   - MBProgressHUD (~> 0.9.2)
   - MJRefresh
-  - OLImageView
   - Reveal-iOS-SDK
+  - SDWebImage (~> 3.8)
   - TTTAttributedLabel
   - WMPageController
+  - YYImage
   - YYModel
   - YYText
+  - YYWebImage
 
 EXTERNAL SOURCES:
   ASByr:
-    :path: ../ASByr
+    :git: https://github.com/andy-sheng/ASByr.git
+
+CHECKOUT OPTIONS:
+  ASByr:
+    :commit: 2669bc661e22723e9ad24e86b56c431793916f02
+    :git: https://github.com/andy-sheng/ASByr.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   ASByr: f2eb6844fd9f3598704709ea133985b1b1efd76b
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
-  OLImageView: e03cd533ce6b1a155acb9f708ab9b2e71ea070d5
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
-  WMPageController: 83dbd55e604a4704c7e955bbe9020c5d74020fff
-  YYModel: 63142c2f07c5c8c9d1c261689cf3827ea6ab2886
-  YYText: ac09660c9ccd9b817f409a20caa6f5587444d2ae
+  WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
+  YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: cc53efab3fde96da5ceaa47d7f0ee638e4371c4e
+PODFILE CHECKSUM: 31f89e5633ddfd41f746a4f994e35d2e54c5d7ba
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.2.0

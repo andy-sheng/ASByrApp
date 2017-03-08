@@ -22,15 +22,17 @@
 #import "XQCollectArticleTVC.h"
 #import "XQThreadsDetailViewModel.h"
 #import "UIAlertController+Extension.h"
+#import "ASInputVC.h"
 
 #import "YYModel.h"
 #import "XQByrArticle.h"
 #import "XQByrUser.h"
 #import "XQByrPagination.h"
 
-const NSUInteger titleRow = 0;
-const NSUInteger bodyRow  = 1;
-const NSUInteger replyRow = 2;
+static const NSUInteger kTitleRow = 0;
+static const NSUInteger kBodyRow  = 1;
+static const NSUInteger kReplyRow = 2;
+
 
 @interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
 
@@ -157,6 +159,14 @@ const NSUInteger replyRow = 2;
     }];
     [alertController addAction:cancelAction];
     
+    __weak ASThreadsController * weakself = self;
+    UIAlertAction *replyAction = [UIAlertAction actionWithTitle:@"回复" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (weakself) {
+            [weakself.navigationController pushViewController:[[ASInputVC alloc] init] animated:YES];
+        }
+    }];
+    [alertController addAction:replyAction];
+    
     NSString * hudtext;
     NSString * notificationName;
     NSString * collectBtnTitle;
@@ -173,7 +183,7 @@ const NSUInteger replyRow = 2;
     
     NSDictionary* userInfo = @{@"article": self.viewModel.articleEntity};
 
-    __weak ASThreadsController * weakself = self;
+    
     collectAction = [UIAlertAction actionWithTitle:collectBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         
         MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:weakself.view animated:YES];
@@ -203,6 +213,10 @@ const NSUInteger replyRow = 2;
     [self.keyboard popWithContext:@{@"reid":@(self.replyArticles[indexPath.row].aid)}];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.keyboard hide];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -210,9 +224,9 @@ const NSUInteger replyRow = 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ( section == titleRow ){
+    if ( section == kTitleRow ){
         return _viewModel == nil ? 0 : 1;
-    }else if( section == bodyRow) {
+    }else if( section == kBodyRow) {
         return 0;
     }else{
         return [self.replyArticles count] - 1;
@@ -220,7 +234,7 @@ const NSUInteger replyRow = 2;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == bodyRow) {
+    if (section == kBodyRow) {
         if (_viewModel != nil) {
             NSString * htmlString = [_viewModel getContentHtmlString];
             [_webBodyCell loadHTMLString:htmlString baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///%@/webresource",[[NSBundle mainBundle] bundlePath]]]];
@@ -233,19 +247,19 @@ const NSUInteger replyRow = 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == bodyRow) {
+    if (section == kBodyRow) {
         return self.webBodyCell.height > 0?self.webBodyCell.height:10;
     }
     return CGFLOAT_MIN;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == titleRow) {
+    if (indexPath.section == kTitleRow) {
         ASThreadsTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsTitle" forIndexPath:indexPath];
         cell.delegate = self;
         [cell setupWithTitle:_viewModel.title];
         return cell;
-    }else if(indexPath.section == bodyRow){
+    }else if(indexPath.section == kBodyRow){
         ASThreadsBodyCell * cell = [tableView dequeueReusableCellWithIdentifier:@"threadsBody"];
         cell.delegate = self;
         [cell setupWithContent:@""];
@@ -299,6 +313,8 @@ const NSUInteger replyRow = 2;
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse *)response {
     if (response.isSucceeded) {
         NSMutableArray *reformedArticles = [NSMutableArray array];
+        
+        // 挪出去
         if (_isLoadThreads) {
             [self.viewModel setArticleEntity:[[response.response objectForKey:@"article"] firstObject] replyCount:[XQByrArticle yy_modelWithJSON:response.response].reply_count];
         }
@@ -307,12 +323,16 @@ const NSUInteger replyRow = 2;
             NSDictionary* userInfo = @{@"article": _viewModel.articleEntity};
             [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCollectedArticle" object:nil userInfo:userInfo];
         }
-        self.pagination = [XQByrPagination yy_modelWithJSON:[response.response objectForKey:@"pagination"]];
-        for (id article in [response.response objectForKey:@"article"]) {
-            XQByrArticle *tmp = [XQByrArticle yy_modelWithJSON:article];
-            [reformedArticles addObject:tmp];
+        // 挪出去
+        
+        @autoreleasepool {
+            self.pagination = [XQByrPagination yy_modelWithJSON:[response.response objectForKey:@"pagination"]];
+            for (id article in [response.response objectForKey:@"article"]) {
+                XQByrArticle *tmp = [XQByrArticle yy_modelWithJSON:article];
+                [reformedArticles addObject:tmp];
+            }
+            response.reformedData = [reformedArticles copy];
         }
-        response.reformedData = reformedArticles;
     }
     return response;
 }
@@ -321,7 +341,7 @@ const NSUInteger replyRow = 2;
 
 - (void)linkClicked:(NSURL *)url {
     //self.navigationController pushViewController:[UIWebView] animated:<#(BOOL)#>
-    [[UIApplication sharedApplication] openURL:url];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 
 #pragma mark - ASThreadsBodyCellDelegate
@@ -391,7 +411,7 @@ const NSUInteger replyRow = 2;
     return _replyStatusHud;
 }
 
-- (XQWebView *)webBodyCell{
+- (XQWebView *)webBodyCell {
     if (_webBodyCell == nil) {
         _webBodyCell = [[XQWebView alloc]initWithFrame:CGRectMake(0, 0, XQSCREEN_W, 100)];
         _webBodyCell.navigationDelegate = nil;
@@ -400,17 +420,14 @@ const NSUInteger replyRow = 2;
     return _webBodyCell;
 }
 
-- (XQThreadsDetailViewModel *)viewModel{
-    NSLog(@"进入懒加载");
+- (XQThreadsDetailViewModel *)viewModel {
     if (_viewModel == nil) {
         _viewModel = [[XQThreadsDetailViewModel alloc]init];
     }
     return _viewModel;
 }
 
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:XQNotificationWebViewLoaded object:nil];
-
-    NSLog(@"asthreadscontroller will be dealloced.");
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end
