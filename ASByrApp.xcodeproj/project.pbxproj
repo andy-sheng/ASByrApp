@@ -32,6 +32,9 @@
 		A1310C7F1E4DB5CB002ED116 /* placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1310C7C1E4DB5CB002ED116 /* placeholder.jpg */; };
 		A131470C1E6FA8BA008CD422 /* ASInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A131470B1E6FA8BA008CD422 /* ASInputVC.m */; };
 		A13147111E6FDD96008CD422 /* ASInputTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147101E6FDD96008CD422 /* ASInputTextCell.m */; };
+		A13147141E7004C8008CD422 /* ASInputImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147131E7004C8008CD422 /* ASInputImageCell.m */; };
+		A13147181E704450008CD422 /* ASAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13147171E704450008CD422 /* ASAccessoryView.xib */; };
+		A131471B1E70446C008CD422 /* ASAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471A1E70446C008CD422 /* ASAccessoryView.m */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
 		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
@@ -340,6 +343,11 @@
 		A131470B1E6FA8BA008CD422 /* ASInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputVC.m; sourceTree = "<group>"; };
 		A131470F1E6FDD96008CD422 /* ASInputTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputTextCell.h; sourceTree = "<group>"; };
 		A13147101E6FDD96008CD422 /* ASInputTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputTextCell.m; sourceTree = "<group>"; };
+		A13147121E7004C8008CD422 /* ASInputImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputImageCell.h; sourceTree = "<group>"; };
+		A13147131E7004C8008CD422 /* ASInputImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputImageCell.m; sourceTree = "<group>"; };
+		A13147171E704450008CD422 /* ASAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASAccessoryView.xib; sourceTree = "<group>"; };
+		A13147191E70446C008CD422 /* ASAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAccessoryView.h; sourceTree = "<group>"; };
+		A131471A1E70446C008CD422 /* ASAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAccessoryView.m; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
@@ -731,6 +739,11 @@
 			children = (
 				A131470F1E6FDD96008CD422 /* ASInputTextCell.h */,
 				A13147101E6FDD96008CD422 /* ASInputTextCell.m */,
+				A13147121E7004C8008CD422 /* ASInputImageCell.h */,
+				A13147131E7004C8008CD422 /* ASInputImageCell.m */,
+				A13147171E704450008CD422 /* ASAccessoryView.xib */,
+				A13147191E70446C008CD422 /* ASAccessoryView.h */,
+				A131471A1E70446C008CD422 /* ASAccessoryView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1471,6 +1484,7 @@
 				A1C0040D1CEC189100AA6B53 /* emc25.gif in Resources */,
 				A1C0042E1CEC189100AA6B53 /* emc55.gif in Resources */,
 				A1C0041E1CEC189100AA6B53 /* emc40.gif in Resources */,
+				A13147181E704450008CD422 /* ASAccessoryView.xib in Resources */,
 				A1C004291CEC189100AA6B53 /* emc50.gif in Resources */,
 				A1C004871CEC189100AA6B53 /* em22.gif in Resources */,
 				A1C004141CEC189100AA6B53 /* emc31.gif in Resources */,
@@ -1719,6 +1733,7 @@
 				751C37661E5D1E86000C5A7B /* XQDBManager.m in Sources */,
 				75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */,
 				75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */,
+				A131471B1E70446C008CD422 /* ASAccessoryView.m in Sources */,
 				A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */,
 				75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */,
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
@@ -1732,6 +1747,7 @@
 				A1310C791E4DB590002ED116 /* XQThreadsDetailViewModel.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
+				A13147141E7004C8008CD422 /* ASInputImageCell.m in Sources */,
 				A131470C1E6FA8BA008CD422 /* ASInputVC.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
 				75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */,

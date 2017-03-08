@@ -9,6 +9,7 @@
 #import "ASInputVC.h"
 #import "ASKeyboard.h"
 #import "ASInputTextCell.h"
+#import "ASInputImageCell.h"
 #import "ASSectionListVC.h"
 #import <Masonry.h>
 
@@ -18,16 +19,28 @@ static const NSInteger kInputTitleRow = 1;
 static const NSInteger kInputBodyRow = 2;
 static const NSInteger kInputImageRow = 3;
 
-@interface ASInputVC ()<UITableViewDelegate, UITableViewDataSource>
+@interface ASInputVC ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ASInputTextDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) UIBarButtonItem *sendBtn;
 
+@property (nonatomic, strong) UIImagePickerController *imagePicker;
+
+@property (nonatomic, strong) NSMutableArray *imgArr;
+
 @end
 
 
 @implementation ASInputVC
+
+- (instancetype)init {
+    self = [super init];
+    if (self != nil) {
+        self.imgArr = [NSMutableArray array];
+    }
+    return self;
+}
 
 # pragma mark lifecycle
 
@@ -53,33 +66,45 @@ static const NSInteger kInputImageRow = 3;
     [super updateViewConstraints];
 }
 
-# pragma mark UITableviewDelegate
+# pragma mark - ASInputTextDelegate
+- (void)addPhoto {
+    [self presentViewController:self.imagePicker animated:YES completion:nil];
+}
+
+# pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
+    [self.imgArr addObject:[info objectForKey:UIImagePickerControllerOriginalImage]];
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+# pragma mark - UITableviewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.row == kBoardRow) {
         [self.navigationController pushViewController:[[ASSectionListVC alloc] init] animated:YES];
+    } else if (indexPath.row == kInputImageRow) {
+        
+        [self presentViewController:self.imagePicker animated:YES completion:nil];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == kInputBodyRow) {
+        return XQSCREEN_H
+        - self.navigationController.navigationBar.frame.origin.y
+        - self.navigationController.navigationBar.frame.size.height
+        - [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:kBoardRow inSection:0]].size.height
+        - [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:kInputTitleRow inSection:0]].size.height;
+    }
     return UITableViewAutomaticDimension;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return nil;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0.001;
-}
-
-# pragma mark UITableviewDatasource
+# pragma mark - UITableviewDatasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,29 +118,31 @@ static const NSInteger kInputImageRow = 3;
         cell.textLabel.text = @"RE:";
     } else if (indexPath.row == kInputBodyRow) {
         cell = [[ASInputTextCell alloc] init];
+        ((ASInputTextCell*)cell).delegate = self;
     } else if (indexPath.row == kInputImageRow) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        cell.textLabel.text = @"输入";
+        cell = [[ASInputImageCell alloc] init];
     }
-    return  cell;
+    return cell;
 }
 
 
-# pragma mark Private methods
+# pragma mark - Private methods
 
 - (void)send {
+    [self.tableView setNeedsLayout];
     NSLog(@"send");
 }
 
-# pragma makr setters and getters
+# pragma makr - setters and getters
 
 - (UITableView*)tableView {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, XQSCREEN_W, XQSCREEN_H) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.estimatedRowHeight = 50.0;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _tableView;
 }
@@ -129,4 +156,13 @@ static const NSInteger kInputImageRow = 3;
     }
     return _sendBtn;
 }
+
+- (UIImagePickerController*)imagePicker {
+    if (_imagePicker == nil) {
+        _imagePicker = [[UIImagePickerController alloc] init];
+        _imagePicker.delegate = self;
+    }
+    return _imagePicker;
+}
+
 @end

@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ASInputTextDelegate <NSObject>
+
+@optional
+- (void)addPhoto;
+
+@end
+
 @interface ASInputTextCell : UITableViewCell
+
+@property (nonatomic, weak) id<ASInputTextDelegate> delegate;
 
 @end
