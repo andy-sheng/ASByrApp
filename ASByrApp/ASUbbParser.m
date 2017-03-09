@@ -9,11 +9,14 @@
 #import "ASUbbParser.h"
 #import "UIColor+Hex.h"
 
+#import "XQByrAttachment.h"
+#import "XQByrFile.h"
 #import "NSAttributedString+YYText.h"
 #import "YYTextUtilities.h"
 #import "YYTextAttribute.h"
 #import "YYImage.h"
 #import "YYWebImage.h"
+#import <ASByrToken.h>
 
 @implementation ASUbbParser {
     UIFont *_font;
@@ -203,11 +206,27 @@
     
     [_regexUpload enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         
+        NSRange uploadIdRange = [result rangeAtIndex:2];
+        NSRange innerTextRange = [result rangeAtIndex:3];
+        NSInteger uploadId = [[text.string substringWithRange:uploadIdRange] integerValue];
+        YYAnimatedImageView *imgView = [[YYAnimatedImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder.jpg"]];
         
+        
+        NSString *url = @"";
+        if (self.attachement.file && self.attachement.file.count >= uploadId) {
+            url = self.attachement.file[uploadId - 1].thumbnail_small;
+        }
+        [imgView yy_setImageWithURL:[NSURL URLWithString:url] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
+
+        NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
+        [text insertAttributedString:imgStr atIndex:innerTextRange.location];
     }];
-    
-    
+    #ifdef DEBUG
+    #else
     [_regexTag replaceMatchesInString:text.mutableString options:0 range:NSMakeRange(0, text.length) withTemplate:@""];
+    #endif
+    
+    
     
     return YES;
 }

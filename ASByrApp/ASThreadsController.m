@@ -267,9 +267,7 @@ static const NSUInteger kReplyRow = 2;
     }else{
         ASThreadsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"threadsReply" forIndexPath:indexPath];
         cell.delegate = self;
-        [cell setupWithFaceurl:self.replyArticles[indexPath.row + 1].user.face_url
-                           uid:self.replyArticles[indexPath.row + 1].user.uid
-                       content:self.replyArticles[indexPath.row + 1].content];
+        [cell setupWithArticle:self.replyArticles[indexPath.row + 1]];
         return cell;
     }
 }

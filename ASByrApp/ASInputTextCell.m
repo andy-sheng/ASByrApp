@@ -8,6 +8,7 @@
 
 #import "ASInputTextCell.h"
 #import "ASAccessoryView.h"
+#import "ASUbbParser.h"
 #import <YYTextView.h>
 #import <Masonry.h>
 
@@ -25,6 +26,7 @@
     if (self != nil) {
         [self.contentView addSubview:self.textView];
         [self setNeedsUpdateConstraints];
+        [self addObserver:self forKeyPath:@"contentText" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
@@ -48,7 +50,17 @@
     // Configure the view for the selected state
 }
 
-# pragma mark - ASAccessoryDelegate
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"contentText"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSLog(@"change");
+    if ([keyPath isEqualToString:@"contentText"]) {
+        self.textView.text = self.contentText;
+    }
+}
+# pragma mark - Private Methods
 - (void)addPhoto {
     
 }
@@ -61,7 +73,7 @@
 - (YYTextView*)textView {
     if (_textView == nil) {
         _textView = [[YYTextView alloc] init];
-        
+        _textView.textParser = [[ASUbbParser alloc] init];
         ASAccessoryView *accessoryView = (ASAccessoryView*)[[NSBundle mainBundle] loadNibNamed:@"ASAccessoryView" owner:nil options:nil][0];
         
         __weak typeof(self)wself = self;

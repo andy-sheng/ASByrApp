@@ -17,6 +17,7 @@
 
 @interface ASInputTextCell : UITableViewCell
 
+@property (nonatomic, weak) NSMutableString *contentText;
 @property (nonatomic, weak) id<ASInputTextDelegate> delegate;
 
 @end

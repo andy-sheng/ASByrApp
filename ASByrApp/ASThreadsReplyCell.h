@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class XQByrArticle;
+
 @protocol ASThreadsReplyCellDelegate <NSObject>
 
 @required
@@ -20,8 +22,6 @@
 
 @property(nonatomic, weak) id <ASThreadsReplyCellDelegate> delegate;
 
-- (void)setupWithFaceurl:(NSString*) faceUrl
-                     uid:(NSString*) uid
-                 content:(NSString*) content;
+- (void)setupWithArticle:(XQByrArticle*) article;
 
 @end

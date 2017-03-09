@@ -29,6 +29,9 @@ static const NSInteger kInputImageRow = 3;
 
 @property (nonatomic, strong) NSMutableArray *imgArr;
 
+@property (nonatomic, strong) ASInputTextCell *inputTextCell;
+
+@property (nonatomic, strong) NSArray *uploads;
 @end
 
 
@@ -75,14 +78,21 @@ static const NSInteger kInputImageRow = 3;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     [self.imgArr addObject:[info objectForKey:UIImagePickerControllerOriginalImage]];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+   
+    
+    
+    
+    [self.inputTextCell willChangeValueForKey:@"contentText"];
+    [self.inputTextCell.contentText appendString:@"asf[ema20]"];
+    [self.inputTextCell didChangeValueForKey:@"contentText"];
 }
+
 # pragma mark - UITableviewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.row == kBoardRow) {
         [self.navigationController pushViewController:[[ASSectionListVC alloc] init] animated:YES];
     } else if (indexPath.row == kInputImageRow) {
-        
         [self presentViewController:self.imagePicker animated:YES completion:nil];
     }
 }
@@ -117,8 +127,7 @@ static const NSInteger kInputImageRow = 3;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         cell.textLabel.text = @"RE:";
     } else if (indexPath.row == kInputBodyRow) {
-        cell = [[ASInputTextCell alloc] init];
-        ((ASInputTextCell*)cell).delegate = self;
+        cell = self.inputTextCell;
     } else if (indexPath.row == kInputImageRow) {
         cell = [[ASInputImageCell alloc] init];
     }
@@ -163,6 +172,14 @@ static const NSInteger kInputImageRow = 3;
         _imagePicker.delegate = self;
     }
     return _imagePicker;
+}
+
+- (ASInputTextCell*)inputTextCell {
+    if (_inputTextCell == nil) {
+        _inputTextCell = [[ASInputTextCell alloc] init];
+        _inputTextCell.delegate = self;
+    }
+    return _inputTextCell;
 }
 
 @end
