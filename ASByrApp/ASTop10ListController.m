@@ -49,6 +49,7 @@
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10Cell" bundle:nil] forCellReuseIdentifier:@"ASTop10Cell"];
         [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10SeperatorCell" bundle:nil] forCellReuseIdentifier:@"ASTop10SeperatorCell"];
+        self.tableView.mj_footer.hidden = YES;
         //[self.tableView registerClass:[ASTop10Cell class] forCellReuseIdentifier:@"test"];
     }
     return self;
@@ -133,18 +134,18 @@
 #pragma mark - ASByrWidgetResponseDelegate
 
 - (void)fetchTop10Response:(ASByrResponse *)response {
-    [self commenResponseRecv:response];
+    [self commonResponseRecv:response];
 }
 
 - (void)fetchRecommendResponse:(ASByrResponse *)response {
-    [self commenResponseRecv:response];
+    [self commonResponseRecv:response];
 }
 
 - (void)fetchSectionTopResponse:(ASByrResponse *)response {
-    [self commenResponseRecv:response];
+    [self commonResponseRecv:response];
 }
 
-- (void)commenResponseRecv:(ASByrResponse*)response {
+- (void)commonResponseRecv:(ASByrResponse*)response {
     self.top10 = response.reformedData;
     [self.tableView reloadData];
     END_REFRESHING
@@ -167,24 +168,13 @@
 - (ASByrResponse*)commenReformer:(ASByrResponse*)response {
     if (response.statusCode >= 200 && response.statusCode < 300) {
         NSMutableArray * reformedData = [[NSMutableArray alloc] init];
-        for (id article in response.response[@"article"]) {
-            XQByrArticle *reformedArticle = [XQByrArticle yy_modelWithJSON:article];
-//            NSMutableDictionary * reformedArticle = [[NSMutableDictionary alloc] init];
-//            reformedArticle[@"title"]   = article[@"title"];
-//            reformedArticle[@"aid"]     = article[@"id"];
-//            reformedArticle[@"content"] = article[@"content"];
-//            reformedArticle[@"board"]   = article[@"board_name"];
-//            if ([article objectForKey:@"user"] != nil && [article objectForKey:@"user"] != [NSNull null]) {
-//                reformedArticle[@"user"]    = @{@"face": [article[@"user"] objectForKey:@"face_url"] ?: @"",
-//                                                @"uid": [article[@"user"] objectForKey:@"id"] ?: @""};
-//            } else {
-//                reformedArticle[@"user"]    = @{@"face": @"",
-//                                                @"uid": @"unknown" };
-//            }
-            
-            [reformedData addObject:reformedArticle];
+        @autoreleasepool {
+            for (id article in response.response[@"article"]) {
+                XQByrArticle *reformedArticle = [XQByrArticle yy_modelWithJSON:article];
+                [reformedData addObject:reformedArticle];
+            }
+            response.reformedData = [reformedData copy];
         }
-        response.reformedData = [reformedData copy];
         response.isSucceeded = YES;
     } else {
         response.isSucceeded = NO;
