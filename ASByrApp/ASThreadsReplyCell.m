@@ -48,13 +48,13 @@
 
 - (void)setupWithArticle:(XQByrArticle*) article {
     [self.faceImage setImageWithURL:[NSURL URLWithString:article.user.face_url]];
+    ASUbbParser *parser = [[ASUbbParser alloc] init];
+    self.contentLabel.textParser = parser;
+    parser.attachment = article.attachment;
     self.uidLabel.text = article.user.uid;
     self.contentLabel.text = article.content;
     NSLog(@"%ld", article.aid);
     NSLog(@"%@", article.board_name);
-    ASUbbParser *parser = [[ASUbbParser alloc] init];
-    parser.attachment = article.attachment;
-    self.contentLabel.textParser = parser;
 }
 
 

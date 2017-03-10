@@ -30,12 +30,10 @@
 		A1310C7A1E4DB590002ED116 /* XQWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1310C781E4DB590002ED116 /* XQWebView.m */; };
 		A1310C7E1E4DB5CB002ED116 /* ASUbbParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */; };
 		A1310C7F1E4DB5CB002ED116 /* placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1310C7C1E4DB5CB002ED116 /* placeholder.jpg */; };
-		A131470C1E6FA8BA008CD422 /* ASInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A131470B1E6FA8BA008CD422 /* ASInputVC.m */; };
-		A13147111E6FDD96008CD422 /* ASInputTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147101E6FDD96008CD422 /* ASInputTextCell.m */; };
-		A13147141E7004C8008CD422 /* ASInputImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147131E7004C8008CD422 /* ASInputImageCell.m */; };
 		A13147181E704450008CD422 /* ASAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13147171E704450008CD422 /* ASAccessoryView.xib */; };
 		A131471B1E70446C008CD422 /* ASAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471A1E70446C008CD422 /* ASAccessoryView.m */; };
 		A131471E1E724364008CD422 /* ASUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471D1E724364008CD422 /* ASUtil.m */; };
+		A13147211E72D415008CD422 /* ASInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147201E72D415008CD422 /* ASInputVC.m */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
 		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
@@ -340,17 +338,13 @@
 		A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASUbbParser.m; sourceTree = "<group>"; };
 		A1310C7C1E4DB5CB002ED116 /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
 		A1310C7D1E4DB5CB002ED116 /* ASUbbParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASUbbParser.h; sourceTree = "<group>"; };
-		A131470A1E6FA8BA008CD422 /* ASInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputVC.h; sourceTree = "<group>"; };
-		A131470B1E6FA8BA008CD422 /* ASInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputVC.m; sourceTree = "<group>"; };
-		A131470F1E6FDD96008CD422 /* ASInputTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputTextCell.h; sourceTree = "<group>"; };
-		A13147101E6FDD96008CD422 /* ASInputTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputTextCell.m; sourceTree = "<group>"; };
-		A13147121E7004C8008CD422 /* ASInputImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputImageCell.h; sourceTree = "<group>"; };
-		A13147131E7004C8008CD422 /* ASInputImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputImageCell.m; sourceTree = "<group>"; };
 		A13147171E704450008CD422 /* ASAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASAccessoryView.xib; sourceTree = "<group>"; };
 		A13147191E70446C008CD422 /* ASAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAccessoryView.h; sourceTree = "<group>"; };
 		A131471A1E70446C008CD422 /* ASAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAccessoryView.m; sourceTree = "<group>"; };
 		A131471C1E724350008CD422 /* ASUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASUtil.h; sourceTree = "<group>"; };
 		A131471D1E724364008CD422 /* ASUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASUtil.m; sourceTree = "<group>"; };
+		A131471F1E72D415008CD422 /* ASInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputVC.h; sourceTree = "<group>"; };
+		A13147201E72D415008CD422 /* ASInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputVC.m; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
@@ -731,8 +725,8 @@
 			isa = PBXGroup;
 			children = (
 				A131470E1E6FDD65008CD422 /* View */,
-				A131470A1E6FA8BA008CD422 /* ASInputVC.h */,
-				A131470B1E6FA8BA008CD422 /* ASInputVC.m */,
+				A131471F1E72D415008CD422 /* ASInputVC.h */,
+				A13147201E72D415008CD422 /* ASInputVC.m */,
 			);
 			name = "Input(发帖)";
 			sourceTree = "<group>";
@@ -740,10 +734,6 @@
 		A131470E1E6FDD65008CD422 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A131470F1E6FDD96008CD422 /* ASInputTextCell.h */,
-				A13147101E6FDD96008CD422 /* ASInputTextCell.m */,
-				A13147121E7004C8008CD422 /* ASInputImageCell.h */,
-				A13147131E7004C8008CD422 /* ASInputImageCell.m */,
 				A13147171E704450008CD422 /* ASAccessoryView.xib */,
 				A13147191E70446C008CD422 /* ASAccessoryView.h */,
 				A131471A1E70446C008CD422 /* ASAccessoryView.m */,
@@ -1752,8 +1742,6 @@
 				A1310C791E4DB590002ED116 /* XQThreadsDetailViewModel.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
-				A13147141E7004C8008CD422 /* ASInputImageCell.m in Sources */,
-				A131470C1E6FA8BA008CD422 /* ASInputVC.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
 				A131471E1E724364008CD422 /* ASUtil.m in Sources */,
 				75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */,
@@ -1766,6 +1754,7 @@
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
+				A13147211E72D415008CD422 /* ASInputVC.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A192A1581CE32AE40024C694 /* ASTop10SeperatorCell.m in Sources */,
 				A1310C7A1E4DB590002ED116 /* XQWebView.m in Sources */,
@@ -1779,7 +1768,6 @@
 				A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */,
 				A1C0032E1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
-				A13147111E6FDD96008CD422 /* ASInputTextCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

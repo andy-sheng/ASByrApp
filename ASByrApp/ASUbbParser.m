@@ -91,7 +91,7 @@
     
     _regexUpload = regexp("(\\[upload=([0-9]+)\\])(.*?)(\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
-    _regexTag = regexp("(\\[em[abc]?[0-9]+\\])|(\\[upload=.*\\].*?\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    _regexTag = regexp("(\\[em[abc]?[0-9]+\\])|(\\[.*?\\])|(\\[/.*?\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
 #undef regexp
 }
 
@@ -223,7 +223,7 @@
             url = self.attachment.file[uploadId - 1].thumbnail_small;
         }
         NSLog(@"%@", url)
-        [imgView yy_setImageWithURL:[NSURL URLWithString:url] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
+        [imgView yy_setImageWithURL:[NSURL URLWithString:url] options:kNilOptions];
 
 
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
@@ -234,10 +234,8 @@
     }];
    // #ifdef DEBUG
    // #else
-//    [_regexTag enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-//        [text replaceCharactersInRange:result.range withString:@""];
-//    }];
-    //[_regexTag replaceMatchesInString:text.mutableString options:0 range:NSMakeRange(0, text.length) withTemplate:@""];
+    
+    [_regexTag replaceMatchesInString:text.mutableString options:kNilOptions range:NSMakeRange(0, text.length) withTemplate:@""];
    // #endif
     
     

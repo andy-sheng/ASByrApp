@@ -29,9 +29,9 @@
 #import "XQByrUser.h"
 #import "XQByrPagination.h"
 
-static const NSUInteger kTitleRow = 0;
-static const NSUInteger kBodyRow  = 1;
-static const NSUInteger kReplyRow = 2;
+const NSUInteger kTitleRow = 0;
+const NSUInteger kBodyRow  = 1;
+const NSUInteger kReplyRow = 2;
 
 
 @interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
@@ -162,7 +162,8 @@ static const NSUInteger kReplyRow = 2;
     __weak ASThreadsController * weakself = self;
     UIAlertAction *replyAction = [UIAlertAction actionWithTitle:@"回复" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (weakself) {
-            [weakself.navigationController pushViewController:[[ASInputVC alloc] init] animated:YES];
+            //[weakself.navigationController pushViewController:[[ASInputVC alloc] init] animated:YES];
+            [weakself.navigationController pushViewController:[[ASInputVC alloc] initWithReplyArticle:self.replyArticles[0]] animated:YES];
         }
     }];
     [alertController addAction:replyAction];
@@ -338,7 +339,6 @@ static const NSUInteger kReplyRow = 2;
 #pragma mark - ASThreadsTitleCellDelegate
 
 - (void)linkClicked:(NSURL *)url {
-    //self.navigationController pushViewController:[UIWebView] animated:<#(BOOL)#>
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 

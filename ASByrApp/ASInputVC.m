@@ -1,92 +1,103 @@
 //
-//  ASInputVCViewController.m
+//  NewInputVC.m
 //  ASByrApp
 //
-//  Created by Andy on 2017/3/8.
+//  Created by Andy on 2017/3/10.
 //  Copyright © 2017年 andy. All rights reserved.
 //
 
 #import "ASInputVC.h"
-#import "ASKeyboard.h"
-#import "ASInputTextCell.h"
-#import "ASInputImageCell.h"
-#import "ASSectionListVC.h"
+#import "ASAccessoryView.h"
 #import "ASUtil.h"
+#import "ASUbbParser.h"
+#import <XQByrArticle.h>
 #import <XQByrAttachment.h>
 #import <ASByrAttachment.h>
+#import <ASByrArticle.h>
 #import <Masonry.h>
+#import <YYText.h>
 
+@interface ASInputVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, YYTextViewDelegate>
 
-static const NSInteger kBoardRow = 0;
-static const NSInteger kInputTitleRow = 1;
-static const NSInteger kInputBodyRow = 2;
-static const NSInteger kInputImageRow = 3;
-
-@interface ASInputVC ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ASInputTextDelegate>
-
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIBarButtonItem *sendBtn;
 
+@property (nonatomic, strong) ASUbbParser *ubbParser;
+
+@property (nonatomic, strong) YYTextView *textView;
+
+@property (nonatomic, strong) YYTextView *preshowView;
+
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
-
-@property (nonatomic, strong) NSMutableArray *imgArr;
-
-@property (nonatomic, strong) ASInputTextCell *inputTextCell;
-
-@property (nonatomic, strong) NSArray *uploads;
 
 @property (nonatomic, strong) ASByrAttachment *attachmentApi;
 
+@property (nonatomic, strong) ASByrArticle *articleApi;
+
 @property (nonatomic, strong) XQByrAttachment *attachment;
+
+@property (nonatomic, strong) XQByrArticle *replyTo;
 
 @end
 
-
 @implementation ASInputVC
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithReplyArticle:(XQByrArticle *)article {
+    self = [self init];
     if (self != nil) {
-        self.imgArr = [NSMutableArray array];
+        self.replyTo = article;
     }
     return self;
 }
 
-# pragma mark lifecycle
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.tableView];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = self.sendBtn;
+    //self.inputView
+    [self.scrollView addSubview:self.textView];
+    [self.scrollView addSubview:self.preshowView];
+    [self.view addSubview:self.scrollView];
     [self.view setNeedsUpdateConstraints];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Do any additional setup after loading the view.
 }
 
 - (void)updateViewConstraints {
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
+    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.left.equalTo(self.scrollView);
+        make.size.equalTo(self.scrollView);
+    }];
+    [self.preshowView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.textView.mas_right);
+        make.top.right.bottom.equalTo(self.scrollView);
+        make.size.equalTo(self.scrollView);
+    }];
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.bottom.left.equalTo(self.view);
+        make.height.equalTo(@(self.view.frame.size.height - 64));
     }];
     [super updateViewConstraints];
 }
 
-# pragma mark - ASInputTextDelegate
-- (void)addPhoto {
-    [self presentViewController:self.imagePicker animated:YES completion:nil];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
 }
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+# pragma mark - YYTextViewDelegate
+- (void)textViewDidChange:(YYTextView *)textView {
+    if (textView == self.textView) {
+        [self.preshowView setText:self.textView.text];
+    }
+}
 # pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
-    [self.imgArr addObject:[info objectForKey:UIImagePickerControllerOriginalImage]];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"%@", [info objectForKey:UIImagePickerControllerReferenceURL]);
+
     
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSString *imageName = [[info objectForKey:UIImagePickerControllerReferenceURL] lastPathComponent];
@@ -94,89 +105,36 @@ static const NSInteger kInputImageRow = 3;
     NSURL *fileUrl = saveImage(img, imageName);
     
     __weak typeof(self)wself = self;
-    [self.attachmentApi addAttachmentWithBoard:@"Advertising" file:fileUrl successBlock:^(NSInteger statusCode, id response) {
+    [self.attachmentApi addAttachmentWithBoard:self.replyTo.board_name file:fileUrl successBlock:^(NSInteger statusCode, id response) {
         __strong typeof(wself)sself = wself;
         if (sself) {
             sself.attachment = response;
-            //sself.
+            sself.ubbParser.attachment = response;
+            sself.textView.text = [NSString stringWithFormat:@"%@[upload=%ld][/upload] ", sself.textView.text, sself.attachment.file.count];
         }
     } failureBlock:^(NSInteger statusCode, id response) {
-        
+        NSLog(@"%@", response);
     }];
     
-    [self.inputTextCell willChangeValueForKey:@"contentText"];
-    [self.inputTextCell.contentText appendString:@"asf[ema20]"];
-    [self.inputTextCell didChangeValueForKey:@"contentText"];
-}
 
-# pragma mark - UITableviewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (indexPath.row == kBoardRow) {
-        [self.navigationController pushViewController:[[ASSectionListVC alloc] init] animated:YES];
-    } else if (indexPath.row == kInputImageRow) {
-        [self presentViewController:self.imagePicker animated:YES completion:nil];
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == kInputBodyRow) {
-        return XQSCREEN_H
-        - self.navigationController.navigationBar.frame.origin.y
-        - self.navigationController.navigationBar.frame.size.height
-        - [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:kBoardRow inSection:0]].size.height
-        - [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:kInputTitleRow inSection:0]].size.height;
-    }
-    return UITableViewAutomaticDimension;
-}
-
-# pragma mark - UITableviewDatasource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell;
-    if (indexPath.row == kBoardRow) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        cell.textLabel.text = @"版面";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == kInputTitleRow ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        cell.textLabel.text = @"RE:";
-    } else if (indexPath.row == kInputBodyRow) {
-        cell = self.inputTextCell;
-    } else if (indexPath.row == kInputImageRow) {
-        cell = [[ASInputImageCell alloc] init];
-    }
-    return cell;
 }
 
 
 # pragma mark - Private methods
 
 - (void)send {
-    [self.tableView setNeedsLayout];
-    NSLog(@"send");
+    [self.articleApi postArticleWithBoard:self.replyTo.board_name title:@"" content:self.textView.text reid:self.replyTo.aid successBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"done");
+    } failureBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"fail:%@", response);
+    }];
 }
 
-# pragma makr - setters and getters
-
-- (UITableView*)tableView {
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] init];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.rowHeight = UITableViewAutomaticDimension;
-        _tableView.estimatedRowHeight = 50.0;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }
-    return _tableView;
+- (void)addPhoto {
+    [self presentViewController:self.imagePicker animated:YES completion:nil];
 }
+
+# pragma makr - Setters and Getters
 
 - (UIBarButtonItem*)sendBtn {
     if (_sendBtn == nil) {
@@ -196,15 +154,55 @@ static const NSInteger kInputImageRow = 3;
     return _imagePicker;
 }
 
-- (ASInputTextCell*)inputTextCell {
-    if (_inputTextCell == nil) {
-        _inputTextCell = [[ASInputTextCell alloc] init];
-        _inputTextCell.attachment = self.attachment;
-        _inputTextCell.delegate = self;
-        [self addObserver:_inputTextCell forKeyPath:@"contentText" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:_inputTextCell forKeyPath:@"attachment" options:NSKeyValueObservingOptionNew context:nil];
+
+- (UIScrollView*)scrollView {
+    if (_scrollView == nil) {
+        //_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, 375, 667 - 64)];
+        _scrollView = [[UIScrollView alloc] init];
+        _scrollView.pagingEnabled = YES;
+        _scrollView.bounces = NO;
+        _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.contentSize = CGSizeMake(375 * 2, 667 - 64);
     }
-    return _inputTextCell;
+    return _scrollView;
+}
+
+- (YYTextView*)textView {
+    if (_textView == nil) {
+        _textView = [[YYTextView alloc] init];
+        _textView.textAlignment = NSTextAlignmentNatural;
+        _textView.placeholderText = @"输入帖子内容";
+        ASAccessoryView *accessoryView = (ASAccessoryView*)[[NSBundle mainBundle] loadNibNamed:@"ASAccessoryView" owner:nil options:nil][0];
+        
+        __weak typeof(self)wself = self;
+        accessoryView.addPhotoBlock = ^{
+            __strong typeof(wself)sself = wself;
+            if (sself) {
+                [sself addPhoto];
+            }
+        };
+        
+        accessoryView.dismissBlock = ^{
+            __strong typeof(wself)sself = wself;
+            if (sself) {
+                [sself.textView resignFirstResponder];
+            }
+        };
+        _textView.delegate = self;
+        _textView.inputAccessoryView = accessoryView;
+        [_textView setFont:[UIFont systemFontOfSize:17]];
+    }
+    return _textView;
+}
+
+- (YYTextView*)preshowView {
+    if (_preshowView == nil) {
+        _preshowView = [[YYTextView alloc] init];
+        _preshowView.placeholderText = @"预览";
+        _preshowView.editable = NO;
+        _preshowView.textParser = self.ubbParser;
+    }
+    return _preshowView;
 }
 
 - (ASByrAttachment*)attachmentApi {
@@ -214,6 +212,13 @@ static const NSInteger kInputImageRow = 3;
     return _attachmentApi;
 }
 
+- (ASByrArticle*)articleApi {
+    if (_articleApi == nil) {
+        _articleApi = [[ASByrArticle alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
+    }
+    return _articleApi;
+}
+
 - (XQByrAttachment*)attachment {
     if (_attachment == nil) {
         _attachment = [XQByrAttachment new];
@@ -221,9 +226,10 @@ static const NSInteger kInputImageRow = 3;
     return _attachment;
 }
 
-
-- (void)dealloc {
-    [self removeObserver:self.inputTextCell forKeyPath:@"contentText"];
-    [self removeObserver:self.inputTextCell forKeyPath:@"attachment"];
+- (ASUbbParser*)ubbParser {
+    if (_ubbParser == nil) {
+        _ubbParser = [[ASUbbParser alloc] init];
+    }
+    return _ubbParser;
 }
 @end
