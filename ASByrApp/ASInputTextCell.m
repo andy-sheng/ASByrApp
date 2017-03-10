@@ -26,7 +26,6 @@
     if (self != nil) {
         [self.contentView addSubview:self.textView];
         [self setNeedsUpdateConstraints];
-        [self addObserver:self forKeyPath:@"contentText" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
@@ -50,14 +49,14 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"contentText"];
-}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     NSLog(@"change");
     if ([keyPath isEqualToString:@"contentText"]) {
         self.textView.text = self.contentText;
+    } else if ([keyPath isEqualToString:@"attachment"]) {
+        NSLog(@"attachment changed");
+        ((ASUbbParser*)self.textView.textParser).attachment = [change objectForKey:NSKeyValueChangeNewKey];
     }
 }
 # pragma mark - Private Methods
@@ -74,6 +73,7 @@
     if (_textView == nil) {
         _textView = [[YYTextView alloc] init];
         _textView.textParser = [[ASUbbParser alloc] init];
+        _textView.placeholderText = @"输入帖子内容";
         ASAccessoryView *accessoryView = (ASAccessoryView*)[[NSBundle mainBundle] loadNibNamed:@"ASAccessoryView" owner:nil options:nil][0];
         
         __weak typeof(self)wself = self;

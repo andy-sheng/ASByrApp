@@ -67,7 +67,7 @@
 
 - (void)initRegex {
 #define regexp(reg, option) [NSRegularExpression regularExpressionWithPattern : @reg options : option error : NULL]
-    _regexEm = regexp("\\[(em[abc]?[0-9]+)\\]", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    _regexEm = regexp("(\\[(em[abc]?[0-9]+)\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
     _regexB = regexp("(\\[b\\])(.*?)(\\[/b\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
@@ -91,7 +91,7 @@
     
     _regexUpload = regexp("(\\[upload=([0-9]+)\\])(.*?)(\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
-    _regexTag = regexp("(\\[.*?\\])|(\\[/.*?\\])|(\\[em[abc]?[0-9]+\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    _regexTag = regexp("(\\[em[abc]?[0-9]+\\])|(\\[upload=.*\\].*?\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
 #undef regexp
 }
 
@@ -99,10 +99,12 @@
     NSLog(@"parser:%@", text.string);
     if (text.length == 0) return NO;
     [text yy_removeAttributesInRange:NSMakeRange(0, text.length)];
+    
     text.yy_font = _font;
     
     [_regexEm enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        NSRange emRange = [result rangeAtIndex:1];
+        NSRange tagRange = [result rangeAtIndex:1];
+        NSRange emRange = [result rangeAtIndex:2];
         
         
         UIImage *img = [YYImage imageNamed:[NSString stringWithFormat:@"%@.gif", [text.string substringWithRange:emRange]]];
@@ -111,9 +113,11 @@
         YYAnimatedImageView *imgView = [[YYAnimatedImageView alloc] initWithFrame:CGRectMake(0, 0, _fontSize * 2, _fontSize * 2)];
         [imgView setImage:img];
         
-        
+
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
         [text insertAttributedString:imgStr atIndex:emRange.location + emRange.length+1];
+        
+        //[text.mutableString replaceCharactersInRange:tagRange withString:@""];
     }];
     
     [_regexB enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
@@ -206,6 +210,8 @@
     
     [_regexUpload enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         
+        NSRange frontTag = [result rangeAtIndex:1];
+        NSRange backTag = [result rangeAtIndex:4];
         NSRange uploadIdRange = [result rangeAtIndex:2];
         NSRange innerTextRange = [result rangeAtIndex:3];
         NSInteger uploadId = [[text.string substringWithRange:uploadIdRange] integerValue];
@@ -213,18 +219,26 @@
         
         
         NSString *url = @"";
-        if (self.attachement.file && self.attachement.file.count >= uploadId) {
-            url = self.attachement.file[uploadId - 1].thumbnail_small;
+        if (self.attachment.file && self.attachment.file.count >= uploadId) {
+            url = self.attachment.file[uploadId - 1].thumbnail_small;
         }
+        NSLog(@"%@", url)
         [imgView yy_setImageWithURL:[NSURL URLWithString:url] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
 
+
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
-        [text insertAttributedString:imgStr atIndex:innerTextRange.location];
+        [text insertAttributedString:imgStr atIndex:backTag.location + backTag.length];
+
+        //[text.mutableString replaceCharactersInRange:backTag withString:@""];
+        //[text.mutableString replaceCharactersInRange:frontTag withString:@""];
     }];
-    #ifdef DEBUG
-    #else
-    [_regexTag replaceMatchesInString:text.mutableString options:0 range:NSMakeRange(0, text.length) withTemplate:@""];
-    #endif
+   // #ifdef DEBUG
+   // #else
+//    [_regexTag enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+//        [text replaceCharactersInRange:result.range withString:@""];
+//    }];
+    //[_regexTag replaceMatchesInString:text.mutableString options:0 range:NSMakeRange(0, text.length) withTemplate:@""];
+   // #endif
     
     
     

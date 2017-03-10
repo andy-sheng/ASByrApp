@@ -15,7 +15,7 @@
 
 @property(nonatomic, assign) CGFloat fontSize;
 
-@property(nonatomic, weak) XQByrAttachment *attachement;
+@property(nonatomic, weak) XQByrAttachment *attachment;
 
 @property(nonatomic, weak) id linkHandler;
 //- (BOOL)parseText:(NSMutableAttributedString *)text selectedRange:(NSRangePointer)selectedRange;

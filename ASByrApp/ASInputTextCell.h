@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <XQByrAttachment.h>
 
 @protocol ASInputTextDelegate <NSObject>
 
@@ -17,6 +18,7 @@
 
 @interface ASInputTextCell : UITableViewCell
 
+@property (nonatomic, weak) XQByrAttachment *attachment;
 @property (nonatomic, weak) NSMutableString *contentText;
 @property (nonatomic, weak) id<ASInputTextDelegate> delegate;
 

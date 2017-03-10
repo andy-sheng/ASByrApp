@@ -11,6 +11,9 @@
 #import "ASInputTextCell.h"
 #import "ASInputImageCell.h"
 #import "ASSectionListVC.h"
+#import "ASUtil.h"
+#import <XQByrAttachment.h>
+#import <ASByrAttachment.h>
 #import <Masonry.h>
 
 
@@ -32,6 +35,11 @@ static const NSInteger kInputImageRow = 3;
 @property (nonatomic, strong) ASInputTextCell *inputTextCell;
 
 @property (nonatomic, strong) NSArray *uploads;
+
+@property (nonatomic, strong) ASByrAttachment *attachmentApi;
+
+@property (nonatomic, strong) XQByrAttachment *attachment;
+
 @end
 
 
@@ -78,9 +86,23 @@ static const NSInteger kInputImageRow = 3;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     [self.imgArr addObject:[info objectForKey:UIImagePickerControllerOriginalImage]];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
-   
+    NSLog(@"%@", [info objectForKey:UIImagePickerControllerReferenceURL]);
     
+    UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSString *imageName = [[info objectForKey:UIImagePickerControllerReferenceURL] lastPathComponent];
     
+    NSURL *fileUrl = saveImage(img, imageName);
+    
+    __weak typeof(self)wself = self;
+    [self.attachmentApi addAttachmentWithBoard:@"Advertising" file:fileUrl successBlock:^(NSInteger statusCode, id response) {
+        __strong typeof(wself)sself = wself;
+        if (sself) {
+            sself.attachment = response;
+            //sself.
+        }
+    } failureBlock:^(NSInteger statusCode, id response) {
+        
+    }];
     
     [self.inputTextCell willChangeValueForKey:@"contentText"];
     [self.inputTextCell.contentText appendString:@"asf[ema20]"];
@@ -177,9 +199,31 @@ static const NSInteger kInputImageRow = 3;
 - (ASInputTextCell*)inputTextCell {
     if (_inputTextCell == nil) {
         _inputTextCell = [[ASInputTextCell alloc] init];
+        _inputTextCell.attachment = self.attachment;
         _inputTextCell.delegate = self;
+        [self addObserver:_inputTextCell forKeyPath:@"contentText" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:_inputTextCell forKeyPath:@"attachment" options:NSKeyValueObservingOptionNew context:nil];
     }
     return _inputTextCell;
 }
 
+- (ASByrAttachment*)attachmentApi {
+    if (_attachmentApi == nil) {
+        _attachmentApi = [[ASByrAttachment alloc] initWithAccessToken:[ASByrToken shareInstance].accessToken];
+    }
+    return _attachmentApi;
+}
+
+- (XQByrAttachment*)attachment {
+    if (_attachment == nil) {
+        _attachment = [XQByrAttachment new];
+    }
+    return _attachment;
+}
+
+
+- (void)dealloc {
+    [self removeObserver:self.inputTextCell forKeyPath:@"contentText"];
+    [self removeObserver:self.inputTextCell forKeyPath:@"attachment"];
+}
 @end

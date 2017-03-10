@@ -50,9 +50,10 @@
     [self.faceImage setImageWithURL:[NSURL URLWithString:article.user.face_url]];
     self.uidLabel.text = article.user.uid;
     self.contentLabel.text = article.content;
-    
+    NSLog(@"%ld", article.aid);
+    NSLog(@"%@", article.board_name);
     ASUbbParser *parser = [[ASUbbParser alloc] init];
-    parser.attachement = article.attachment;
+    parser.attachment = article.attachment;
     self.contentLabel.textParser = parser;
 }
 
