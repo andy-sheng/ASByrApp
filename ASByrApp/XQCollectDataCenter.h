@@ -8,11 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, XQCollectionUpdateType){
+typedef NS_OPTIONS(NSInteger, XQCollectionUpdateType){
     //update after enter the article detail
     XQCollectionUpdateContent,
-    //update after fetch from the server
-    XQCollectionUpdateReply
+    //update after add article from user motion
+    XQCollectionUpdateUserAdd,
+    //update after receive add success msg from the server 这种是用collection存储
+    //XQCollectionUpdateStateReceive
+};
+
+typedef NS_ENUM(NSInteger, XQCollectionStateType){
+    //刚添加
+    XQCollectionStateAdd,
+    //待删除
+    XQCollectionStateDelete,
+    //和服务器同步
+    XQCollectionStateSync
 };
 
 @class XQByrArticle,XQByrCollection;
@@ -25,7 +36,9 @@ typedef NS_ENUM(NSInteger, XQCollectionUpdateType){
 
 - (void)addCollectData:(XQByrArticle * __nonnull)article withBlock:(void(^__nullable)(void))block;
 
-- (void)updateCollectData:(XQByrArticle * __nonnull)article options:(XQCollectionUpdateType)type withBlock:(void(^__nullable)(void))block;
+- (void)updateCollectFromArticle:(XQByrArticle * __nonnull)article withBlock:(void(^__nullable)(void))block;
+
+- (void)updateCollect:(XQByrCollection * __nonnull)collection withBlock:(void (^__nullable)(void))block;
 
 - (void)deleteCollectData:(NSString * __nonnull)articleID withBlock:(void(^__nullable)(NSString * __nonnull articleID))block;
 

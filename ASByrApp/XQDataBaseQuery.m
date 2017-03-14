@@ -23,6 +23,8 @@
 
 NSString * const XQByrDatabaseName = @"XQByrDatabase.db";
 
+static  NSString * const XQArticleUserViewName = @"xq_article_user";
+
 - (instancetype)init{
     return [self initWithDatabaseName:XQByrDatabaseName];
 }
@@ -74,8 +76,10 @@ NSString * const XQByrDatabaseName = @"XQByrDatabase.db";
     id key;
     while ((key = [enumerator nextObject])!=nil) {
         NSString * obj = dataInfo[key];
-        [columnList addObject:key];
-        [dataList addObject:obj];
+        if (obj && obj != (id)[NSNull null]) {
+            [columnList addObject:key];
+            [dataList addObject:obj];
+        }
     }
     
     NSError * error = nil;
@@ -106,7 +110,7 @@ NSString * const XQByrDatabaseName = @"XQByrDatabase.db";
     }
     
     NSError * error = nil;
-    BOOL result = [self.dbManager updateDataOfTable:tableName columInfo:[dataList componentsJoinedByString:@","] primaryKey:primaryKey error:&error];
+    BOOL result = [self.dbManager updateDataOfTable:tableName columInfo:[dataList componentsJoinedByString:@","] primaryKey:whereQuery error:&error];
     
     if (!result && error) {
         NSLog(@"更新%@ 表中数据发生错误： %@",tableName, error);
@@ -117,19 +121,29 @@ NSString * const XQByrDatabaseName = @"XQByrDatabase.db";
     NSError * error = nil;
     NSArray * fetchResult = [self.dbManager fetchDataOfTable:tableName class:class error:&error];
     if ((!fetchResult || [fetchResult count]==0) && error) {
-        NSLog(@"更新%@ 表中数据发生错误： %@",tableName, error);
+        NSLog(@"获取%@ 表中数据发生错误： %@",tableName, error);
     }
     return fetchResult;
 }
 
-- (id)fetchDataAtTable:(NSString *)tableName ofClass:(Class)className primaryKey:(NSString *)key primaryValue:(NSString *)value{
+- (NSArray *)fetchDataAtView{
     NSError * error = nil;
-    id fetchResult = [self.dbManager fetchDataOfTable:tableName class:className primaryQuery:[NSString stringWithFormat:@"%@ %@",key,value] error:&error];
-    if ((!fetchResult || [fetchResult count]==0) && error) {
-        NSLog(@"更新%@ 表中数据发生错误： %@",tableName, error);
+    NSArray * resultList = [self.dbManager fetchDataOfView:XQArticleUserViewName error:&error];
+    if (!resultList && error) {
+        NSLog(@"获取%@ 视图中数据发生错误： %@",XQArticleUserViewName, error);
     }
-    return fetchResult;
+    return resultList;
 }
+
+//- (id)fetchDataAtTable:(NSString *)tableName ofClass:(Class)className primaryKey:(NSString *)key primaryValue:(NSString *)value{
+//    NSError * error = nil;
+//    id fetchResult = [self.dbManager fetchDataOfTable:tableName class:className primaryQuery:[NSString stringWithFormat:@"%@ %@",key,value] error:&error];
+//    if ((!fetchResult || [fetchResult count]==0) && error) {
+//        NSLog(@"更新%@ 表中数据发生错误： %@",tableName, error);
+//    }
+//    return fetchResult;
+//}
+
 - (void)deleteDataAtTable:(NSString *)tableName primaryKey:(NSString *)primaryKey keyValue:(NSString *)keyValue{
     NSError * error = nil;
     [self.dbManager deleteDataOfTable:tableName whereQuery:[NSString stringWithFormat:@"%@ = %@",primaryKey,keyValue] error:&error];
@@ -138,24 +152,60 @@ NSString * const XQByrDatabaseName = @"XQByrDatabase.db";
     }
 }
 
-- (void)createView:(NSString *)fTableName fTableColumn:(NSArray *)fTableColumn ftTableName:(NSString *)ftTableName ftTableColumn:(NSArray *)ftTableColumn{
+
+- (void)createView:(NSString *)fTableName fTableColumn:(NSDictionary *)fTableColumn ftTableColumn:(NSArray *)ftTableColumn{
+    NSMutableArray __block * fTableColumnList = [[NSMutableArray alloc]init];
     
+    NSString * ftTableName;
+    NSString * ftTableColumnInfo;
+    NSEnumerator * enumeratort = [fTableColumn keyEnumerator];
+    id key;
+    while ((key = [enumeratort nextObject])!=nil) {
+        NSString * obj = fTableColumn[key];
+        if ([self p_hasForeignKey:obj]) {
+            ftTableName = [self p_findForeignTableName:obj];
+            NSString * tfFieldName = [self p_findForeignFieldName:obj];
+            ftTableColumnInfo = [NSString stringWithFormat:@"f.%@ = ft.%@",key,tfFieldName];
+        }else{
+            [fTableColumnList addObject:[NSString stringWithFormat:@"f.%@ as %@",key,key]];
+        }
+    }
+    for (int i = 0; i < [ftTableColumn count]; i++) {
+        [fTableColumnList addObject:[NSString stringWithFormat:@"ft.%@ as %@",ftTableColumn[i],ftTableColumn[i]]];
+    }
+    
+    NSError * error = nil;
+    [self.dbManager createView:XQArticleUserViewName ftableName:fTableName fTableColumn:[fTableColumnList componentsJoinedByString:@","] ftTableName:ftTableName ftTableColumn:ftTableColumnInfo withError:&error];
+    if (error) {
+        NSLog(@"创建%@ 视图发生错误： %@",@"xq_view", error);
+    }
 }
+
 #pragma mark private method
 - (BOOL)p_hasForeignKey:(NSString *)str{
-    NSRegularExpression * regularFirst = [NSRegularExpression regularExpressionWithPattern:@".*FOREGIN KEY.*" options:NSRegularExpressionCaseInsensitive error:nil];
-    if([regularFirst numberOfMatchesInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str   length])] > 0){
+    NSRegularExpression * regularFirst = [NSRegularExpression regularExpressionWithPattern:@"(.*)(REFERENCES)(\\s)?(.*)" options:NSRegularExpressionCaseInsensitive error:nil];
+    if([regularFirst numberOfMatchesInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str  length])] > 0){
         return true;
     }else{
         return false;
     }
 }
 
-- (NSString *)p_findForeignTableName:(NSString *)str{
+- (NSString *)p_findForeignFieldName:(NSString *)str{
     NSRegularExpression * regularSecond = [NSRegularExpression regularExpressionWithPattern:@"\\(.*?\\)" options:NSRegularExpressionCaseInsensitive error:nil];
     NSTextCheckingResult * result = [regularSecond firstMatchInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str length])];
     if (result.range.length > 0) {
-        return [str substringWithRange:result.range];
+        return [str substringWithRange:NSMakeRange(result.range.location+1, result.range.length-2)];
+    }else{
+        return @"";
+    }
+}
+
+- (NSString *)p_findForeignTableName:(NSString *)str{
+    NSRegularExpression * regularSecond = [NSRegularExpression regularExpressionWithPattern:@"REFERENCES\\s*.*?\\(" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSTextCheckingResult * result = [regularSecond firstMatchInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str length])];
+    if (result.range.length > 0) {
+        return [str substringWithRange:NSMakeRange(result.range.location+11, result.range.length-13)];
     }else{
         return @"";
     }

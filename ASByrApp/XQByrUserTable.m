@@ -9,12 +9,23 @@
 #import "XQByrUserTable.h"
 #import <XQByrUser.h>
 
-@interface XQByrUserTable()<XQTableBaseExecutorProtocol>
+@interface XQByrUserTable()<XQTableBaseExecutorProtocol,XQForeignTableBaseProtocol>
 
 @end
+
 @implementation XQByrUserTable
 
-+ (NSArray *)getForeignColumnInfo{
+- (instancetype)init{
+    static XQByrUserTable * userTable;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        userTable = [[XQByrUserTable alloc]initDatabase];
+    });
+    return userTable;
+}
+
+#pragma mark XQForeignTableBaseProtocol
+- (NSArray *)foreignColumnInfo{
     return [NSArray arrayWithObjects:@"uid",@"user_name",@"face_url",nil];
 }
 

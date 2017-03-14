@@ -131,7 +131,7 @@
 
 - (void)setUpParameters:(NSDictionary *)parameters{
     self.titleLabel.text = [[parameters objectForKey:@"title"]copy];
-    self.userNameLabel.text = [[parameters objectForKey:@"userName"] copy];
+    self.userNameLabel.text = [[parameters objectForKey:@"user_name"] copy];
     self.replyCount.text = [NSString stringWithFormat:@"%@条回复",[parameters objectForKey:@"replyCount"]];
 }
 @end

@@ -20,7 +20,11 @@
 
 - (NSArray *)fetchDataOfTable:(NSString *)tableName class:(Class)classType error:(NSError * __autoreleasing *)error;
 
-- (id)fetchDataOfTable:(NSString *)tableName class:(Class)classType primaryQuery:(NSString *)query error:(NSError * __autoreleasing *)error;
+//- (id)fetchDataOfTable:(NSString *)tableName class:(Class)classType primaryQuery:(NSString *)query error:(NSError * __autoreleasing *)error;
 
 - (BOOL)deleteDataOfTable:(NSString *)tableName whereQuery:(NSString *)whereQuery error:(NSError * __autoreleasing *)error;
+
+- (BOOL)createView:(NSString *)viewName ftableName:(NSString *)fTableName fTableColumn:(NSString *)fTableColumnInfo ftTableName:(NSString *)ftTableName  ftTableColumn:(NSString *)ftTableColumnInfo withError:(NSError *__autoreleasing *)error;
+
+- (NSArray *)fetchDataOfView:(NSString *)viewName error:(NSError *__autoreleasing *)error;
 @end

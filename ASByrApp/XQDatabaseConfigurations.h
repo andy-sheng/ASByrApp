@@ -27,6 +27,8 @@ typedef NS_ENUM (NSInteger, XQDatabaseErrorKey){
     
     XQDatabaseTableTransactionUpdateError,
     
+    XQDataBaseViewCreateError,
+    
     XQDatabaseMigrationError,
     
     XQDatabaseDefaultError

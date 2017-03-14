@@ -106,7 +106,7 @@ static NSString * const reuseIdentifier = @"collectCell";
         [cell.firstImageView setImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE]];
     }
     
-    NSString * profileImageUrl = [self.arrayList[indexPath.row] objectForKey:@"profileImageUrl"];
+    NSString * profileImageUrl = [self.arrayList[indexPath.row] objectForKey:@"face_url"];
     if(profileImageUrl && ![profileImageUrl isEqual:@""]){
         [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:profileImageUrl] placeholderImage:[UIImage imageNamed:XQCOLLECTION_PROFILE_IMAGE] options:SDWebImageRefreshCached];
     }
@@ -117,7 +117,7 @@ static NSString * const reuseIdentifier = @"collectCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ASThreadsController * threadsVC = [[ASThreadsController alloc]initWithWithBoard:[self.arrayList[indexPath.row] objectForKey:@"boardName"] aid:[[self.arrayList[indexPath.row] objectForKey:@"articleID" ]integerValue]];
+    ASThreadsController * threadsVC = [[ASThreadsController alloc]initWithWithBoard:[self.arrayList[indexPath.row] objectForKey:@"bname"] aid:[[self.arrayList[indexPath.row] objectForKey:@"gid" ]integerValue]];
     [self.navigationController pushViewController:threadsVC animated:YES];
 }
 
@@ -125,12 +125,12 @@ static NSString * const reuseIdentifier = @"collectCell";
 
 - (void)fentchCollections{
     //每次登录时取数据
-    if ([XQUserInfo sharedXQUserInfo].firstLogin != TRUE) {
+    //if ([XQUserInfo sharedXQUserInfo].firstLogin != TRUE) {
         [_collectDataCenter deleteAllCollectDataWithBlock:nil];
         [_collectionApi fetchCollectionsWithCount:30 page:1];
-    }else{
-        [self fentchCollectionsFromLocalWithFilters:nil];
-    }
+//    }else{
+//        [self fentchCollectionsFromLocalWithFilters:nil];
+//    }
 }
 
 - (void)fentchCollectionsFromLocalWithFilters:(NSDictionary *)filters{
@@ -158,7 +158,7 @@ static NSString * const reuseIdentifier = @"collectCell";
 - (void)updateCollectArticle:(NSNotification *)notis{
     NSLog(@"更新通知激活！");
     XQByrArticle * article = notis.userInfo[@"article"];
-    [self.collectDataCenter updateCollectData:article options:XQCollectionUpdateContent withBlock:nil];
+    [self.collectDataCenter updateCollectFromArticle:article withBlock:nil];
 }
 
 - (void)deleteCollectArticle:(NSNotification *)notis{
@@ -166,18 +166,18 @@ static NSString * const reuseIdentifier = @"collectCell";
     XQByrArticle * article = notis.userInfo[@"article"];
     [self.collectionApi deleteCollectionWithAid:[NSString stringWithFormat:@"%ld",(long)article.group_id] successBlock:^(NSInteger statusCode, id response) {
         NSLog(@"删除收藏请求成功.");
+        [self.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id] withBlock:nil];
     } failureBlock:^(NSInteger statusCode, id response) {
-        NSLog(@"删除收藏请求失败.");
+        NSLog(@"删除收藏请求失败. statusCode:%ld",(long)statusCode);
+        
     }];
-    [self.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id] withBlock:nil];
+    
 }
 
 #pragma mark ASByrCollectionResponseDelegate
 - (void)fentchCollectionsResponse:(ASByrResponse *)response{
     NSArray * array = [NSArray arrayWithArray:response.reformedData];
-    [_collectDataCenter saveCollectDataFromCollections:array withBlock:nil];
-    ////////========
-    [self fentchCollectionsFromLocalWithFilters:nil];
+    [self.arrayList addObjectsFromArray:array];
 }
 
 #pragma mark ASByrCollectionResponseReformer
@@ -192,6 +192,8 @@ static NSString * const reuseIdentifier = @"collectCell";
         [_collectionApi fetchCollectionsWithCount:30 page:(NSInteger)response.response[@"pagination"][@"page_current_count"]+1];
     }else{
         [XQUserInfo sharedXQUserInfo].firstLogin = TRUE;
+        [[XQUserInfo sharedXQUserInfo] setDataIntoSandbox];
+        [[XQUserInfo sharedXQUserInfo] getDataFromSandbox];
     }
     response.reformedData = reformedArticles;
     return response;
@@ -209,6 +211,6 @@ static NSString * const reuseIdentifier = @"collectCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addNewCollectedArticle" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateNewCollectedArticle" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"deleteCollectedArticle" object:nil];
-    
 }
+
 @end

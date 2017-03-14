@@ -13,5 +13,4 @@
 
 extern NSString *XQByrDatabaseName;
 
-
 @end

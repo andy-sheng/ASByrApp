@@ -32,7 +32,7 @@
 
 - (BOOL)createTable:(NSString *)tableName columnInfo:(NSString *)columnInfo error:(NSError *__autoreleasing *)error{
     
-    NSString * sqlQuery = [NSString stringWithFormat:@"PRAGMA foreign_keys = ON; CREATE TABLE %@ (%@)",tableName, columnInfo];
+    NSString * sqlQuery = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (%@)",tableName, columnInfo];
     
     sqlite3_stmt * stmt = NULL;
     int result = sqlite3_prepare_v2(_database, sqlQuery.UTF8String, -1, &stmt, NULL);
@@ -55,8 +55,9 @@
 }
 
 - (BOOL)insertDataIntoTable:(NSString *)tableName column:(NSString *)column data:(NSString *)data error:(NSError *__autoreleasing *)error{
-    NSString * sqlQuery = [NSString stringWithFormat:@"PRAGMA foreign_keys = ON; INSERT INTO %@ (%@) values (%@)",tableName, column, data];
+    NSString * sqlQuery = [NSString stringWithFormat:@"INSERT INTO %@ (%@) values (%@)",tableName, column, data];
     
+    //[self p_executeQuery:sqlQuery];
     sqlite3_stmt * stmt = NULL;
     int result = sqlite3_prepare_v2(_database, sqlQuery.UTF8String, -1, &stmt, NULL);
     
@@ -79,7 +80,7 @@
 
 - (BOOL)updateDataOfTable:(NSString *)tableName columInfo:(NSString *)columnInfo primaryKey:(NSString *)primaryKey error:(NSError *__autoreleasing *)error{
 
-    NSString * sqlQuery = [NSString stringWithFormat:@"PRAGMA foreign_keys = ON; UPDATE %@ SET %@ WHERE %@",tableName, columnInfo, primaryKey];
+    NSString * sqlQuery = [NSString stringWithFormat:@" UPDATE %@ SET %@ WHERE %@",tableName, columnInfo, primaryKey];
     
     sqlite3_stmt * stmt = NULL;
     int result = sqlite3_prepare_v2(_database, sqlQuery.UTF8String, -1, &stmt, NULL);
@@ -101,8 +102,8 @@
     return YES;
 }
 
-- (NSArray *)fetchDataOfTable:(NSString *)tableName class:(Class)classType error:(NSError *__autoreleasing *)error{
-    NSString * sqlQuery = [NSString stringWithFormat:@"PRAGMA foreign_keys = ON; SELECT * FROM TABLE %@",tableName];
+- (NSArray *)fetchDataOfView:(NSString *)viewName error:(NSError *__autoreleasing *)error{
+    NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@ order by createdTime",viewName];
     NSMutableArray *rows=[NSMutableArray array];//数据行
     
     //评估语法正确性
@@ -120,13 +121,12 @@
                     dic[[NSString stringWithUTF8String:name]]=[NSString stringWithUTF8String:(const char *)value];
                 }
             }
-            NSObject * object = [classType yy_modelWithDictionary:dic];
-            [rows addObject:object];
+            [rows addObject:dic];
         }
     }else{
-        *error = [NSError errorWithDomain:XQDatabaseErrorDomain code:XQDatabaseTableFetchError userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"update data of table %@ at %@ failed with error:\n %s",tableName, _dbpath,sqlite3_errmsg(_database)]}];
+        *error = [NSError errorWithDomain:XQDatabaseErrorDomain code:XQDatabaseTableFetchError userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"fetch data of view %@ at %@ failed with error:\n %s",viewName, _dbpath,sqlite3_errmsg(_database)]}];
         return nil;
-
+        
     }
     //释放句柄
     sqlite3_finalize(stmt);
@@ -137,8 +137,8 @@
 - (id)fetchDataOfTable:(NSString *)tableName class:(Class)classType primaryQuery:(NSString *)query error:(NSError *__autoreleasing *)error{
     NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM TABLE %@ WHERE %@", tableName, query];
     return [classType yy_modelWithDictionary:[[self p_executeQuery:sqlQuery] firstObject]];
-
 }
+
 - (BOOL)deleteDataOfTable:(NSString *)tableName whereQuery:(NSString *)whereQuery error:(NSError *__autoreleasing *)error{
     NSString * sqlQuery = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",tableName, whereQuery];
     
@@ -161,6 +161,27 @@
     }
     return YES;
     
+}
+
+- (BOOL)createView:(NSString *)viewName ftableName:(NSString *)fTableName fTableColumn:(NSString *)fTableColumnInfo ftTableName:(NSString *)ftTableName  ftTableColumn:(NSString *)ftTableColumnInfo withError:(NSError *__autoreleasing *)error{
+    NSString * sqlQuery = [NSString stringWithFormat:@"CREATE VIEW IF NOT EXISTS %@ as select %@ from %@ f left outer join %@ ft on %@",viewName,fTableColumnInfo,fTableName,ftTableName,ftTableColumnInfo];
+    
+    sqlite3_stmt * stmt = NULL;
+    int result = sqlite3_prepare_v2(_database, sqlQuery.UTF8String, -1, &stmt, NULL);
+    
+    if (result != SQLITE_OK) {
+        *error = [NSError errorWithDomain:XQDatabaseErrorDomain code:XQDataBaseViewCreateError userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"create view %@ at %@ failed with error:\n %s",viewName, _dbpath,sqlite3_errmsg(_database)]}];
+        return NO;
+    }
+    
+    result = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    
+    if (result != SQLITE_DONE) {
+        *error = [NSError errorWithDomain:XQDatabaseErrorDomain code:XQDataBaseViewCreateError userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"create view %@ at %@ failed with error:\n %s",viewName, _dbpath,sqlite3_errmsg(_database)]}];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark private method

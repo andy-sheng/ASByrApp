@@ -8,6 +8,7 @@
 
 #import "XQTableBaseExecutor.h"
 #import "XQDataBaseQuery.h"
+#import <objc/message.h>
 #import <objc/runtime.h>
 
 @interface XQTableBaseExecutor()
@@ -18,9 +19,11 @@
 
 @end
 
+static void * xqdatabaseforeignkey = "xqdbforeigntablekey";
+
 @implementation XQTableBaseExecutor
 
-- (instancetype)init{
+- (instancetype)initDatabase{
     self = [super init];
     if (self && [self conformsToProtocol:@protocol(XQTableBaseExecutorProtocol)]) {
         _tableProtocol = (XQTableBaseExecutor<XQTableBaseExecutorProtocol> *)self;
@@ -28,10 +31,14 @@
         if (dataBaseQuery) {
             [dataBaseQuery createTable:self.tableProtocol.tableName tableColumn:self.tableProtocol.tableColumnInfo];
         }
-        if ([_tableProtocol respondsToSelector:@selector(bindForeignClass)]) {
-            Class cl = NSClassFromString(self.tableProtocol.foreignClassName);
-            id ftTableColumn = 
-            //[dataBaseQuery createView:self.tableProtocol.tableName fTableColumn:self.tableProtocol.tableColumnInfo ftTableColumn:];
+        if ([_tableProtocol respondsToSelector:@selector(foreignTableClass)]) {
+            Class cl = self.tableProtocol.foreignTableClass;
+            id clobj = [[cl alloc]init];
+            if (clobj && [clobj isKindOfClass:[XQTableBaseExecutor class]]) {
+                //objc_setAssociatedObject(self, xqdatabaseforeignkey, clobj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                NSArray * ftTableColumn = [clobj foreignColumnInfo];
+                [dataBaseQuery createView:self.tableProtocol.tableName fTableColumn:self.tableProtocol.tableColumnInfo ftTableColumn:ftTableColumn];
+            }
         }
         _databaseQuery = dataBaseQuery;
     }else{
@@ -41,30 +48,20 @@
 }
 
 - (void)insertRecord:(NSObject *)record{
-    NSMutableDictionary * __block dictionary = [NSMutableDictionary dictionary];
-    NSLog(@"%@",self.tableProtocol.tableColumnInfo);
-    [self.tableProtocol.tableColumnInfo enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSString *  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString * o = [record valueForKey:key];
-        NSLog(@"%@",key);
-        if (o!=nil) {
-            [dictionary setObject:o forKey:key];
-        }
-    }];
+    NSDictionary * dictionary = [self p_changeObjectToDictionary:record];
     [self.databaseQuery insertDataAtTable:_tableProtocol.tableName dataInfo:dictionary];
 }
 
 - (void)updateRecord:(NSObject *)record{
-    NSMutableDictionary * __block dictionary = [NSMutableDictionary dictionary];
-    [self.tableProtocol.tableColumnInfo enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSString *  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([record valueForKey:key]!=nil) {
-            [dictionary setObject:[record valueForKey:key] forKey:key];
-        }
-    }];
+    NSDictionary * dictionary = [self p_changeObjectToDictionary:record];
+    
     [self.databaseQuery updateDataAtTable:_tableProtocol.tableName dataInfo:dictionary primaryKey:_tableProtocol.primaryKey];
 }
 
+//只有在article类中会调用 待优化
 - (NSArray *)findAllRecord{
-    return [self.databaseQuery fetchDataAtTable:_tableProtocol.tableName ofClass:_tableProtocol.tableClass];
+    //return [self.databaseQuery fetchDataAtTable:_tableProtocol.tableName ofClass:_tableProtocol.tableClass];
+    return [self.databaseQuery fetchDataAtView];
 }
 
 - (void)deleteRecord:(NSObject *)record{
@@ -73,11 +70,49 @@
     }
 }
 
-- (id)findRecordByPrimaryValue:(NSString *)primaryValue{
-    return [self.databaseQuery fetchDataAtTable:_tableProtocol.tableName ofClass:_tableProtocol.tableClass primaryKey:_tableProtocol.primaryKey primaryValue:primaryValue];
-}
+//- (id)findRecordByPrimaryValue:(NSString *)primaryValue{
+//    return [self.databaseQuery fetchDataAtTable:_tableProtocol.tableName ofClass:_tableProtocol.tableClass primaryKey:_tableProtocol.primaryKey primaryValue:primaryValue];
+//}
+
 
 #pragma mark -- private method
+-(void)dealloc{
+    if ([_tableProtocol respondsToSelector:@selector(foreignTableClass)]) {
+        objc_setAssociatedObject(self, xqdatabaseforeignkey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
 
+- (NSString *)p_findForeignFieldName:(NSString *)str{
+    NSRegularExpression * regularSecond = [NSRegularExpression regularExpressionWithPattern:@"\\(.*?\\)" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSTextCheckingResult * result = [regularSecond firstMatchInString:str options:NSMatchingReportCompletion range:NSMakeRange(0, [str length])];
+    if (result.range.length > 0) {
+        return [str substringWithRange:NSMakeRange(result.range.location+1, result.range.length-2)];
+    }else{
+        return @"";
+    }
+}
 
+- (NSDictionary *)p_changeObjectToDictionary:(NSObject *)record{
+    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    NSLog(@"%@",self.tableProtocol.tableColumnInfo);
+    
+    NSEnumerator * enumerator = [self.tableProtocol.tableColumnInfo keyEnumerator];
+    id key;
+    while ((key = [enumerator nextObject]) != nil) {
+        NSString * obj = [self.tableProtocol.tableColumnInfo objectForKey:key];
+        id o = [record valueForKey:key];
+        if (o!=nil){
+            if ([self.tableProtocol respondsToSelector:@selector(foreignTableClass)]&&[o isKindOfClass:self.tableProtocol.foreignModelClass]) {
+                NSString * tkey = [self p_findForeignFieldName:obj];
+                id oo = [o valueForKey:tkey];
+                if (oo!=nil) {
+                    [dictionary setObject:[NSString stringWithFormat:@"\"%@\"",oo] forKey:key];
+                }
+            }else if(![o isEqual:@""]){
+                [dictionary setObject:[NSString stringWithFormat:@"\"%@\"",o] forKey:key];
+            }
+        }
+    }
+    return dictionary;
+}
 @end

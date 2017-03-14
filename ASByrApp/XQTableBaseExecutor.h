@@ -25,13 +25,25 @@
 
 @optional
 
-- (NSString *)foreignClassName;
+- (Class)foreignTableClass;
+
+- (Class)foreignModelClass;
+
+@end
+
+@protocol XQForeignTableBaseProtocol <NSObject>
+
+@required
+
+- (NSArray *)foreignColumnInfo;
 
 @end
 
 @interface XQTableBaseExecutor : NSObject
 
 @property (weak, nonatomic, readonly) id<XQTableBaseExecutorProtocol> tableProtocol;
+
+- (instancetype)initDatabase;
 
 - (void)insertRecord:(NSObject *)record;
 
@@ -41,6 +53,6 @@
 
 - (NSArray *)findAllRecord;
 
-- (id)findRecordByPrimaryValue:(NSString *)primaryValue;
+//- (id)findRecordByPrimaryValue:(NSString *)primaryValue;
 
 @end
