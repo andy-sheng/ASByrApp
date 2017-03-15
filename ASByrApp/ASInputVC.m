@@ -108,7 +108,7 @@
     NSURL *fileUrl = saveImage(img, imageName);
     
     __weak typeof(self)wself = self;
-    [self.attachmentApi addAttachmentWithBoard:self.replyTo.board_name file:fileUrl successBlock:^(NSInteger statusCode, id response) {
+    [self.attachmentApi addAttachmentWithBoard:self.replyTo.board_name aid:self.replyTo.aid file:fileUrl successBlock:^(NSInteger statusCode, id response) {
         __strong typeof(wself)sself = wself;
         if (sself) {
             sself.attachment = response;

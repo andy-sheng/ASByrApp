@@ -67,7 +67,7 @@
 
 - (void)initRegex {
 #define regexp(reg, option) [NSRegularExpression regularExpressionWithPattern : @reg options : option error : NULL]
-    _regexEm = regexp("(\\[(em[abc]?[0-9]+)\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    _regexEm = regexp("(\\[(em[abc]?[0-9]+?)\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
     _regexB = regexp("(\\[b\\])(.*?)(\\[/b\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
@@ -102,7 +102,9 @@
     
     text.yy_font = _font;
     
-    [_regexEm enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    
+    NSArray<NSTextCheckingResult*> *results = [_regexEm matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
+    for (NSTextCheckingResult *result in [results reverseObjectEnumerator]) {
         NSRange tagRange = [result rangeAtIndex:1];
         NSRange emRange = [result rangeAtIndex:2];
         
@@ -113,12 +115,12 @@
         YYAnimatedImageView *imgView = [[YYAnimatedImageView alloc] initWithFrame:CGRectMake(0, 0, _fontSize * 2, _fontSize * 2)];
         [imgView setImage:img];
         
-
+        
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
         [text insertAttributedString:imgStr atIndex:emRange.location + emRange.length+1];
         
-        //[text.mutableString replaceCharactersInRange:tagRange withString:@""];
-    }];
+        [text.mutableString replaceCharactersInRange:tagRange withString:@""];
+    }
     
     [_regexB enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         NSRange innerTextRange = [result rangeAtIndex:2];
@@ -173,17 +175,18 @@
         [text yy_setFont:_italicFont range:innerTextRange];
     }];
     
-    [_regexImg enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    results = [_regexEm matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
+    for (NSTextCheckingResult *result in [results reverseObjectEnumerator]) {
         NSRange imgUrlRange = [result rangeAtIndex:2];
         NSRange innerTextRange = [result rangeAtIndex:3];
         
         YYAnimatedImageView *imgView = [[YYAnimatedImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder.jpg"]];
-       [imgView yy_setImageWithURL:[NSURL URLWithString:[text.string substringWithRange:imgUrlRange]] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
-   
+        [imgView yy_setImageWithURL:[NSURL URLWithString:[text.string substringWithRange:imgUrlRange]] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
+        
         NSLog(@"%@", [text.string substringWithRange:imgUrlRange]);
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
         [text insertAttributedString:imgStr atIndex:innerTextRange.location];
-    }];
+    }
     
     [_regexSize enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         NSRange valRange = [result rangeAtIndex:2];
@@ -208,8 +211,8 @@
         
     }];
     
-    [_regexUpload enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        
+    results = [_regexUpload matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
+    for (NSTextCheckingResult *result in [results reverseObjectEnumerator]) {
         NSRange frontTag = [result rangeAtIndex:1];
         NSRange backTag = [result rangeAtIndex:4];
         NSRange uploadIdRange = [result rangeAtIndex:2];
@@ -224,15 +227,14 @@
         }
         NSLog(@"%@", url)
         [imgView yy_setImageWithURL:[NSURL URLWithString:url] options:kNilOptions];
-
-
+        
+        
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
         [text insertAttributedString:imgStr atIndex:backTag.location + backTag.length];
+        
 
-        //[text.mutableString replaceCharactersInRange:backTag withString:@""];
-        //[text.mutableString replaceCharactersInRange:frontTag withString:@""];
-    }];
-   // #ifdef DEBUG
+    }
+      // #ifdef DEBUG
    // #else
     
     [_regexTag replaceMatchesInString:text.mutableString options:kNilOptions range:NSMakeRange(0, text.length) withTemplate:@""];
