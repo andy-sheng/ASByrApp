@@ -8,6 +8,7 @@
 
 #import "ASInputVC.h"
 #import "ASAccessoryView.h"
+#import "ASEmotionInput.h"
 #import "ASUtil.h"
 #import "ASUbbParser.h"
 #import <XQByrArticle.h>
@@ -38,6 +39,8 @@
 @property (nonatomic, strong) XQByrAttachment *attachment;
 
 @property (nonatomic, strong) XQByrArticle *replyTo;
+
+@property (nonatomic, strong) ASEmotionInput *emotionInputView;
 
 @end
 
@@ -134,6 +137,18 @@
     [self presentViewController:self.imagePicker animated:YES completion:nil];
 }
 
+- (void)addEmotion {
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:0.35];
+    
+    [self.textView resignFirstResponder];
+    self.textView.inputView = self.textView.inputView ? nil : self.emotionInputView;
+    [self.textView becomeFirstResponder];
+    
+    [UIView commitAnimations];
+}
+
 # pragma makr - Setters and Getters
 
 - (UIBarButtonItem*)sendBtn {
@@ -157,7 +172,6 @@
 
 - (UIScrollView*)scrollView {
     if (_scrollView == nil) {
-        //_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, 375, 667 - 64)];
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.pagingEnabled = YES;
         _scrollView.bounces = NO;
@@ -175,14 +189,21 @@
         ASAccessoryView *accessoryView = (ASAccessoryView*)[[NSBundle mainBundle] loadNibNamed:@"ASAccessoryView" owner:nil options:nil][0];
         
         __weak typeof(self)wself = self;
-        accessoryView.addPhotoBlock = ^{
+        accessoryView.addPhotoBlock = ^(id context){
             __strong typeof(wself)sself = wself;
             if (sself) {
                 [sself addPhoto];
             }
         };
         
-        accessoryView.dismissBlock = ^{
+        accessoryView.addEmotionBlock = ^(id context){
+            __strong typeof(wself) sself = wself;
+            if (sself) {
+                [sself addEmotion];
+            }
+        };
+        
+        accessoryView.dismissBlock = ^(id context){
             __strong typeof(wself)sself = wself;
             if (sself) {
                 [sself.textView resignFirstResponder];
@@ -193,6 +214,21 @@
         [_textView setFont:[UIFont systemFontOfSize:17]];
     }
     return _textView;
+}
+
+- (ASEmotionInput*)emotionInputView {
+    if (_emotionInputView == nil) {
+        _emotionInputView = [[NSBundle mainBundle] loadNibNamed:@"ASEmotionInput" owner:nil options:nil][0];
+        
+        __weak typeof(self)wself = self;
+        _emotionInputView.addEmotionBlock = ^(id context){
+            __strong typeof(wself) sself = wself;
+            if (sself) {
+                [sself.textView insertText:context];
+            }
+        };
+    }
+    return _emotionInputView;
 }
 
 - (YYTextView*)preshowView {

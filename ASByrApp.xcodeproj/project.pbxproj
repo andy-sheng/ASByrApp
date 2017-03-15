@@ -22,7 +22,6 @@
 		75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */; };
 		75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
-		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
 		A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC771CD50BF40029DAC8 /* ASTop10Manager.m */; };
 		A11FBC7C1CD876460029DAC8 /* top10Iterms.plist in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC7B1CD876460029DAC8 /* top10Iterms.plist */; };
@@ -34,6 +33,8 @@
 		A131471B1E70446C008CD422 /* ASAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471A1E70446C008CD422 /* ASAccessoryView.m */; };
 		A131471E1E724364008CD422 /* ASUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471D1E724364008CD422 /* ASUtil.m */; };
 		A13147211E72D415008CD422 /* ASInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147201E72D415008CD422 /* ASInputVC.m */; };
+		A15AD5B61E79676300F34360 /* ASEmotionInput.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15AD5B51E79676300F34360 /* ASEmotionInput.xib */; };
+		A15AD5B91E79677E00F34360 /* ASEmotionInput.m in Sources */ = {isa = PBXBuildFile; fileRef = A15AD5B81E79677E00F34360 /* ASEmotionInput.m */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
 		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
@@ -325,7 +326,6 @@
 		75EF743A1E5492A3008D3E2C /* XQCollectArticleTCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTCell.h; sourceTree = "<group>"; };
 		75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleTCell.m; sourceTree = "<group>"; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
-		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
 		A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTop10ManageVC.m; sourceTree = "<group>"; };
 		A11FBC761CD50BF40029DAC8 /* ASTop10Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10Manager.h; sourceTree = "<group>"; };
@@ -345,6 +345,10 @@
 		A131471D1E724364008CD422 /* ASUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASUtil.m; sourceTree = "<group>"; };
 		A131471F1E72D415008CD422 /* ASInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputVC.h; sourceTree = "<group>"; };
 		A13147201E72D415008CD422 /* ASInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputVC.m; sourceTree = "<group>"; };
+		A15AD5B51E79676300F34360 /* ASEmotionInput.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASEmotionInput.xib; sourceTree = "<group>"; };
+		A15AD5B71E79677E00F34360 /* ASEmotionInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASEmotionInput.h; sourceTree = "<group>"; };
+		A15AD5B81E79677E00F34360 /* ASEmotionInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASEmotionInput.m; sourceTree = "<group>"; };
+		A15AD5BA1E798AB500F34360 /* ASInputCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASInputCommon.h; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
@@ -737,6 +741,10 @@
 				A13147171E704450008CD422 /* ASAccessoryView.xib */,
 				A13147191E70446C008CD422 /* ASAccessoryView.h */,
 				A131471A1E70446C008CD422 /* ASAccessoryView.m */,
+				A15AD5B51E79676300F34360 /* ASEmotionInput.xib */,
+				A15AD5B71E79677E00F34360 /* ASEmotionInput.h */,
+				A15AD5B81E79677E00F34360 /* ASEmotionInput.m */,
+				A15AD5BA1E798AB500F34360 /* ASInputCommon.h */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -942,7 +950,6 @@
 		A1BFB6121CC4891500FE5CA1 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				A11FBC6E1CD240C30029DAC8 /* smile.png */,
 				A11FBC6C1CD23F5E0029DAC8 /* plus.png */,
 			);
 			name = icons;
@@ -1418,6 +1425,7 @@
 				A1C003FF1CEC189100AA6B53 /* emc12.gif in Resources */,
 				A1C0044F1CEC189100AA6B53 /* ema0.gif in Resources */,
 				A1C004091CEC189100AA6B53 /* emc21.gif in Resources */,
+				A15AD5B61E79676300F34360 /* ASEmotionInput.xib in Resources */,
 				A11FBC7C1CD876460029DAC8 /* top10Iterms.plist in Resources */,
 				A1C0045B1CEC189100AA6B53 /* ema2.gif in Resources */,
 				A1C0043D1CEC189100AA6B53 /* emb15.gif in Resources */,
@@ -1590,7 +1598,6 @@
 				A16E1A481CAD6B9500F7C1FA /* Assets.xcassets in Resources */,
 				A1C004681CEC189100AA6B53 /* ema31.gif in Resources */,
 				A1C004771CEC189100AA6B53 /* ema8.gif in Resources */,
-				A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */,
 				A1C0049F1CEC189100AA6B53 /* em44.gif in Resources */,
 				A1C004751CEC189100AA6B53 /* ema6.gif in Resources */,
 				A1C0042B1CEC189100AA6B53 /* emc52.gif in Resources */,
@@ -1751,6 +1758,7 @@
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
 				751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */,
+				A15AD5B91E79677E00F34360 /* ASEmotionInput.m in Sources */,
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,

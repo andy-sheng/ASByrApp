@@ -15,9 +15,14 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <items>
-                <barButtonItem systemItem="camera" id="ok0-tB-gnP">
+                <barButtonItem image="smile" id="aYf-58-Q9f">
                     <connections>
-                        <action selector="addPhoto:" destination="bD4-dW-oDE" id="bdc-fZ-ppn"/>
+                        <action selector="addEmotion:" destination="bD4-dW-oDE" id="oPE-Rq-0QK"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="picture" id="ok0-tB-gnP">
+                    <connections>
+                        <action selector="addPhoto:" destination="bD4-dW-oDE" id="hRt-qs-Jom"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="plain" systemItem="flexibleSpace" id="N4W-2e-otl"/>
@@ -27,10 +32,15 @@
                     </connections>
                 </barButtonItem>
             </items>
+            <connections>
+                <outlet property="emotionBtn" destination="aYf-58-Q9f" id="uvn-WV-uIF"/>
+            </connections>
             <point key="canvasLocation" x="-212" y="-133"/>
         </toolbar>
     </objects>
     <resources>
         <image name="down" width="22" height="22"/>
+        <image name="picture" width="22" height="22"/>
+        <image name="smile" width="22" height="22"/>
     </resources>
 </document>
