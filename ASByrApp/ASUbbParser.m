@@ -39,6 +39,7 @@
     NSRegularExpression *_regexSize;
     NSRegularExpression *_regexU;
     NSRegularExpression *_regexUrl;
+    NSRegularExpression *_regexLink;
     NSRegularExpression *_regexUpload;
     NSRegularExpression *_regexTag;
 }
@@ -88,6 +89,8 @@
     _regexU = regexp("(\\[u\\])(.*?)(\\[/u\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
     _regexUrl = regexp("(\\[url=(.*)\\])(.*?)(\\[/url\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    
+    _regexLink = regexp("[a-z]+://[a-zA-Z0-9_\\-\\.%/]+", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
     _regexUpload = regexp("(\\[upload=([0-9]+)\\])(.*?)(\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
@@ -209,7 +212,13 @@
         [text yy_setTextHighlightRange:innerTextRange color:[UIColor blueColor] backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
         }];
-        
+    }];
+    
+    [_regexLink enumerateMatchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+        NSString *url = [text.string substringWithRange:result.range];
+        [text yy_setTextHighlightRange:result.range color:[UIColor blueColor] backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+        }];
     }];
     
     results = [_regexUpload matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
