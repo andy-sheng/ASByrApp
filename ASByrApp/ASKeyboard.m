@@ -119,7 +119,15 @@
 
 - (void)sendBtnClick {
     [self hide];
-    [self.delegate sendAcion:self.textView.text];
+    [self.delegate sendAcionWithInput:self.textView.text context:self.context];
+}
+
+- (void)moreBtnClick {
+    NSMutableDictionary *tmp = [self.context mutableCopy];
+    tmp[@"currentInput"] = self.textView.text;
+    
+    [self hide];
+    [self.delegate moreAction:[tmp copy]];
 }
 
 #pragma mark - getters and setters
@@ -179,6 +187,7 @@
     if (_moreBtn == nil) {
         _moreBtn = [[UIButton alloc] init];
         [_moreBtn setBackgroundImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+        [_moreBtn addTarget:self.delegate action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _moreBtn;
 }

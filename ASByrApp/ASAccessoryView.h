@@ -6,14 +6,16 @@
 //  Copyright © 2017年 andy. All rights reserved.
 //
 
+#import "ASInputCommon.h"
 #import <UIKit/UIKit.h>
 
-typedef void(^ASActionBlock)();
 
 @interface ASAccessoryView : UIToolbar
 
 @property (nonatomic, copy) ASActionBlock addPhotoBlock;
 
 @property (nonatomic, copy)ASActionBlock dismissBlock;
+
+@property (nonatomic, copy) ASActionBlock addEmotionBlock;
 
 @end

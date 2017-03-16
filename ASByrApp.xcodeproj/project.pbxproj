@@ -22,7 +22,6 @@
 		75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */; };
 		75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
-		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
 		A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC771CD50BF40029DAC8 /* ASTop10Manager.m */; };
 		A11FBC7C1CD876460029DAC8 /* top10Iterms.plist in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC7B1CD876460029DAC8 /* top10Iterms.plist */; };
@@ -30,11 +29,12 @@
 		A1310C7A1E4DB590002ED116 /* XQWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1310C781E4DB590002ED116 /* XQWebView.m */; };
 		A1310C7E1E4DB5CB002ED116 /* ASUbbParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */; };
 		A1310C7F1E4DB5CB002ED116 /* placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1310C7C1E4DB5CB002ED116 /* placeholder.jpg */; };
-		A131470C1E6FA8BA008CD422 /* ASInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A131470B1E6FA8BA008CD422 /* ASInputVC.m */; };
-		A13147111E6FDD96008CD422 /* ASInputTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147101E6FDD96008CD422 /* ASInputTextCell.m */; };
-		A13147141E7004C8008CD422 /* ASInputImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147131E7004C8008CD422 /* ASInputImageCell.m */; };
 		A13147181E704450008CD422 /* ASAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13147171E704450008CD422 /* ASAccessoryView.xib */; };
 		A131471B1E70446C008CD422 /* ASAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471A1E70446C008CD422 /* ASAccessoryView.m */; };
+		A131471E1E724364008CD422 /* ASUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A131471D1E724364008CD422 /* ASUtil.m */; };
+		A13147211E72D415008CD422 /* ASInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A13147201E72D415008CD422 /* ASInputVC.m */; };
+		A15AD5B61E79676300F34360 /* ASEmotionInput.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15AD5B51E79676300F34360 /* ASEmotionInput.xib */; };
+		A15AD5B91E79677E00F34360 /* ASEmotionInput.m in Sources */ = {isa = PBXBuildFile; fileRef = A15AD5B81E79677E00F34360 /* ASEmotionInput.m */; };
 		A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885CE1CBF469300338353 /* ASThreadsController.m */; };
 		A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A16885D81CC0D4E100338353 /* ASThreadsTitleCell.m */; };
 		A16885DB1CC0D4E100338353 /* ASThreadsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16885D91CC0D4E100338353 /* ASThreadsTitleCell.xib */; };
@@ -326,7 +326,6 @@
 		75EF743A1E5492A3008D3E2C /* XQCollectArticleTCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTCell.h; sourceTree = "<group>"; };
 		75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleTCell.m; sourceTree = "<group>"; };
 		A11FBC6C1CD23F5E0029DAC8 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
-		A11FBC6E1CD240C30029DAC8 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		A11FBC701CD4DDC60029DAC8 /* ASTop10ManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10ManageVC.h; sourceTree = "<group>"; };
 		A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTop10ManageVC.m; sourceTree = "<group>"; };
 		A11FBC761CD50BF40029DAC8 /* ASTop10Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTop10Manager.h; sourceTree = "<group>"; };
@@ -339,15 +338,17 @@
 		A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASUbbParser.m; sourceTree = "<group>"; };
 		A1310C7C1E4DB5CB002ED116 /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
 		A1310C7D1E4DB5CB002ED116 /* ASUbbParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASUbbParser.h; sourceTree = "<group>"; };
-		A131470A1E6FA8BA008CD422 /* ASInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputVC.h; sourceTree = "<group>"; };
-		A131470B1E6FA8BA008CD422 /* ASInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputVC.m; sourceTree = "<group>"; };
-		A131470F1E6FDD96008CD422 /* ASInputTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputTextCell.h; sourceTree = "<group>"; };
-		A13147101E6FDD96008CD422 /* ASInputTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputTextCell.m; sourceTree = "<group>"; };
-		A13147121E7004C8008CD422 /* ASInputImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputImageCell.h; sourceTree = "<group>"; };
-		A13147131E7004C8008CD422 /* ASInputImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputImageCell.m; sourceTree = "<group>"; };
 		A13147171E704450008CD422 /* ASAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASAccessoryView.xib; sourceTree = "<group>"; };
 		A13147191E70446C008CD422 /* ASAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAccessoryView.h; sourceTree = "<group>"; };
 		A131471A1E70446C008CD422 /* ASAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAccessoryView.m; sourceTree = "<group>"; };
+		A131471C1E724350008CD422 /* ASUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASUtil.h; sourceTree = "<group>"; };
+		A131471D1E724364008CD422 /* ASUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASUtil.m; sourceTree = "<group>"; };
+		A131471F1E72D415008CD422 /* ASInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInputVC.h; sourceTree = "<group>"; };
+		A13147201E72D415008CD422 /* ASInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASInputVC.m; sourceTree = "<group>"; };
+		A15AD5B51E79676300F34360 /* ASEmotionInput.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASEmotionInput.xib; sourceTree = "<group>"; };
+		A15AD5B71E79677E00F34360 /* ASEmotionInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASEmotionInput.h; sourceTree = "<group>"; };
+		A15AD5B81E79677E00F34360 /* ASEmotionInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASEmotionInput.m; sourceTree = "<group>"; };
+		A15AD5BA1E798AB500F34360 /* ASInputCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASInputCommon.h; sourceTree = "<group>"; };
 		A16885CD1CBF469300338353 /* ASThreadsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsController.h; sourceTree = "<group>"; };
 		A16885CE1CBF469300338353 /* ASThreadsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASThreadsController.m; sourceTree = "<group>"; };
 		A16885D71CC0D4E100338353 /* ASThreadsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASThreadsTitleCell.h; sourceTree = "<group>"; };
@@ -728,8 +729,8 @@
 			isa = PBXGroup;
 			children = (
 				A131470E1E6FDD65008CD422 /* View */,
-				A131470A1E6FA8BA008CD422 /* ASInputVC.h */,
-				A131470B1E6FA8BA008CD422 /* ASInputVC.m */,
+				A131471F1E72D415008CD422 /* ASInputVC.h */,
+				A13147201E72D415008CD422 /* ASInputVC.m */,
 			);
 			name = "Input(发帖)";
 			sourceTree = "<group>";
@@ -737,15 +738,48 @@
 		A131470E1E6FDD65008CD422 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A131470F1E6FDD96008CD422 /* ASInputTextCell.h */,
-				A13147101E6FDD96008CD422 /* ASInputTextCell.m */,
-				A13147121E7004C8008CD422 /* ASInputImageCell.h */,
-				A13147131E7004C8008CD422 /* ASInputImageCell.m */,
 				A13147171E704450008CD422 /* ASAccessoryView.xib */,
 				A13147191E70446C008CD422 /* ASAccessoryView.h */,
 				A131471A1E70446C008CD422 /* ASAccessoryView.m */,
+				A15AD5B51E79676300F34360 /* ASEmotionInput.xib */,
+				A15AD5B71E79677E00F34360 /* ASEmotionInput.h */,
+				A15AD5B81E79677E00F34360 /* ASEmotionInput.m */,
+				A15AD5BA1E798AB500F34360 /* ASInputCommon.h */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		A15AD5BC1E7A3E9A00F34360 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
+				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		A15AD5BD1E7A3EC000F34360 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
+				A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */,
+				A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */,
+				75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */,
+				75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */,
+				A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		A15AD5BE1E7A3EEF00F34360 /* UbbParser */ = {
+			isa = PBXGroup;
+			children = (
+				A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */,
+				A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */,
+				A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */,
+				A1310C7D1E4DB5CB002ED116 /* ASUbbParser.h */,
+			);
+			name = UbbParser;
 			sourceTree = "<group>";
 		};
 		A16885D01CC0D22D00338353 /* Threads(帖子详情) */ = {
@@ -803,6 +837,12 @@
 		A16E1A3A1CAD6B9500F7C1FA /* ASByrApp */ = {
 			isa = PBXGroup;
 			children = (
+				A15AD5BE1E7A3EEF00F34360 /* UbbParser */,
+				A15AD5BC1E7A3E9A00F34360 /* Login */,
+				A1BFB6551CC60D4300FE5CA1 /* Keyboard */,
+				A15AD5BD1E7A3EC000F34360 /* Extensions */,
+				A131470D1E6FA8C1008CD422 /* Input(发帖) */,
+				A16885D01CC0D22D00338353 /* Threads(帖子详情) */,
 				75D4B6F91E4702FA004906B5 /* webresouce */,
 				75A4C2051E1BC65600B563A7 /* Sqlite */,
 				75A4C1E21E1B970000B563A7 /* Personal(设置) */,
@@ -898,25 +938,12 @@
 		A16E1A7A1CB246C000F7C1FA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				A131470D1E6FA8C1008CD422 /* Input(发帖) */,
-				A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */,
-				A1310C7D1E4DB5CB002ED116 /* ASUbbParser.h */,
 				75A4C1E81E1B979D00B563A7 /* singleton */,
-				A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */,
-				A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */,
-				A1BFB6551CC60D4300FE5CA1 /* Keyboard */,
-				A16885D01CC0D22D00338353 /* Threads(帖子详情) */,
-				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
-				A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */,
-				A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */,
-				A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */,
 				A16E1A7B1CB24AE600F7C1FA /* ASBasicArticleListController.h */,
 				A16E1A7C1CB24AE600F7C1FA /* ASBasicArticleListController.m */,
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
-				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
-				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
-				75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */,
-				75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */,
+				A131471C1E724350008CD422 /* ASUtil.h */,
+				A131471D1E724364008CD422 /* ASUtil.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -947,7 +974,6 @@
 		A1BFB6121CC4891500FE5CA1 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				A11FBC6E1CD240C30029DAC8 /* smile.png */,
 				A11FBC6C1CD23F5E0029DAC8 /* plus.png */,
 			);
 			name = icons;
@@ -1423,6 +1449,7 @@
 				A1C003FF1CEC189100AA6B53 /* emc12.gif in Resources */,
 				A1C0044F1CEC189100AA6B53 /* ema0.gif in Resources */,
 				A1C004091CEC189100AA6B53 /* emc21.gif in Resources */,
+				A15AD5B61E79676300F34360 /* ASEmotionInput.xib in Resources */,
 				A11FBC7C1CD876460029DAC8 /* top10Iterms.plist in Resources */,
 				A1C0045B1CEC189100AA6B53 /* ema2.gif in Resources */,
 				A1C0043D1CEC189100AA6B53 /* emb15.gif in Resources */,
@@ -1595,7 +1622,6 @@
 				A16E1A481CAD6B9500F7C1FA /* Assets.xcassets in Resources */,
 				A1C004681CEC189100AA6B53 /* ema31.gif in Resources */,
 				A1C004771CEC189100AA6B53 /* ema8.gif in Resources */,
-				A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */,
 				A1C0049F1CEC189100AA6B53 /* em44.gif in Resources */,
 				A1C004751CEC189100AA6B53 /* ema6.gif in Resources */,
 				A1C0042B1CEC189100AA6B53 /* emc52.gif in Resources */,
@@ -1747,9 +1773,8 @@
 				A1310C791E4DB590002ED116 /* XQThreadsDetailViewModel.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
 				A16E1A921CB49C2D00F7C1FA /* ASTop10Cell.m in Sources */,
-				A13147141E7004C8008CD422 /* ASInputImageCell.m in Sources */,
-				A131470C1E6FA8BA008CD422 /* ASInputVC.m in Sources */,
 				A96462B81CC0A3CB0086DEE6 /* UILabel+Extension.m in Sources */,
+				A131471E1E724364008CD422 /* ASUtil.m in Sources */,
 				75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */,
 				A91776251CC76CD000ED84B3 /* XQSectionModel.m in Sources */,
 				A1C818DD1CCA162E00D535F6 /* ASKeyboard.m in Sources */,
@@ -1757,9 +1782,11 @@
 				A16E1A401CAD6B9500F7C1FA /* AppDelegate.m in Sources */,
 				A16E1A801CB25A0300F7C1FA /* ASTop10ListController.m in Sources */,
 				751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */,
+				A15AD5B91E79677E00F34360 /* ASEmotionInput.m in Sources */,
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
+				A13147211E72D415008CD422 /* ASInputVC.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A192A1581CE32AE40024C694 /* ASTop10SeperatorCell.m in Sources */,
 				A1310C7A1E4DB590002ED116 /* XQWebView.m in Sources */,
@@ -1773,7 +1800,6 @@
 				A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */,
 				A1C0032E1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
-				A13147111E6FDD96008CD422 /* ASInputTextCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

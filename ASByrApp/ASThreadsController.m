@@ -29,9 +29,9 @@
 #import "XQByrUser.h"
 #import "XQByrPagination.h"
 
-static const NSUInteger kTitleRow = 0;
-static const NSUInteger kBodyRow  = 1;
-static const NSUInteger kReplyRow = 2;
+const NSUInteger kTitleRow = 0;
+const NSUInteger kBodyRow  = 1;
+const NSUInteger kReplyRow = 2;
 
 
 @interface ASThreadsController ()<UITableViewDelegate, UITableViewDataSource, ASByrArticleResponseDelegate, ASByrArticleResponseReformer, ASKeyBoardDelegate, ASThreadsTitleCellDelegate,ASThreadsBodyCellDelegate, ASThreadsReplyCellDelegate>
@@ -162,7 +162,8 @@ static const NSUInteger kReplyRow = 2;
     __weak ASThreadsController * weakself = self;
     UIAlertAction *replyAction = [UIAlertAction actionWithTitle:@"回复" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (weakself) {
-            [weakself.navigationController pushViewController:[[ASInputVC alloc] init] animated:YES];
+            //[weakself.navigationController pushViewController:[[ASInputVC alloc] init] animated:YES];
+            [weakself.navigationController pushViewController:[[ASInputVC alloc] initWithReplyArticle:self.replyArticles[0]] animated:YES];
         }
     }];
     [alertController addAction:replyAction];
@@ -210,7 +211,7 @@ static const NSUInteger kReplyRow = 2;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [self.keyboard popWithContext:@{@"reid":@(self.replyArticles[indexPath.row].aid)}];
+    [self.keyboard popWithContext:@{@"replyTo":self.replyArticles[indexPath.row + 1]}];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -274,11 +275,11 @@ static const NSUInteger kReplyRow = 2;
 
 #pragma mark - ASKeyBoardDelegate
 
-- (void)sendAcion:(NSString *)text {
-    NSInteger reid = [self.keyboard.context[@"reid"] integerValue];
+- (void)sendAcionWithInput:(NSString *)input context:(id)context {
+    NSInteger reid = ((XQByrArticle*)context[@"replyTo"]).aid;
     NSLog(@"%ld", reid);
     __weak typeof(self) weakSelf = self;
-    [self.articleApi postArticleWithBoard:self.board title:@"" content:text reid:reid successBlock:^(NSInteger statusCode, id response) {
+    [self.articleApi postArticleWithBoard:self.board title:@"" content:input reid:reid successBlock:^(NSInteger statusCode, id response) {
         weakSelf.replyStatusHud.labelText = @"回复成功";
         [weakSelf.replyStatusHud show:YES];
         [weakSelf.replyStatusHud hide:YES afterDelay:1];
@@ -287,6 +288,10 @@ static const NSUInteger kReplyRow = 2;
         [weakSelf.replyStatusHud show:YES];
         [weakSelf.replyStatusHud hide:YES afterDelay:1];
     }];
+}
+
+- (void)moreAction:(id)context {
+    [self.navigationController pushViewController:[[ASInputVC alloc] initWithReplyArticle:context[@"replyTo"] input:context[@"currentInput"]] animated:YES];
 }
 
 #pragma mark - ASByrArticleResponseDelegate
@@ -338,7 +343,6 @@ static const NSUInteger kReplyRow = 2;
 #pragma mark - ASThreadsTitleCellDelegate
 
 - (void)linkClicked:(NSURL *)url {
-    //self.navigationController pushViewController:[UIWebView] animated:<#(BOOL)#>
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 
