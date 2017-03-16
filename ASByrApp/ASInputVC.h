@@ -13,4 +13,6 @@
 
 - (instancetype)initWithReplyArticle:(XQByrArticle*) article;
 
+- (instancetype)initWithReplyArticle:(XQByrArticle *)article input:(NSString*)input;
+
 @end

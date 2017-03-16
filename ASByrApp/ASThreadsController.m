@@ -211,7 +211,7 @@ const NSUInteger kReplyRow = 2;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [self.keyboard popWithContext:@{@"reid":@(self.replyArticles[indexPath.row].aid)}];
+    [self.keyboard popWithContext:@{@"replyTo":self.replyArticles[indexPath.row]}];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -275,11 +275,11 @@ const NSUInteger kReplyRow = 2;
 
 #pragma mark - ASKeyBoardDelegate
 
-- (void)sendAcion:(NSString *)text {
-    NSInteger reid = [self.keyboard.context[@"reid"] integerValue];
+- (void)sendAcionWithInput:(NSString *)input context:(id)context {
+    NSInteger reid = ((XQByrArticle*)context[@"replyTo"]).aid;
     NSLog(@"%ld", reid);
     __weak typeof(self) weakSelf = self;
-    [self.articleApi postArticleWithBoard:self.board title:@"" content:text reid:reid successBlock:^(NSInteger statusCode, id response) {
+    [self.articleApi postArticleWithBoard:self.board title:@"" content:input reid:reid successBlock:^(NSInteger statusCode, id response) {
         weakSelf.replyStatusHud.labelText = @"回复成功";
         [weakSelf.replyStatusHud show:YES];
         [weakSelf.replyStatusHud hide:YES afterDelay:1];
@@ -288,6 +288,10 @@ const NSUInteger kReplyRow = 2;
         [weakSelf.replyStatusHud show:YES];
         [weakSelf.replyStatusHud hide:YES afterDelay:1];
     }];
+}
+
+- (void)moreAction:(id)context {
+    [self.navigationController pushViewController:[[ASInputVC alloc] initWithReplyArticle:context[@"replyTo"] input:context[@"currentInput"]] animated:YES];
 }
 
 #pragma mark - ASByrArticleResponseDelegate

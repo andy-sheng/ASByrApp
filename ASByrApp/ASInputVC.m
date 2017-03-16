@@ -12,6 +12,7 @@
 #import "ASUtil.h"
 #import "ASUbbParser.h"
 #import <XQByrArticle.h>
+#import <XQByrUser.h>
 #import <XQByrAttachment.h>
 #import <ASByrAttachment.h>
 #import <ASByrArticle.h>
@@ -47,9 +48,15 @@
 @implementation ASInputVC
 
 - (instancetype)initWithReplyArticle:(XQByrArticle *)article {
+    return [self initWithReplyArticle:article input:@""];
+}
+
+- (instancetype)initWithReplyArticle:(XQByrArticle *)article input:(NSString *)input {
     self = [self init];
     if (self != nil) {
         self.replyTo = article;
+        [self.textView insertText:[NSString stringWithFormat:@"【 在 %@ 的大作中提到: 】\n%@", self.replyTo.user.user_name, self.replyTo.content]];
+        [self.textView insertText:input];
     }
     return self;
 }
@@ -113,7 +120,7 @@
         if (sself) {
             sself.attachment = response;
             sself.ubbParser.attachment = response;
-            sself.textView.text = [NSString stringWithFormat:@"%@[upload=%ld][/upload] ", sself.textView.text, sself.attachment.file.count];
+            sself.textView.text = [NSString stringWithFormat:@"%@[upload=%ld][/upload]\n", sself.textView.text, sself.attachment.file.count];
         }
     } failureBlock:^(NSInteger statusCode, id response) {
         NSLog(@"%@", response);
