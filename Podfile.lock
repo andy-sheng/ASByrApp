@@ -56,7 +56,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ASByr:
-    :commit: 2669bc661e22723e9ad24e86b56c431793916f02
+    :commit: 70239f4f2d157eabd59b7b153c9d5ffff8e83402
     :git: https://github.com/andy-sheng/ASByr.git
 
 SPEC CHECKSUMS:
