@@ -205,8 +205,9 @@
         NSRange urlRange = [result rangeAtIndex:2];
         NSRange innerTextRange = [result rangeAtIndex:3];
         
+        NSString *urlStr = [text.string substringWithRange:urlRange];
         [text yy_setTextHighlightRange:innerTextRange color:[UIColor blueColor] backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[text.string substringWithRange:urlRange]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
         }];
         
     }];
