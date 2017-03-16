@@ -749,6 +749,39 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		A15AD5BC1E7A3E9A00F34360 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
+				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		A15AD5BD1E7A3EC000F34360 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
+				A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */,
+				A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */,
+				75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */,
+				75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */,
+				A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		A15AD5BE1E7A3EEF00F34360 /* UbbParser */ = {
+			isa = PBXGroup;
+			children = (
+				A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */,
+				A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */,
+				A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */,
+				A1310C7D1E4DB5CB002ED116 /* ASUbbParser.h */,
+			);
+			name = UbbParser;
+			sourceTree = "<group>";
+		};
 		A16885D01CC0D22D00338353 /* Threads(帖子详情) */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,6 +837,12 @@
 		A16E1A3A1CAD6B9500F7C1FA /* ASByrApp */ = {
 			isa = PBXGroup;
 			children = (
+				A15AD5BE1E7A3EEF00F34360 /* UbbParser */,
+				A15AD5BC1E7A3E9A00F34360 /* Login */,
+				A1BFB6551CC60D4300FE5CA1 /* Keyboard */,
+				A15AD5BD1E7A3EC000F34360 /* Extensions */,
+				A131470D1E6FA8C1008CD422 /* Input(发帖) */,
+				A16885D01CC0D22D00338353 /* Threads(帖子详情) */,
 				75D4B6F91E4702FA004906B5 /* webresouce */,
 				75A4C2051E1BC65600B563A7 /* Sqlite */,
 				75A4C1E21E1B970000B563A7 /* Personal(设置) */,
@@ -899,25 +938,10 @@
 		A16E1A7A1CB246C000F7C1FA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				A131470D1E6FA8C1008CD422 /* Input(发帖) */,
-				A1310C7B1E4DB5CB002ED116 /* ASUbbParser.m */,
-				A1310C7D1E4DB5CB002ED116 /* ASUbbParser.h */,
 				75A4C1E81E1B979D00B563A7 /* singleton */,
-				A1C0032C1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m */,
-				A1C0032D1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.h */,
-				A1BFB6551CC60D4300FE5CA1 /* Keyboard */,
-				A16885D01CC0D22D00338353 /* Threads(帖子详情) */,
-				A96462B41CC0A3CB0086DEE6 /* UIColor+Hex.h */,
-				A96462B71CC0A3CB0086DEE6 /* UIColor+Hex.m */,
-				A96462B51CC0A3CB0086DEE6 /* UILabel+Extension.m */,
-				A96462B61CC0A3CB0086DEE6 /* UILabel+Extension.h */,
 				A16E1A7B1CB24AE600F7C1FA /* ASBasicArticleListController.h */,
 				A16E1A7C1CB24AE600F7C1FA /* ASBasicArticleListController.m */,
 				A16E1A841CB2BCC500F7C1FA /* ASConfig.h */,
-				A1E69D271CB7F147001E9E27 /* ASLoginController.h */,
-				A1E69D281CB7F147001E9E27 /* ASLoginController.m */,
-				75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */,
-				75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */,
 				A131471C1E724350008CD422 /* ASUtil.h */,
 				A131471D1E724364008CD422 /* ASUtil.m */,
 			);

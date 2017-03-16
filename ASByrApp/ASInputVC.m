@@ -11,13 +11,12 @@
 #import "ASEmotionInput.h"
 #import "ASUtil.h"
 #import "ASUbbParser.h"
-#import <XQByrArticle.h>
-#import <XQByrUser.h>
-#import <XQByrAttachment.h>
-#import <ASByrAttachment.h>
-#import <ASByrArticle.h>
-#import <Masonry.h>
-#import <YYText.h>
+#import "ASByr.h"
+#import "ASByrAttachment.h"
+#import "ASByrArticle.h"
+#import "Masonry.h"
+#import "YYText.h"
+#import "MBProgressHUD.h"
 
 @interface ASInputVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, YYTextViewDelegate>
 
@@ -42,6 +41,10 @@
 @property (nonatomic, strong) XQByrArticle *replyTo;
 
 @property (nonatomic, strong) ASEmotionInput *emotionInputView;
+
+@property (nonatomic, strong) MBProgressHUD *uploadHud;
+
+@property (nonatomic, strong) MBProgressHUD *postHud;
 
 @end
 
@@ -94,17 +97,22 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 # pragma mark - YYTextViewDelegate
+
 - (void)textViewDidChange:(YYTextView *)textView {
     if (textView == self.textView) {
         [self.preshowView setText:self.textView.text];
     }
 }
+
 # pragma mark - UIImagePickerControllerDelegate
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
 
@@ -115,14 +123,19 @@
     NSURL *fileUrl = saveImage(img, imageName);
     
     __weak typeof(self)wself = self;
-    [self.attachmentApi addAttachmentWithBoard:self.replyTo.board_name aid:self.replyTo.aid file:fileUrl successBlock:^(NSInteger statusCode, id response) {
+    [self.attachmentApi addAttachmentWithBoard:self.replyTo.board_name file:fileUrl successBlock:^(NSInteger statusCode, id response) {
         __strong typeof(wself)sself = wself;
         if (sself) {
             sself.attachment = response;
             sself.ubbParser.attachment = response;
             sself.textView.text = [NSString stringWithFormat:@"%@[upload=%ld][/upload]\n", sself.textView.text, sself.attachment.file.count];
+            [sself.uploadHud hide:YES];
         }
     } failureBlock:^(NSInteger statusCode, id response) {
+        __strong typeof(wself)sself = wself;
+        if (sself) {
+            [sself.uploadHud hide:YES];
+        }
         NSLog(@"%@", response);
     }];
     
@@ -133,10 +146,15 @@
 # pragma mark - Private methods
 
 - (void)send {
+    __weak typeof(self) wself = self;
     [self.articleApi postArticleWithBoard:self.replyTo.board_name title:@"" content:self.textView.text reid:self.replyTo.aid successBlock:^(NSInteger statusCode, id response) {
-        NSLog(@"done");
+        
+        wself.postHud.labelText = @"回复成功";
+        [wself.postHud hide:YES afterDelay:1];
+        [wself.navigationController popViewControllerAnimated:YES];
     } failureBlock:^(NSInteger statusCode, id response) {
-        NSLog(@"fail:%@", response);
+        wself.postHud.labelText = @"回复失败";
+        [wself.postHud hide:YES afterDelay:1];
     }];
 }
 
@@ -275,4 +293,22 @@
     }
     return _ubbParser;
 }
+
+- (MBProgressHUD*)uploadHud {
+    if (_uploadHud == nil) {
+        _uploadHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    }
+    [_uploadHud show:YES];
+    return _uploadHud;
+}
+
+- (MBProgressHUD*)postHud {
+    if (_postHud == nil) {
+        _postHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        _postHud.mode = MBProgressHUDModeText;
+    }
+    [_postHud show:YES];
+    return _postHud;
+}
+
 @end

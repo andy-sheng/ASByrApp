@@ -211,7 +211,7 @@ const NSUInteger kReplyRow = 2;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [self.keyboard popWithContext:@{@"replyTo":self.replyArticles[indexPath.row]}];
+    [self.keyboard popWithContext:@{@"replyTo":self.replyArticles[indexPath.row + 1]}];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
