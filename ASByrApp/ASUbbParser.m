@@ -9,11 +9,14 @@
 #import "ASUbbParser.h"
 #import "UIColor+Hex.h"
 
+#import "XQByrAttachment.h"
+#import "XQByrFile.h"
 #import "NSAttributedString+YYText.h"
 #import "YYTextUtilities.h"
 #import "YYTextAttribute.h"
 #import "YYImage.h"
 #import "YYWebImage.h"
+#import <ASByrToken.h>
 
 @implementation ASUbbParser {
     UIFont *_font;
@@ -36,7 +39,9 @@
     NSRegularExpression *_regexSize;
     NSRegularExpression *_regexU;
     NSRegularExpression *_regexUrl;
+    NSRegularExpression *_regexLink;
     NSRegularExpression *_regexUpload;
+    NSRegularExpression *_regexTag;
 }
 
 - (instancetype)init {
@@ -63,7 +68,7 @@
 
 - (void)initRegex {
 #define regexp(reg, option) [NSRegularExpression regularExpressionWithPattern : @reg options : option error : NULL]
-    _regexEm = regexp("\\[(em[abc]?[0-9]+)\\]", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    _regexEm = regexp("(\\[(em[abc]?[0-9]+?)\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
     _regexB = regexp("(\\[b\\])(.*?)(\\[/b\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
@@ -85,17 +90,26 @@
     
     _regexUrl = regexp("(\\[url=(.*)\\])(.*?)(\\[/url\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
     
+    _regexLink = regexp("[a-z]+://[a-zA-Z0-9_\\-\\.%/]+", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    
     _regexUpload = regexp("(\\[upload=([0-9]+)\\])(.*?)(\\[/upload\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
+    
+    _regexTag = regexp("(\\[em[abc]?[0-9]+\\])|(\\[.*?\\])|(\\[/.*?\\])", NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators);
 #undef regexp
 }
+
 - (BOOL)parseText:(NSMutableAttributedString *)text selectedRange:(NSRangePointer)selectedRange {
     NSLog(@"parser:%@", text.string);
     if (text.length == 0) return NO;
     [text yy_removeAttributesInRange:NSMakeRange(0, text.length)];
+    
     text.yy_font = _font;
     
-    [_regexEm enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        NSRange emRange = [result rangeAtIndex:1];
+    
+    NSArray<NSTextCheckingResult*> *results = [_regexEm matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
+    for (NSTextCheckingResult *result in [results reverseObjectEnumerator]) {
+        NSRange tagRange = [result rangeAtIndex:1];
+        NSRange emRange = [result rangeAtIndex:2];
         
         
         UIImage *img = [YYImage imageNamed:[NSString stringWithFormat:@"%@.gif", [text.string substringWithRange:emRange]]];
@@ -107,7 +121,9 @@
         
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
         [text insertAttributedString:imgStr atIndex:emRange.location + emRange.length+1];
-    }];
+        
+        [text.mutableString replaceCharactersInRange:tagRange withString:@""];
+    }
     
     [_regexB enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         NSRange innerTextRange = [result rangeAtIndex:2];
@@ -162,17 +178,18 @@
         [text yy_setFont:_italicFont range:innerTextRange];
     }];
     
-    [_regexImg enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    results = [_regexEm matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
+    for (NSTextCheckingResult *result in [results reverseObjectEnumerator]) {
         NSRange imgUrlRange = [result rangeAtIndex:2];
         NSRange innerTextRange = [result rangeAtIndex:3];
         
         YYAnimatedImageView *imgView = [[YYAnimatedImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder.jpg"]];
-       [imgView yy_setImageWithURL:[NSURL URLWithString:[text.string substringWithRange:imgUrlRange]] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
-   
+        [imgView yy_setImageWithURL:[NSURL URLWithString:[text.string substringWithRange:imgUrlRange]] options:YYWebImageOptionProgressiveBlur|YYWebImageOptionSetImageWithFadeAnimation];
+        
         NSLog(@"%@", [text.string substringWithRange:imgUrlRange]);
         NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
         [text insertAttributedString:imgStr atIndex:innerTextRange.location];
-    }];
+    }
     
     [_regexSize enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         NSRange valRange = [result rangeAtIndex:2];
@@ -191,16 +208,49 @@
         NSRange urlRange = [result rangeAtIndex:2];
         NSRange innerTextRange = [result rangeAtIndex:3];
         
+        NSString *urlStr = [text.string substringWithRange:urlRange];
         [text yy_setTextHighlightRange:innerTextRange color:[UIColor blueColor] backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[text.string substringWithRange:urlRange]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
         }];
-        
     }];
     
-    [_regexUpload enumerateMatchesInString:text.string options:0 range:NSMakeRange(0, text.string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        
-        
+    [_regexLink enumerateMatchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+        NSString *url = [text.string substringWithRange:result.range];
+        [text yy_setTextHighlightRange:result.range color:[UIColor blueColor] backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+        }];
     }];
+    
+    results = [_regexUpload matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
+    for (NSTextCheckingResult *result in [results reverseObjectEnumerator]) {
+        NSRange frontTag = [result rangeAtIndex:1];
+        NSRange backTag = [result rangeAtIndex:4];
+        NSRange uploadIdRange = [result rangeAtIndex:2];
+        NSRange innerTextRange = [result rangeAtIndex:3];
+        NSInteger uploadId = [[text.string substringWithRange:uploadIdRange] integerValue];
+        YYAnimatedImageView *imgView = [[YYAnimatedImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder.jpg"]];
+        
+        
+        NSString *url = @"";
+        if (self.attachment.file && self.attachment.file.count >= uploadId) {
+            url = self.attachment.file[uploadId - 1].thumbnail_small;
+        }
+        NSLog(@"%@", url)
+        [imgView yy_setImageWithURL:[NSURL URLWithString:url] options:kNilOptions];
+        
+        
+        NSMutableAttributedString *imgStr = [NSMutableAttributedString yy_attachmentStringWithContent:imgView contentMode:UIViewContentModeCenter attachmentSize:imgView.frame.size alignToFont:_font alignment:YYTextVerticalAlignmentCenter];
+        [text insertAttributedString:imgStr atIndex:backTag.location + backTag.length];
+        
+
+    }
+      // #ifdef DEBUG
+   // #else
+    
+    [_regexTag replaceMatchesInString:text.mutableString options:kNilOptions range:NSMakeRange(0, text.length) withTemplate:@""];
+   // #endif
+    
+    
     
     return YES;
 }

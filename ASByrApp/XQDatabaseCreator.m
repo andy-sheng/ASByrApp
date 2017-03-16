@@ -8,12 +8,12 @@
 //
 
 #import "XQDatabaseCreator.h"
-#import "DBManager.h"
+#import "XQDBManager.h"
 @implementation XQDatabaseCreator
 
 + (void)createDatabase{
-    NSString * key = @"IsCreatedDb";
-    NSUserDefaults *defaults=[[NSUserDefaults alloc]init];
+    NSString * key = @"hasCreatedDb";
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     if ([[defaults valueForKey:key] intValue]!=1) {
         [self createUserTable];
         [self createArticleTable];
@@ -23,20 +23,20 @@
 
 + (void)createUserTable{
     NSString *sql=@"CREATE TABLE User (userID text PRIMARY KEY ,userName text, profileImageUrl text)";
-    [[DBManager sharedDBManager] executeNonQuery:sql];
+    [[XQDBManager sharedXQDBManager] executeNonQuery:sql];
 }
 
 + (void)createArticleTable{
-    NSString *sql=@"CREATE TABLE Article (articleID text PRIMARY KEY,title text,boardName text,boardDescription text,content text, firstImageUrl text,replyCount text, collectTime text, author text REFERENCES User (userID) )";
-    [[DBManager sharedDBManager] executeNonQuery:sql];
+    NSString *sql=@"CREATE TABLE Article (articleID text PRIMARY KEY,title text,boardName text,boardDescription text, firstImageUrl text,replyCount text, state text, collectTime text, author text REFERENCES User (userID) )";
+    [[XQDBManager sharedXQDBManager] executeNonQuery:sql];
 }
 
 + (void)openDatabase{
-    [[DBManager sharedDBManager] openDb:XQDATABASE_NAME];
+    [[XQDBManager sharedXQDBManager] openDb:XQDATABASE_NAME];
 }
 
 + (void)closeDatabase{
-    [[DBManager sharedDBManager] closeDb];
+    [[XQDBManager sharedXQDBManager] closeDb];
 }
 
 @end

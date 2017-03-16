@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Masonry.h"
-
+#import <Masonry.h>
+#import <XQByrArticle.h>
 
 @protocol ASKeyBoardDelegate <NSObject>
 
 @optional
 
-- (void)sendAcion:(NSString *) text;
+- (void)moreAction:(id) context;
+
+- (void)sendAcionWithInput:(NSString *) input context:(id)context;
 
 @end
 

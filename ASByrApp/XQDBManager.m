@@ -1,28 +1,35 @@
-///
-//  DBManager.m
+//
+//  XQDBManager.m
 //  ASByrApp
 //
-//  Created by lxq on 16/9/2.
-//  Copyright © 2016年 andy. All rights reserved.
+//  Created by lixiangqian on 17/2/22.
+//  Copyright © 2017年 andy. All rights reserved.
 //
 
-#import "DBManager.h"
-@implementation DBManager
-singleton_implementation(DBManager)
+#import "XQDBManager.h"
+
+static const char * kDBQueueName = "db_queue";
+
+@implementation XQDBManager {
+    dispatch_queue_t _dbQue;
+}
+
+singleton_implementation(XQDBManager)
 
 #pragma mark 重写初始化方法
 - (instancetype)init{
-    DBManager *manager;
+    XQDBManager *manager;
     if((manager = [super init]))
     {
         [manager openDb:XQDATABASE_NAME];
+        _dbQue = dispatch_queue_create(kDBQueueName, DISPATCH_QUEUE_SERIAL);
     }
     return manager;
 }
 
 - (void)openDb:(NSString *)dbname{
     //取得数据库保存路径，通常保存沙盒Documents目录
-    NSString *directory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *directory=[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
     NSString *filePath=[directory stringByAppendingPathComponent:dbname];
     NSLog(@"数据库路径%@",filePath);
     //如果有数据库则直接打开，否则创建并打开（注意filePath是ObjC中的字符串，需要转化为C语言字符串类型）
@@ -44,11 +51,15 @@ singleton_implementation(DBManager)
 }
 
 -(void)executeNonQuery:(NSString *)sql{
-    char *error;
-    //单步执行sql语句，用于插入、修改、删除
-    if (SQLITE_OK!=sqlite3_exec(_database, sql.UTF8String, NULL, NULL,&error)) {
-        NSLog(@"执行SQL语句过程中发生错误！错误信息：%s",error);
-    }
+    dispatch_async(_dbQue, ^{
+        char *error;
+        //单步执行sql语句，用于插入、修改、删除
+        if (SQLITE_OK!=sqlite3_exec(_database, sql.UTF8String, NULL, NULL,&error)) {
+            NSLog(@"执行SQL语句过程中发生错误！错误信息：%s",error);
+            //落掉这一句会memory leak
+            sqlite3_free(error);
+        } 
+    });
 }
 
 -(NSArray *)executeQuery:(NSString *)sql{
@@ -76,4 +87,5 @@ singleton_implementation(DBManager)
     sqlite3_finalize(stmt);
     return rows;
 }
+
 @end

@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <YYTextParser.h>
 
+@class XQByrAttachment;
+
 @interface ASUbbParser : NSObject <YYTextParser>
 
 @property(nonatomic, assign) CGFloat fontSize;
+
+@property(nonatomic, weak) XQByrAttachment *attachment;
 
 @property(nonatomic, weak) id linkHandler;
 //- (BOOL)parseText:(NSMutableAttributedString *)text selectedRange:(NSRangePointer)selectedRange;

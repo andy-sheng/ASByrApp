@@ -10,6 +10,8 @@
 #import "NSAttributedString+ASUBB.h"
 #import "UIImageView+AFNetworking.h"
 #import "ASUbbParser.h"
+#import <XQByrUser.h>
+#import <XQByrArticle.h>
 #import <YYLabel.h>
 
 @interface ASThreadsReplyCell()
@@ -28,8 +30,7 @@
     self.faceImage.layer.borderWidth = 1;
     self.faceImage.layer.borderColor = FACE_BORDER_COLOR.CGColor;
     
-    ASUbbParser *parser = [[ASUbbParser alloc] init];
-    self.contentLabel.textParser = parser;
+    
     
     YYTextLinePositionSimpleModifier *modifier = [YYTextLinePositionSimpleModifier new];
     modifier.fixedLineHeight = 24;
@@ -45,12 +46,15 @@
     // Configure the view for the selected state
 }
 
-- (void)setupWithFaceurl:(NSString *)faceUrl
-                     uid:(NSString *)uid
-                 content:(NSString *)content {
-    [self.faceImage setImageWithURL:[NSURL URLWithString:faceUrl]];
-    self.uidLabel.text = uid;
-    self.contentLabel.text = content;
+- (void)setupWithArticle:(XQByrArticle*) article {
+    [self.faceImage setImageWithURL:[NSURL URLWithString:article.user.face_url]];
+    ASUbbParser *parser = [[ASUbbParser alloc] init];
+    self.contentLabel.textParser = parser;
+    parser.attachment = article.attachment;
+    self.uidLabel.text = article.user.uid;
+    self.contentLabel.text = article.content;
+    NSLog(@"%ld", article.aid);
+    NSLog(@"%@", article.board_name);
 }
 
 

@@ -7,16 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XQSingleton.h"
 
 @class XQByrUser;
 
 @interface XQUserService : NSObject
-singleton_interface(XQUserService)
 
 - (void)addUser:(XQByrUser *)user;
 
-+ (NSDictionary *)getUserById:(NSString *)userId;
+- (NSDictionary *)getUserById:(NSString *)userId;
 
 - (void)deleteAllUser;
 @end
