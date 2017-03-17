@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */; };
 		751C8C171E61686200C2E1D6 /* XQTableBaseExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C161E61686200C2E1D6 /* XQTableBaseExecutor.m */; };
 		751C8C1B1E61699400C2E1D6 /* XQByrUserTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C1A1E61699400C2E1D6 /* XQByrUserTable.m */; };
 		751C8C1E1E6177FA00C2E1D6 /* XQDataBaseQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C1D1E6177FA00C2E1D6 /* XQDataBaseQuery.m */; };
@@ -20,8 +19,10 @@
 		75A4C1E71E1B971D00B563A7 /* XQSelfInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */; };
 		75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */; };
 		75D4B6F81E46DB24004906B5 /* XQArticleBody.css in Resources */ = {isa = PBXBuildFile; fileRef = 75D4B6F71E46DB24004906B5 /* XQArticleBody.css */; };
+		75DD9D941E77EA1A00514151 /* XQCollectArticleViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DD9D931E77EA1A00514151 /* XQCollectArticleViewModel.m */; };
 		75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */; };
 		75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */; };
+		90CA6A339F125E7242EA30E7 /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C3C33BA689A6C610384D82 /* libPods-ASByrApp.a */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC6F1CD240C30029DAC8 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6E1CD240C30029DAC8 /* smile.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
@@ -295,7 +296,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		751C8C151E61686200C2E1D6 /* XQTableBaseExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQTableBaseExecutor.h; sourceTree = "<group>"; };
 		751C8C161E61686200C2E1D6 /* XQTableBaseExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQTableBaseExecutor.m; sourceTree = "<group>"; };
 		751C8C191E61699400C2E1D6 /* XQByrUserTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQByrUserTable.h; sourceTree = "<group>"; };
@@ -320,6 +320,8 @@
 		75A4C1EB1E1B97AE00B563A7 /* XQSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSingleton.h; sourceTree = "<group>"; };
 		75A4C2041E1BA3BA00B563A7 /* XQPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQPrefixHeader.pch; sourceTree = "<group>"; };
 		75D4B6F71E46DB24004906B5 /* XQArticleBody.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = XQArticleBody.css; sourceTree = "<group>"; };
+		75DD9D921E77EA1A00514151 /* XQCollectArticleViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleViewModel.h; sourceTree = "<group>"; };
+		75DD9D931E77EA1A00514151 /* XQCollectArticleViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleViewModel.m; sourceTree = "<group>"; };
 		75EF74371E54928E008D3E2C /* XQCollectArticleTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTVC.h; sourceTree = "<group>"; };
 		75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleTVC.m; sourceTree = "<group>"; };
 		75EF743A1E5492A3008D3E2C /* XQCollectArticleTCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTCell.h; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 		A96F5B781CC85F6F00117F5E /* XQBoardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XQBoardView.xib; sourceTree = "<group>"; };
 		A96F5B7A1CC8CBE300117F5E /* color_board.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = color_board.plist; sourceTree = "<group>"; };
 		AFEB0B90720F3E673F124D65 /* Pods-ASByrApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASByrApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp.release.xcconfig"; sourceTree = "<group>"; };
+		F3C3C33BA689A6C610384D82 /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9B2B79ECA6F5866DFDD62C8 /* Pods-ASByrApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASByrApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -623,7 +626,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */,
-				40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */,
+				90CA6A339F125E7242EA30E7 /* libPods-ASByrApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +717,15 @@
 				75D4B6F71E46DB24004906B5 /* XQArticleBody.css */,
 			);
 			name = webresouce;
+			sourceTree = "<group>";
+		};
+		75DD9D911E77E9F700514151 /* viewModel */ = {
+			isa = PBXGroup;
+			children = (
+				75DD9D921E77EA1A00514151 /* XQCollectArticleViewModel.h */,
+				75DD9D931E77EA1A00514151 /* XQCollectArticleViewModel.m */,
+			);
+			name = viewModel;
 			sourceTree = "<group>";
 		};
 		A11FBC751CD50BC50029DAC8 /* model */ = {
@@ -1195,6 +1207,7 @@
 		A95F636B1CDF0CAE0060075E /* Collection(收藏) */ = {
 			isa = PBXGroup;
 			children = (
+				75DD9D911E77E9F700514151 /* viewModel */,
 				A95F637B1CDF81570060075E /* view */,
 				75EF74371E54928E008D3E2C /* XQCollectArticleTVC.h */,
 				75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */,
@@ -1248,7 +1261,7 @@
 			isa = PBXGroup;
 			children = (
 				75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */,
-				442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */,
+				F3C3C33BA689A6C610384D82 /* libPods-ASByrApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1714,6 +1727,7 @@
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */,
 				75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */,
+				75DD9D941E77EA1A00514151 /* XQCollectArticleViewModel.m in Sources */,
 				751C8C241E62D96400C2E1D6 /* XQByrArticleTable.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
