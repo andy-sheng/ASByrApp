@@ -18,8 +18,6 @@
 #import <YYModel/YYModel.h>
 
 
-#define XQDatabaseLock() dispatch_semaphore_wait(self->_lock, DISPATCH_TIME_FOREVER)
-#define XQDatabaseUnlock() dispatch_semaphore_signal(self->_lock)
 @interface XQCollectDataCenter()
 
 @property (strong, nonatomic) XQByrUserTable * userService;
@@ -38,19 +36,24 @@
         _articleService = [[XQByrArticleTable alloc]init];
         _queue = dispatch_queue_create("com.BUPT.ASByrApp.collect.database", DISPATCH_QUEUE_CONCURRENT);
         _lock = dispatch_semaphore_create(1);
+        
+        NSString * createTimeMax = [[NSUserDefaults standardUserDefaults]objectForKey:@"XQCollectCreatedTimeMax"];
+        if (createTimeMax == nil) {
+            createTimeMax = @"";
+        }
+        _createdTimeMax = createTimeMax;
+
+        
     }
     return self;
 }
 
-- (void)fetchCollectListFromLocal:(NSDictionary * __nullable)filters withBlock:(void(^__nullable)( NSArray * __nullable objects))block{
+- (void)fetchCollectListFromLocalWithPage:(NSInteger)page pageCount:(NSInteger)count withBlock:(void(^__nullable)( NSArray * __nullable objects))block{
     //暂时不考虑处理横向切片(将有图的帖子和无图的帖子分开)的情况
     __weak typeof(self) _self = self;
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
-//
-//        XQDatabaseLock();
-        NSMutableArray * articleArray =[NSMutableArray arrayWithArray:[self.articleService findAllRecord]];
-//        XQDatabaseUnlock();
+        NSArray * articleArray =[NSArray arrayWithArray:[self.articleService findRecordWithPage:page pageCount:count]];
     
         if(block) block(articleArray);
     });
@@ -61,33 +64,28 @@
         return;
     }
     NSArray * _array = [NSArray arrayWithArray:array];
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
+   
         for (NSInteger i = 0; i < [_array count]; i++) {
             
             XQByrCollection* collection = [(XQByrCollection *)[array objectAtIndex:i] copy];
-            collection.state = XQCollectionStateSync;
-            collection.firstImageUrl = @"";
-            XQByrUser * user;
-            if (collection.user){
-                if([collection.user isKindOfClass:[XQByrUser class]]){
-                    user = [collection.user copy];
-                }else{
-                    user.uid = (NSString *)collection.user;
-                    user.user_name = @"";
+            if (self.firstLoad == YES || [_createdTimeMax isEqualToString:@""] || (self.firstLoad == NO && [collection.createdTime compare:_createdTimeMax options:NSNumericSearch]==NSOrderedDescending)) {
+                collection.state = XQCollectionStateSync;
+                collection.firstImageUrl = @"";
+                XQByrUser * user;
+                if (collection.user){
+                    if([collection.user isKindOfClass:[XQByrUser class]]){
+                        user = [collection.user copy];
+                    }else{
+                        user.uid = (NSString *)collection.user;
+                        user.user_name = @"";
+                    }
+                    [self.userService insertRecord:user];
                 }
-//                XQDatabaseLock();
-                [self.userService insertRecord:user];
-//                XQDatabaseUnlock();
+                [self.articleService insertRecord:collection];
+                self.createdTimeMax = collection.createdTime;
             }
-            //collection.user = user;
-//            XQDatabaseLock();
-            [self.articleService insertRecord:collection];
-//            XQDatabaseUnlock();
         }
         if (block) block();
-    });
 }
 
 - (void)addCollectData:(XQByrArticle *)article withBlock:(void (^ _Nullable)(void))block{
@@ -98,12 +96,8 @@
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
 
-//        XQDatabaseLock();
         [self.userService insertRecord:collection.user];
-//        XQDatabaseUnlock();
-//        XQDatabaseLock();
         [self.articleService insertRecord:collection];
-//        XQDatabaseUnlock();
         if (block) block();
     });
 }
@@ -114,9 +108,7 @@
     __weak typeof(self) _self = self;
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
-//    XQDatabaseLock();
         [self.articleService updateRecord:collection];
-//    XQDatabaseUnlock();
         if (block) block();
     });
 }
@@ -134,16 +126,11 @@
 }
 
 - (void)deleteCollectData:(NSString *)articleID withBlock:(void (^ _Nullable)(NSString * articleID))block{
-//    __weak typeof(self) _self = self;
-//    dispatch_async(_queue, ^{
-//        __strong typeof(_self) self = _self;
-//        XQDatabaseLock();
+
     XQByrCollection * collection = [[XQByrCollection alloc]init];
     collection.gid = articleID;
     [self.articleService deleteRecord:collection];
-//        XQDatabaseUnlock();
     if (block) block(articleID);
-//    });
 }
 
 - (void)deleteAllCollectDataWithBlock:(void (^)(void))block{
@@ -203,6 +190,32 @@
         collection.postTime = [NSString stringWithFormat:@"%ld",(long)article.post_time];
     }
     return collection;
+}
+
+- (BOOL)needSave:(NSString *)createdTime{
+    if ([self.createdTimeMax isEqualToString:@""]) {
+        return true;
+    }
+    return true;
+}
+
+#pragma mark getters and setters
+- (void)setCreatedTimeMax:(NSString *)createdTimeMax{
+    if ([self.createdTimeMax isEqualToString:@""] ||( [createdTimeMax compare:self.createdTimeMax options:NSNumericSearch] == NSOrderedAscending && !_firstLoad)) {
+        _createdTimeMax = createdTimeMax;
+        [[NSUserDefaults standardUserDefaults]setObject:createdTimeMax forKey:@"XQCollectCreatedTimeMax"];
+    }
+}
+
+- (BOOL)firstLoad{
+    if (!_firstLoad) {
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:@"XQCollectFirstLoad"] == nil) {
+            _firstLoad = true;
+        }else{
+            _firstLoad = false;
+        }
+    }
+    return _firstLoad;
 }
 
 @end

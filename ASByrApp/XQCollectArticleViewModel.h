@@ -13,11 +13,16 @@
 
 @interface XQCollectArticleViewModel : NSObject
 
+@property (assign, nonatomic) NSInteger page;
+
+@property (copy, nonatomic) NSNumber* maxPage;
 
 @property (strong, nonatomic) XQCollectDataCenter * collectDataCenter;
 
 @property (strong, nonatomic) ASByrCollection * collectionApi;
 
-@property (strong, nonatomic) RACCommand * fetchCollectionCommand;
+@property (strong, nonatomic) NSArray * databaseArrayList;
 
+//@property (strong, nonatomic) RACCommand * fetchCollectionCommand;
+- (void)endDatabaseInitialSave;
 @end

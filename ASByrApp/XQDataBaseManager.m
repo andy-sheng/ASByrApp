@@ -102,8 +102,8 @@
     return YES;
 }
 
-- (NSArray *)fetchDataOfView:(NSString *)viewName error:(NSError *__autoreleasing *)error{
-    NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@ order by createdTime",viewName];
+- (NSArray *)fetchDataOfView:(NSString *)viewName limit:(NSInteger)limit offset:(NSInteger)offset error:(NSError *__autoreleasing *)error{
+    NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@ order By createdTime limit %ld offset %ld",viewName,(long)limit,(long)offset];
     NSMutableArray *rows=[NSMutableArray array];//数据行
     
     //评估语法正确性
@@ -164,7 +164,7 @@
 }
 
 - (BOOL)createView:(NSString *)viewName ftableName:(NSString *)fTableName fTableColumn:(NSString *)fTableColumnInfo ftTableName:(NSString *)ftTableName  ftTableColumn:(NSString *)ftTableColumnInfo withError:(NSError *__autoreleasing *)error{
-    NSString * sqlQuery = [NSString stringWithFormat:@"CREATE VIEW IF NOT EXISTS %@ as select %@ from %@ f left outer join %@ ft on %@",viewName,fTableColumnInfo,fTableName,ftTableName,ftTableColumnInfo];
+    NSString * sqlQuery = [NSString stringWithFormat:@"CREATE VIEW IF NOT EXISTS %@ as select %@ from %@ f left outer join %@ ft on %@ order by createdTime",viewName,fTableColumnInfo,fTableName,ftTableName,ftTableColumnInfo];
     
     sqlite3_stmt * stmt = NULL;
     int result = sqlite3_prepare_v2(_database, sqlQuery.UTF8String, -1, &stmt, NULL);

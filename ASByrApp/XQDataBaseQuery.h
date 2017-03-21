@@ -32,6 +32,6 @@ extern NSString * const XQByrDatabaseName;
 
 - (void)createView:(NSString *)fTableName fTableColumn:(NSDictionary*)fTableColumn ftTableColumn:(NSArray *)ftTableColumn;
 
-- (NSArray *)fetchDataAtView;
+- (NSArray *)fetchDataAtViewWithLimit:(NSInteger)limit offset:(NSInteger)offset;
 
 @end

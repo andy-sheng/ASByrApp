@@ -26,5 +26,5 @@
 
 - (BOOL)createView:(NSString *)viewName ftableName:(NSString *)fTableName fTableColumn:(NSString *)fTableColumnInfo ftTableName:(NSString *)ftTableName  ftTableColumn:(NSString *)ftTableColumnInfo withError:(NSError *__autoreleasing *)error;
 
-- (NSArray *)fetchDataOfView:(NSString *)viewName error:(NSError *__autoreleasing *)error;
+- (NSArray *)fetchDataOfView:(NSString *)viewName limit:(NSInteger)limit offset:(NSInteger)offset error:(NSError *__autoreleasing *)error;
 @end

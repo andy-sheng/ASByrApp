@@ -35,7 +35,6 @@ static void * xqdatabaseforeignkey = "xqdbforeigntablekey";
             Class cl = self.tableProtocol.foreignTableClass;
             id clobj = [[cl alloc]init];
             if (clobj && [clobj isKindOfClass:[XQTableBaseExecutor class]]) {
-                //objc_setAssociatedObject(self, xqdatabaseforeignkey, clobj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 NSArray * ftTableColumn = [clobj foreignColumnInfo];
                 [dataBaseQuery createView:self.tableProtocol.tableName fTableColumn:self.tableProtocol.tableColumnInfo ftTableColumn:ftTableColumn];
             }
@@ -59,9 +58,8 @@ static void * xqdatabaseforeignkey = "xqdbforeigntablekey";
 }
 
 //只有在article类中会调用 待优化
-- (NSArray *)findAllRecord{
-    //return [self.databaseQuery fetchDataAtTable:_tableProtocol.tableName ofClass:_tableProtocol.tableClass];
-    return [self.databaseQuery fetchDataAtView];
+- (NSArray *)findRecordWithPage:(NSInteger)page pageCount:(NSInteger)pageCount{
+    return [self.databaseQuery fetchDataAtViewWithLimit:pageCount offset:(page-1)*pageCount];
 }
 
 - (void)deleteRecord:(NSObject *)record{

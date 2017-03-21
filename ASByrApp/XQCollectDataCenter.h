@@ -30,7 +30,11 @@ typedef NS_ENUM(NSInteger, XQCollectionStateType){
 
 @interface XQCollectDataCenter : NSObject
 
-- (void)fetchCollectListFromLocal:(NSDictionary * __nullable)filters withBlock:(void(^__nullable)(NSArray * __nullable objects))block;
+@property (assign, nonatomic) BOOL firstLoad;
+
+@property (copy, nonatomic) NSString * __nullable createdTimeMax;
+
+- (void)fetchCollectListFromLocalWithPage:(NSInteger)page pageCount:(NSInteger)count withBlock:(void(^__nullable)( NSArray * __nullable objects))block;
 
 - (void)saveCollectDataFromCollections:(NSArray * _Nullable)array withBlock:(void(^__nullable)(void))block;
 
