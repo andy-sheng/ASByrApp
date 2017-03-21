@@ -58,8 +58,10 @@
     self = [self init];
     if (self != nil) {
         self.replyTo = article;
-        [self.textView insertText:[NSString stringWithFormat:@"【 在 %@ 的大作中提到: 】\n%@", self.replyTo.user.user_name, self.replyTo.content]];
         [self.textView insertText:input];
+        [self.textView insertText:[NSString stringWithFormat:@"\n\n【 在 %@ 的大作中提到: 】\n%@", self.replyTo.user.user_name, self.replyTo.content]];
+        
+        self.textView.selectedRange = NSMakeRange(input.length, 0);
     }
     return self;
 }
@@ -77,6 +79,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.textView becomeFirstResponder];
+    
+}
 - (void)updateViewConstraints {
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.left.equalTo(self.scrollView);
@@ -129,6 +136,7 @@
             sself.attachment = response;
             sself.ubbParser.attachment = response;
             sself.textView.text = [NSString stringWithFormat:@"%@[upload=%ld][/upload]\n", sself.textView.text, sself.attachment.file.count];
+            sself.textView.selectedRange = NSMakeRange(0, 0);
             [sself.uploadHud hide:YES];
         }
     } failureBlock:^(NSInteger statusCode, id response) {
@@ -210,6 +218,7 @@
     if (_textView == nil) {
         _textView = [[YYTextView alloc] init];
         _textView.textAlignment = NSTextAlignmentNatural;
+        _textView.placeholderFont = [UIFont systemFontOfSize:14];
         _textView.placeholderText = @"输入帖子内容";
         ASAccessoryView *accessoryView = (ASAccessoryView*)[[NSBundle mainBundle] loadNibNamed:@"ASAccessoryView" owner:nil options:nil][0];
         
@@ -236,7 +245,7 @@
         };
         _textView.delegate = self;
         _textView.inputAccessoryView = accessoryView;
-        [_textView setFont:[UIFont systemFontOfSize:17]];
+        [_textView setFont:[UIFont systemFontOfSize:14]];
     }
     return _textView;
 }
@@ -262,6 +271,7 @@
         _preshowView.placeholderText = @"预览";
         _preshowView.editable = NO;
         _preshowView.textParser = self.ubbParser;
+        _preshowView.font = [UIFont systemFontOfSize:14];
     }
     return _preshowView;
 }
