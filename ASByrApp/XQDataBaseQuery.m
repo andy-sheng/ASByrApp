@@ -117,15 +117,6 @@ static  NSString * const XQArticleUserViewName = @"xq_article_user";
     }
 }
 
-- (NSArray *)fetchDataAtTable:(NSString *)tableName ofClass:(__unsafe_unretained Class)class{
-    NSError * error = nil;
-    NSArray * fetchResult = [self.dbManager fetchDataOfTable:tableName class:class error:&error];
-    if ((!fetchResult || [fetchResult count]==0) && error) {
-        NSLog(@"获取%@ 表中数据发生错误： %@",tableName, error);
-    }
-    return fetchResult;
-}
-
 - (NSArray *)fetchDataAtViewWithLimit:(NSInteger)limit offset:(NSInteger)offset{
     NSError * error = nil;
     NSArray * resultList = [self.dbManager fetchDataOfView:XQArticleUserViewName limit:limit offset:offset error:&error];

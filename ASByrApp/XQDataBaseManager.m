@@ -134,6 +134,7 @@
     
 }
 
+//暂时保留的函数
 - (id)fetchDataOfTable:(NSString *)tableName class:(Class)classType primaryQuery:(NSString *)query error:(NSError *__autoreleasing *)error{
     NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM TABLE %@ WHERE %@", tableName, query];
     return [classType yy_modelWithDictionary:[[self p_executeQuery:sqlQuery] firstObject]];

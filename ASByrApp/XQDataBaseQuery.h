@@ -24,10 +24,6 @@ extern NSString * const XQByrDatabaseName;
 
 - (void)updateDataAtTable:(NSString *)tableName dataInfo:(NSDictionary *)dataInfo primaryKey:(NSString *)primaryKey;
 
-- (NSArray *)fetchDataAtTable:(NSString *)tableName ofClass:(Class)className;
-
-//- (id)fetchDataAtTable:(NSString *)tableName ofClass:(Class)className primaryKey:(NSString *)key primaryValue:(NSString *)value;
-
 - (void)deleteDataAtTable:(NSString *)tableName primaryKey:(NSString *)primaryKey keyValue:(NSString *)keyValue;
 
 - (void)createView:(NSString *)fTableName fTableColumn:(NSDictionary*)fTableColumn ftTableColumn:(NSArray *)ftTableColumn;

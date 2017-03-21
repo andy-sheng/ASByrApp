@@ -57,7 +57,7 @@ static NSString * const reuseIdentifier = @"collectCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [RACObserve(self.viewModel, arrayList) subscribeNext:^(id x) {
+    [RACObserve(self.viewModel, databaseArrayList) subscribeNext:^(id x) {
         [self updateView];
     }];
 }
@@ -95,7 +95,7 @@ static NSString * const reuseIdentifier = @"collectCell";
     [self.tableView.mj_header endRefreshing];
     [self.tableView.mj_footer endRefreshing];
     
-    [self.collectionList addObjectsFromArray:self.viewModel.arrayList];
+    [self.collectionList addObjectsFromArray:self.viewModel.databaseArrayList];
     [self.tableView reloadData];
 }
 
@@ -163,11 +163,12 @@ static NSString * const reuseIdentifier = @"collectCell";
     XQByrArticle * article = notis.userInfo[@"article"];
     [self.viewModel.collectionApi deleteCollectionWithAid:[NSString stringWithFormat:@"%ld",(long)article.group_id] successBlock:^(NSInteger statusCode, id response) {
         NSLog(@"删除收藏请求成功.");
-        [self.viewModel.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id] withBlock:nil];
+        
     } failureBlock:^(NSInteger statusCode, id response) {
         NSLog(@"删除收藏请求失败. statusCode:%ld",(long)statusCode);
         
     }];
+    [self.viewModel.collectDataCenter deleteCollectData:[NSString stringWithFormat:@"%ld",(long)article.group_id] withBlock:nil];
     
 }
 

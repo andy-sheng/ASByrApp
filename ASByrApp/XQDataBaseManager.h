@@ -18,9 +18,6 @@
 
 - (BOOL)updateDataOfTable:(NSString *)tableName columInfo:(NSString *)columnInfo primaryKey:(NSString *)primaryKey error:(NSError *__autoreleasing *)error;
 
-- (NSArray *)fetchDataOfTable:(NSString *)tableName class:(Class)classType error:(NSError * __autoreleasing *)error;
-
-- (id)fetchDataOfTable:(NSString *)tableName class:(Class)classType primaryQuery:(NSString *)query error:(NSError * __autoreleasing *)error;
 
 - (BOOL)deleteDataOfTable:(NSString *)tableName whereQuery:(NSString *)whereQuery error:(NSError * __autoreleasing *)error;
 

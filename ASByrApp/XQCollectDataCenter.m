@@ -92,14 +92,9 @@
 
     XQByrCollection * collection = [self p_articleToCollection:article withType:XQCollectionUpdateUserAdd];
     
-    __weak typeof(self) _self = self;
-    dispatch_async(_queue, ^{
-        __strong typeof(_self) self = _self;
-
-        [self.userService insertRecord:collection.user];
-        [self.articleService insertRecord:collection];
-        if (block) block();
-    });
+    [self.userService insertRecord:collection.user];
+    [self.articleService insertRecord:collection];
+    if (block) block();
 }
 
 - (void)updateCollectFromArticle:(XQByrArticle * __nonnull)article withBlock:(void(^__nullable)(void))block{
@@ -188,6 +183,12 @@
         collection.bname = article.board_name;
         collection.title = article.title;
         collection.postTime = [NSString stringWithFormat:@"%ld",(long)article.post_time];
+        
+        //获取当前时间戳
+        NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0];
+        NSTimeInterval interval = [date timeIntervalSince1970];
+        collection.createdTime = [NSString stringWithFormat:@"%0.f",interval];
+        
     }
     return collection;
 }
