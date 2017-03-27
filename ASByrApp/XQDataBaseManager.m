@@ -103,7 +103,7 @@
 }
 
 - (NSArray *)fetchDataOfView:(NSString *)viewName limit:(NSInteger)limit offset:(NSInteger)offset error:(NSError *__autoreleasing *)error{
-    NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@ order By createdTime limit %ld offset %ld",viewName,(long)limit,(long)offset];
+    NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@ order By createdTime desc limit %ld offset %ld",viewName,(long)limit,(long)offset];
     NSMutableArray *rows=[NSMutableArray array];//数据行
     
     //评估语法正确性

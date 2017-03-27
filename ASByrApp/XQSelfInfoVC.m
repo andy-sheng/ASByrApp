@@ -43,6 +43,7 @@
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+
 #pragma mark <ASByrUserResponseDelegate>
 -(void)fetchUserResponse:(ASByrResponse *)response{
     if (response.isSucceeded) {

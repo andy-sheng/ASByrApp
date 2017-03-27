@@ -1,5 +1,5 @@
 target 'ASByrApp' do
-    pod 'ASByr', :git => 'https://github.com/andy-sheng/ASByr.git'
+    pod 'ASByr', :path => ‘../ASByr’
     pod 'AFNetworking'
     pod 'MJRefresh'
     pod 'WMPageController'
@@ -12,4 +12,5 @@ target 'ASByrApp' do
     pod 'MBProgressHUD', '~> 0.9.2'
     pod 'TTTAttributedLabel'
     pod 'SDWebImage', '~>3.8'
+    pod 'ReactiveCocoa', '~>2.5’
 end

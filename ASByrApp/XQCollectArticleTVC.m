@@ -11,6 +11,7 @@
 #import "XQCollectArticleViewModel.h"
 #import "XQCollectDataCenter.h"
 #import "XQCollectArticleTCell.h"
+#import "ASTop10SeperatorCell.h"
 #import "XQUserInfo.h"
 
 #import <ASByrCollection.h>
@@ -44,8 +45,11 @@ static NSString * const reuseIdentifier = @"collectCell";
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateCollectArticle:) name:@"updateCollectedArticle" object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(deleteCollectArticle:) name:@"deleteCollectedArticle" object:nil];
         [self.tableView registerClass:[XQCollectArticleTCell class] forCellReuseIdentifier:reuseIdentifier];
+        [self.tableView registerNib:[UINib nibWithNibName:@"ASTop10SeperatorCell" bundle:nil] forCellReuseIdentifier:@"ASTop10SeperatorCell"];
         self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(moreData)];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+
         
     }
     return self;
@@ -106,38 +110,48 @@ static NSString * const reuseIdentifier = @"collectCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 127;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.collectionList count];
+    if (indexPath.row % 2 == 0) {
+        return 127;
+    }else{
+        return 5;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XQCollectArticleTCell *cell = (XQCollectArticleTCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    if (cell == nil) {
-        cell = [[XQCollectArticleTCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }
-    
-    [cell setUpParameters:self.collectionList[indexPath.row]];
-    
-    NSString * firstImageUrl = [self.collectionList[indexPath.row] valueForKey:@"firstImageUrl"];
-    if(firstImageUrl &&![firstImageUrl isEqual:@""]){
-        NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",firstImageUrl,[ASByrToken shareInstance].accessToken]];
-        [cell.firstImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];
+    if (indexPath.row %2 == 0) {
+        XQCollectArticleTCell *cell = (XQCollectArticleTCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+        
+        if (cell == nil) {
+            cell = [[XQCollectArticleTCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+        }
+        
+        [cell setUpParameters:self.collectionList[indexPath.row/2]];
+        
+        NSString * firstImageUrl = [self.collectionList[indexPath.row/2] valueForKey:@"firstImageUrl"];
+        if(firstImageUrl &&![firstImageUrl isEqual:@""]){
+            NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?oauth_token=%@",firstImageUrl,[ASByrToken shareInstance].accessToken]];
+            [cell.firstImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE] options:SDWebImageRefreshCached];
+            
+        }else{
+            [cell.firstImageView setImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE]];
+        }
+        return cell;
     }else{
-        [cell.firstImageView setImage:[UIImage imageNamed:XQCOLLECTION_FIRST_IMAGE]];
+        ASTop10SeperatorCell *cell = (ASTop10SeperatorCell*)[tableView dequeueReusableCellWithIdentifier:@"ASTop10SeperatorCell"];
+        return cell;
     }
     
-    return cell;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ASThreadsController * threadsVC = [[ASThreadsController alloc]initWithWithBoard:[self.collectionList[indexPath.row] valueForKey:@"bname"] aid:[[self.collectionList[indexPath.row] valueForKey:@"gid" ]integerValue]];
+    ASThreadsController * threadsVC = [[ASThreadsController alloc]initWithWithBoard:[self.collectionList[indexPath.row/2] valueForKey:@"bname"] aid:[[self.collectionList[indexPath.row/2] valueForKey:@"gid" ]integerValue]];
     [self.navigationController pushViewController:threadsVC animated:YES];
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.collectionList count]*2 - 1;
+}
 #pragma mark private method
 
 

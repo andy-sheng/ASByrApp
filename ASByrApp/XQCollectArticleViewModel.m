@@ -72,8 +72,8 @@
     [RACObserve(self, arrayList) subscribeNext:^(id x) {
         @strongify(self);
         
-        id firstItem = [x firstObject];
-        if (firstItem && [firstItem isKindOfClass:[XQByrCollection class]]) {
+        XQByrCollection * firstItem = [x firstObject];
+        if (firstItem && ([firstItem.createdTime compare:self.collectDataCenter.createdTimeMax options:NSNumericSearch] == NSOrderedDescending || self.collectDataCenter.firstLoad)) {
             dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
             [self.collectDataCenter saveCollectDataFromCollections:x withBlock:nil];
             dispatch_semaphore_signal(_semaphore);
