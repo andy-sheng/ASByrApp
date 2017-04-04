@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userIdLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
 @property (weak, nonatomic) IBOutlet UITableViewCell *clearCacheCell;
-@property(strong, nonatomic) ASByrUser * userApi;
+@property (strong, nonatomic) ASByrUser * userApi;
 @end
 
 @implementation XQSelfInfoVC
@@ -28,6 +28,7 @@
     [super viewDidLoad];
     //[self loadData];
     self.tableView.delegate = self;
+    [self.navigationItem setTitle:@"我"];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

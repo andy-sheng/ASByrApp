@@ -61,6 +61,7 @@ static NSString * const reuseIdentifier = @"collectCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    [self.navigationItem setTitle:@"收藏"];
     [RACObserve(self.viewModel, databaseArrayList) subscribeNext:^(id x) {
         [self updateView];
     }];
