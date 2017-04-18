@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, XQCollectionStateType){
 
 - (void)saveCollectDataFromCollections:(NSArray * _Nullable)array withBlock:(void(^__nullable)(void))block;
 
+- (void)compareCollectDataFromCollectons:(NSArray * _Nullable)array withPage:(NSInteger)page pageCount:(NSInteger)count withBlock:(void(^__nullable)(void))block;
+
 - (void)addCollectData:(XQByrArticle * __nonnull)article withBlock:(void(^__nullable)(void))block;
 
 - (void)updateCollectFromArticle:(XQByrArticle * __nonnull)article withBlock:(void(^__nullable)(void))block;

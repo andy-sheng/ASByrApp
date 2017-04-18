@@ -119,6 +119,7 @@
     XQNewBoardViewCell *cell = (XQNewBoardViewCell *)[tableView dequeueReusableCellWithIdentifier:@"testboard"];
     if (cell==nil) {
         cell = [XQNewBoardViewCell newCellWithIdentifier:@"testboard" andStyle:UITableViewCellStyleDefault andParameters:self.boardList[indexPath.row]];
+        NSLog(@"new cell==");
     }else{
         [cell setUpCellWithParameters:self.boardList[indexPath.row]];
     }
@@ -173,6 +174,11 @@
 
 - (void)commenResponseRecv:(ASByrResponse *)response{
     if(self.page<=1){
+        //NSInteger size1 = class_getInstanceSize([self class]);
+        //NSLog(@"%ld",(long)size1);
+        [self.boardList removeAllObjects];
+        //NSInteger size2 = class_getInstanceSize([self class]);
+        //NSLog(@"%ld",(long)size2);
         self.boardList = [NSMutableArray arrayWithArray:response.reformedData];
     }else
         [self.boardList addObjectsFromArray:response.reformedData];

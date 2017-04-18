@@ -67,7 +67,7 @@
    
         for (NSInteger i = 0; i < [_array count]; i++) {
             
-            XQByrCollection* collection = [(XQByrCollection *)[array objectAtIndex:i] copy];
+            XQByrCollection* collection = [(XQByrCollection *)[_array objectAtIndex:i] copy];
             if (self.firstLoad == YES || [_createdTimeMax isEqualToString:@""] || (self.firstLoad == NO && [collection.createdTime compare:_createdTimeMax options:NSNumericSearch]==NSOrderedDescending)) {
                 collection.state = XQCollectionStateSync;
                 collection.firstImageUrl = @"";
@@ -86,6 +86,38 @@
             }
         }
         if (block) block();
+}
+
+- (void)compareCollectDataFromCollectons:(NSArray *)array withPage:(NSInteger)page pageCount:(NSInteger)count withBlock:(void (^)(void))block{
+    
+    //dispatch_queue_t backgroundqueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    
+    //dispatch_async(_queue, ^{
+        NSArray * haveArticles = [self.articleService findRecordWithPage:page pageCount:count];
+        
+        NSInteger i = 0, j = 0;
+        NSInteger lastj = 0;
+        if (haveArticles != nil && [haveArticles count]>0) {
+            NSDictionary * collection;
+            while (i < [array count]) {
+                if (j == [haveArticles count]) {
+                    haveArticles = [self.articleService findRecordWithPage:page pageCount:count];
+                    j = lastj;
+                }
+                collection = [haveArticles objectAtIndex:j];
+                if (([collection[@"createdTime"] compare:[[array objectAtIndex:i] valueForKey:@"createdTime"] options:NSLiteralSearch] == NSOrderedAscending)) {
+                    i++;
+                }else if([collection[@"createdTime"] compare:[[array objectAtIndex:i] valueForKey:@"createdTime"] options:NSLiteralSearch] == NSOrderedDescending){
+                    j++;
+                    [self.articleService deleteRecord:[collection copy]];
+                }else{
+                    i++;
+                    j++;
+                    lastj ++;
+                }
+            }
+        }
+    //});
 }
 
 - (void)addCollectData:(XQByrArticle *)article withBlock:(void (^ _Nullable)(void))block{
@@ -120,26 +152,21 @@
     if (block) block();
 }
 
-- (void)deleteCollectData:(NSString *)articleID withBlock:(void (^ _Nullable)(NSString * articleID))block{
 
-    XQByrCollection * collection = [[XQByrCollection alloc]init];
-    collection.gid = articleID;
-    [self.articleService deleteRecord:collection];
-    if (block) block(articleID);
+- (void)deleteCollectData:(NSString *)articleID withBlock:(void (^ _Nullable)(NSString * articleID))block{
+    dispatch_async(_queue, ^{
+        XQByrCollection * collection = [[XQByrCollection alloc]init];
+        collection.gid = articleID;
+        [self.articleService deleteRecord:collection];
+        if (block) block(articleID);
+    });
 }
 
 - (void)deleteAllCollectDataWithBlock:(void (^)(void))block{
-//    __weak typeof(self) _self = self;
-//    dispatch_async(_queue, ^{
-//        __strong typeof(_self) self = _self;
-//        XQDatabaseLock();
-        //[self.articleService deleteArticle:nil];
-        //[self.userService deleteAllUser];
-//        XQDatabaseUnlock();
+
         if (block) {
             block();
         }
-//    });
 }
 
 #pragma mark private method

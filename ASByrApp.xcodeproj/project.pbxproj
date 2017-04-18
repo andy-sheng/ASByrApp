@@ -13,6 +13,9 @@
 		751C8C241E62D96400C2E1D6 /* XQByrArticleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C231E62D96400C2E1D6 /* XQByrArticleTable.m */; };
 		751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */; };
 		75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */; };
+		754A93121E9B1E06007C8BAF /* XQDetailInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A93111E9B1E06007C8BAF /* XQDetailInfoTableViewController.m */; };
+		754A93151E9B1EE4007C8BAF /* XQMailBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A93141E9B1EE4007C8BAF /* XQMailBoxTableViewController.m */; };
+		754A93181E9B1F09007C8BAF /* XQArticleBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A93171E9B1F09007C8BAF /* XQArticleBoxTableViewController.m */; };
 		756B2DE51E63C8FF007A7259 /* XQDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 756B2DE41E63C8FF007A7259 /* XQDataBaseManager.m */; };
 		75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */; };
 		75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */; };
@@ -309,6 +312,12 @@
 		751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectDataCenter.m; sourceTree = "<group>"; };
 		75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Extension.h"; sourceTree = "<group>"; };
 		75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Extension.m"; sourceTree = "<group>"; };
+		754A93101E9B1E06007C8BAF /* XQDetailInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDetailInfoTableViewController.h; sourceTree = "<group>"; };
+		754A93111E9B1E06007C8BAF /* XQDetailInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDetailInfoTableViewController.m; sourceTree = "<group>"; };
+		754A93131E9B1EE4007C8BAF /* XQMailBoxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQMailBoxTableViewController.h; sourceTree = "<group>"; };
+		754A93141E9B1EE4007C8BAF /* XQMailBoxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQMailBoxTableViewController.m; sourceTree = "<group>"; };
+		754A93161E9B1F09007C8BAF /* XQArticleBoxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticleBoxTableViewController.h; sourceTree = "<group>"; };
+		754A93171E9B1F09007C8BAF /* XQArticleBoxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticleBoxTableViewController.m; sourceTree = "<group>"; };
 		756B2DE31E63C8FF007A7259 /* XQDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDataBaseManager.h; sourceTree = "<group>"; };
 		756B2DE41E63C8FF007A7259 /* XQDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDataBaseManager.m; sourceTree = "<group>"; };
 		75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -687,6 +696,12 @@
 				75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */,
 				75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */,
 				75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */,
+				754A93101E9B1E06007C8BAF /* XQDetailInfoTableViewController.h */,
+				754A93111E9B1E06007C8BAF /* XQDetailInfoTableViewController.m */,
+				754A93131E9B1EE4007C8BAF /* XQMailBoxTableViewController.h */,
+				754A93141E9B1EE4007C8BAF /* XQMailBoxTableViewController.m */,
+				754A93161E9B1F09007C8BAF /* XQArticleBoxTableViewController.h */,
+				754A93171E9B1F09007C8BAF /* XQArticleBoxTableViewController.m */,
 			);
 			name = "Personal(设置)";
 			sourceTree = "<group>";
@@ -1744,6 +1759,7 @@
 				751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */,
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
+				754A93181E9B1F09007C8BAF /* XQArticleBoxTableViewController.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
 				A192A1581CE32AE40024C694 /* ASTop10SeperatorCell.m in Sources */,
@@ -1751,9 +1767,11 @@
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A91776281CC76CE500ED84B3 /* XQBoardModel.m in Sources */,
 				A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */,
+				754A93121E9B1E06007C8BAF /* XQDetailInfoTableViewController.m in Sources */,
 				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A1310C7E1E4DB5CB002ED116 /* ASUbbParser.m in Sources */,
 				A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */,
+				754A93151E9B1EE4007C8BAF /* XQMailBoxTableViewController.m in Sources */,
 				75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */,
 				751C8C171E61686200C2E1D6 /* XQTableBaseExecutor.m in Sources */,
 				751C8C1B1E61699400C2E1D6 /* XQByrUserTable.m in Sources */,
@@ -1898,6 +1916,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ASByrApp/XQPrefixHeader.pch";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1917,6 +1936,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ASByrApp/XQPrefixHeader.pch";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

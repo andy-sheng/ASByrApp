@@ -37,7 +37,6 @@
 
 - (NSDictionary *)tableColumnInfo{
     return @{
-             //@"gid":@"text FOREIGN KEY PREFERENCES User (uid)",
              @"gid":@"text PRIMARY KEY",
              @"title":@"text",
              @"bname":@"text",

@@ -53,6 +53,4 @@
 
 - (NSArray *)findRecordWithPage:(NSInteger)page pageCount:(NSInteger)pageCount;
 
-//- (id)findRecordByPrimaryValue:(NSString *)primaryValue;
-
 @end

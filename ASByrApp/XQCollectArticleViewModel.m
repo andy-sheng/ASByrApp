@@ -50,6 +50,7 @@
                 }
                 if ([reformedArticles count] > 0) {
                     self.arrayList = reformedArticles;
+                    //self.databaseArrayList = reformedArticles;
                 }
                 XQByrPagination * pagination = [XQByrPagination yy_modelWithDictionary:response[@"pagination"]];
                 _maxPage = [NSNumber numberWithInteger:pagination.page_all_count];
@@ -75,11 +76,22 @@
         XQByrCollection * firstItem = [x firstObject];
         if (firstItem && ([firstItem.createdTime compare:self.collectDataCenter.createdTimeMax options:NSNumericSearch] == NSOrderedDescending || self.collectDataCenter.firstLoad)) {
             dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+            //存数据 ”写
             [self.collectDataCenter saveCollectDataFromCollections:x withBlock:nil];
             dispatch_semaphore_signal(_semaphore);
         }
         
+        
+        
         if (_page > 0) {
+            dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+            //删除数据 “写
+            [self.collectDataCenter compareCollectDataFromCollectons:self.arrayList withPage:_page pageCount:_count withBlock:nil];
+            dispatch_semaphore_signal(_semaphore);
+            dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+            //删除数据 “读
+            [self.collectDataCenter compareCollectDataFromCollectons:self.arrayList withPage:_page pageCount:_count withBlock:nil];
+            dispatch_semaphore_signal(_semaphore);
             dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
             [self.collectDataCenter fetchCollectListFromLocalWithPage:_page pageCount:_count withBlock:^(NSArray * _Nullable objects) {
                 if (objects && [objects count]>0) {

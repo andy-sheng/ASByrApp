@@ -105,7 +105,7 @@
 - (NSArray *)fetchDataOfView:(NSString *)viewName limit:(NSInteger)limit offset:(NSInteger)offset error:(NSError *__autoreleasing *)error{
     NSString * sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@ order By createdTime desc limit %ld offset %ld",viewName,(long)limit,(long)offset];
     NSMutableArray *rows=[NSMutableArray array];//数据行
-    
+    NSLog(@"111111111");
     //评估语法正确性
     sqlite3_stmt *stmt;
     //检查语法正确性
