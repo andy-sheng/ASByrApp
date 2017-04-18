@@ -8,11 +8,10 @@
 
 #import "ASThreadsTitleCell.h"
 #import "NSAttributedString+ASUBB.h"
-#import "TTTAttributedLabel.h"
 
 @interface ASThreadsTitleCell()
 
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end
 

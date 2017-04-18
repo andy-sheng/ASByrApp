@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, XQCollectionStateType){
 
 @interface XQCollectDataCenter : NSObject
 
+
 @property (assign, nonatomic) BOOL firstLoad;
 
 @property (copy, nonatomic) NSString * __nullable createdTimeMax;

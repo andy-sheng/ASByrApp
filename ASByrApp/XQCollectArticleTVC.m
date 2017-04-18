@@ -69,6 +69,7 @@ static NSString * const reuseIdentifier = @"collectCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+
     [self.collectionList removeAllObjects];
     [self.tableView reloadData];
     [self.tableView.mj_header beginRefreshing];
@@ -150,11 +151,11 @@ static NSString * const reuseIdentifier = @"collectCell";
     [self.navigationController pushViewController:threadsVC animated:YES];
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.collectionList count]*2 - 1;
 }
 #pragma mark private method
-
 
 - (void)addCollectArticle:(NSNotification *)notis{
     NSLog(@"添加通知激活！");

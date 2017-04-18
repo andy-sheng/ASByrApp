@@ -78,20 +78,18 @@
     
     //附件处理 支持mp3,jpg,png,jpeg格式
     if ([files count]>0) {
-        NSInteger fcount = 0;
-        for (NSDictionary * filee in files) {
-            fcount = fcount+1;
-            XQByrFile * file = [XQByrFile yy_modelWithJSON:filee];
+        NSInteger fcount = 1;
+        for (XQByrFile* file in files) {
             NSMutableString * fileHtml = [NSMutableString string];
-            NSString * subname = [file.name substringFromIndex:file.name.length-4];
+            NSString * subname = [[file.name substringFromIndex:file.name.length-4] lowercaseString];
             if ([subname isEqualToString:@".png"] || [subname isEqualToString:@".jpg"] || [subname isEqualToString:@"jpeg"]) {
                 [fileHtml appendString:@"<div class=\"img-parent\">"];
     
-                [fileHtml appendFormat:@"<img src=\"%@?oauth_token=%@\">", file.url,[ASByrToken shareInstance].accessToken];
+                [fileHtml appendFormat:@"<img src=\"%@\">", file.url];
             }
             else if ([subname isEqualToString:@".mp3"]){
                 [fileHtml appendString:@"<div class=\"audio-parent\">"];
-                [fileHtml appendFormat:@"<audio controls=\"controls\" preload=\"auto\" src=\"%@?oauth_token=%@\"></audio>", file.url, [ASByrToken shareInstance].accessToken];
+                [fileHtml appendFormat:@"<audio controls=\"controls\" preload=\"auto\" src=\"%@\"></audio>", file.url];
             }
             [fileHtml appendString:@"</div>"];
             NSString * searchstr = [NSString stringWithFormat:@"[upload=%ld][/upload]",fcount];
@@ -100,6 +98,7 @@
             }else{
                 [str appendString:fileHtml];
             }
+            fcount++;
         }
     }
 

@@ -18,6 +18,8 @@
 #import <YYModel/YYModel.h>
 
 
+#define XQDatabaseLock() dispatch_semaphore_wait(self->_lock, DISPATCH_TIME_FOREVER)
+#define XQDatabaseUnlock() dispatch_semaphore_signal(self->_lock)
 @interface XQCollectDataCenter()
 
 @property (strong, nonatomic) XQByrUserTable * userService;
@@ -42,13 +44,13 @@
             createTimeMax = @"";
         }
         _createdTimeMax = createTimeMax;
-
-        
     }
     return self;
 }
 
+
 - (void)fetchCollectListFromLocalWithPage:(NSInteger)page pageCount:(NSInteger)count withBlock:(void(^__nullable)( NSArray * __nullable objects))block{
+
     //暂时不考虑处理横向切片(将有图的帖子和无图的帖子分开)的情况
     __weak typeof(self) _self = self;
     dispatch_async(_queue, ^{
@@ -115,6 +117,7 @@
                     j++;
                     lastj ++;
                 }
+
             }
         }
     //});
@@ -179,7 +182,7 @@
     
     if (article.has_attachment) {
         XQByrAttachment * attachment;
-        NSDictionary * filedic;
+        XQByrFile * filedic;
         if(article.attachment != nil){
             attachment = article.attachment;
             filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
@@ -187,7 +190,7 @@
             attachment = childArticle.attachment;
             filedic = [[NSArray arrayWithArray:attachment.file] firstObject];
         }
-        collection.firstImageUrl = filedic[@"url"];
+        collection.firstImageUrl = filedic.staticUrl;
     }
     
     //设置主键
@@ -197,6 +200,7 @@
         collection.replyCount = article.reply_count;
     }else if(type == XQCollectionUpdateUserAdd){
         collection.state = XQCollectionStateAdd;
+
         XQByrUser * user = [[XQByrUser alloc]init];
         if ([article.user isKindOfClass:[XQByrUser class]]){
             user = article.user;

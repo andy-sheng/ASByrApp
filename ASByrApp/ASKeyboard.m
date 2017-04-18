@@ -22,9 +22,7 @@
 - (instancetype)init {
     self = [super initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 300)];
     if (self) {
-        //[self setBackgroundColor:[UIColor redColor]];
         [self setupUI];
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
     }
     return self;
@@ -46,11 +44,6 @@
 }
 
 - (void)updateConstraints {
-//    [self mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.bottom.equalTo(self.superview.mas_bottom).offset(self.bounds.size.height);
-//    }];
-    
     [self.inputView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
         make.trailing.equalTo(self.mas_trailing);
@@ -91,14 +84,11 @@
         make.bottom.equalTo(self.mas_bottom);
     }];
     
-//    [self mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.superview.mas_bottom);
-//    }];
     [super updateConstraints];
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)keyboardWillShow:(NSNotification*)notification {
@@ -107,15 +97,17 @@
     CGRect frame = self.frame;
     frame.origin.y = newY;
     self.frame = frame;
-//    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.superview).offset(newConstraint);
-//    }];
 }
 
 # pragma mark - public method
 
 - (void)pop {
     [self.textView becomeFirstResponder];
+}
+
+- (void)popWithContext:(NSDictionary *)context {
+    self.context = context;
+    [self pop];
 }
 
 - (void)hide {
@@ -127,7 +119,15 @@
 
 - (void)sendBtnClick {
     [self hide];
-    [self.delegate sendAcion:self.textView.text];
+    [self.delegate sendAcionWithInput:self.textView.text context:self.context];
+}
+
+- (void)moreBtnClick {
+    NSMutableDictionary *tmp = [self.context mutableCopy];
+    tmp[@"currentInput"] = self.textView.text;
+    
+    [self hide];
+    [self.delegate moreAction:[tmp copy]];
 }
 
 #pragma mark - getters and setters
@@ -145,8 +145,8 @@
 - (UIView *)pluginView {
     if (_pluginView == nil) {
         _pluginView = [[UIView alloc] init];
-        // init code goes here
-        //[_pluginView setBackgroundColor:[UIColor greenColor]];
+        
+        
     }
     return _pluginView;
 }
@@ -187,6 +187,7 @@
     if (_moreBtn == nil) {
         _moreBtn = [[UIButton alloc] init];
         [_moreBtn setBackgroundImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+        [_moreBtn addTarget:self.delegate action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _moreBtn;
 }

@@ -16,6 +16,9 @@
 
 @property(copy, nonatomic) NSString * title;
 
+- (instancetype)initWithArticleDic:(NSDictionary *)articelDic;
+
+
 - (NSString *)getContentHtmlString;
 
 - (void)setArticleEntity:(NSDictionary *)articleEntity replyCount:(NSInteger)replyCount;
