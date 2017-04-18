@@ -30,8 +30,6 @@
 
 #define COLLECTION_FILE @"XQCollection"
 
-#define XQDATABASE_NAME @"XQByrDatabase.db"
-
 #define XQCOLLECTION_FIRST_IMAGE @"file"
 
 #define XQCOLLECTION_PROFILE_IMAGE @"blank"

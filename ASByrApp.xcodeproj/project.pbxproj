@@ -7,20 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		751C8C171E61686200C2E1D6 /* XQTableBaseExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C161E61686200C2E1D6 /* XQTableBaseExecutor.m */; };
+		751C8C1B1E61699400C2E1D6 /* XQByrUserTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C1A1E61699400C2E1D6 /* XQByrUserTable.m */; };
+		751C8C1E1E6177FA00C2E1D6 /* XQDataBaseQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C1D1E6177FA00C2E1D6 /* XQDataBaseQuery.m */; };
+		751C8C241E62D96400C2E1D6 /* XQByrArticleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C8C231E62D96400C2E1D6 /* XQByrArticleTable.m */; };
 		40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */; };
-		751C37661E5D1E86000C5A7B /* XQDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C37651E5D1E86000C5A7B /* XQDBManager.m */; };
 		751C917C1E1FC49900E6A3A5 /* XQCollectDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */; };
 		75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */; };
+		754A93121E9B1E06007C8BAF /* XQDetailInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A93111E9B1E06007C8BAF /* XQDetailInfoTableViewController.m */; };
+		754A93151E9B1EE4007C8BAF /* XQMailBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A93141E9B1EE4007C8BAF /* XQMailBoxTableViewController.m */; };
+		754A93181E9B1F09007C8BAF /* XQArticleBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A93171E9B1F09007C8BAF /* XQArticleBoxTableViewController.m */; };
+		756B2DE51E63C8FF007A7259 /* XQDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 756B2DE41E63C8FF007A7259 /* XQDataBaseManager.m */; };
 		75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */; };
 		75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */; };
 		75A4C1E71E1B971D00B563A7 /* XQSelfInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */; };
 		75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */; };
-		75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */; };
-		75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2141E1BC6C400B563A7 /* XQArticleService.m */; };
-		75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A4C2161E1BC6C400B563A7 /* XQUserService.m */; };
 		75D4B6F81E46DB24004906B5 /* XQArticleBody.css in Resources */ = {isa = PBXBuildFile; fileRef = 75D4B6F71E46DB24004906B5 /* XQArticleBody.css */; };
+		75DD9D941E77EA1A00514151 /* XQCollectArticleViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DD9D931E77EA1A00514151 /* XQCollectArticleViewModel.m */; };
 		75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */; };
 		75EF743C1E5492AC008D3E2C /* XQCollectArticleTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EF743B1E5492AC008D3E2C /* XQCollectArticleTCell.m */; };
+		90CA6A339F125E7242EA30E7 /* libPods-ASByrApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C3C33BA689A6C610384D82 /* libPods-ASByrApp.a */; };
 		A11FBC6D1CD23F5E0029DAC8 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = A11FBC6C1CD23F5E0029DAC8 /* plus.png */; };
 		A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC711CD4DDC60029DAC8 /* ASTop10ManageVC.m */; };
 		A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = A11FBC771CD50BF40029DAC8 /* ASTop10Manager.m */; };
@@ -299,13 +306,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		751C8C151E61686200C2E1D6 /* XQTableBaseExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQTableBaseExecutor.h; sourceTree = "<group>"; };
+		751C8C161E61686200C2E1D6 /* XQTableBaseExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQTableBaseExecutor.m; sourceTree = "<group>"; };
+		751C8C191E61699400C2E1D6 /* XQByrUserTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQByrUserTable.h; sourceTree = "<group>"; };
+		751C8C1A1E61699400C2E1D6 /* XQByrUserTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQByrUserTable.m; sourceTree = "<group>"; };
+		751C8C1C1E6177FA00C2E1D6 /* XQDataBaseQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDataBaseQuery.h; sourceTree = "<group>"; };
+		751C8C1D1E6177FA00C2E1D6 /* XQDataBaseQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDataBaseQuery.m; sourceTree = "<group>"; };
+		751C8C1F1E6184E400C2E1D6 /* XQDatabaseConfigurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDatabaseConfigurations.h; sourceTree = "<group>"; };
+		751C8C221E62D96400C2E1D6 /* XQByrArticleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQByrArticleTable.h; sourceTree = "<group>"; };
+		751C8C231E62D96400C2E1D6 /* XQByrArticleTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQByrArticleTable.m; sourceTree = "<group>"; };
 		442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		751C37641E5D1E86000C5A7B /* XQDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDBManager.h; sourceTree = "<group>"; };
-		751C37651E5D1E86000C5A7B /* XQDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDBManager.m; sourceTree = "<group>"; };
+
 		751C917A1E1FC49900E6A3A5 /* XQCollectDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectDataCenter.h; sourceTree = "<group>"; };
 		751C917B1E1FC49900E6A3A5 /* XQCollectDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectDataCenter.m; sourceTree = "<group>"; };
 		75291E621E4C9B7A00DA8293 /* UIAlertController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Extension.h"; sourceTree = "<group>"; };
 		75291E631E4C9B7A00DA8293 /* UIAlertController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Extension.m"; sourceTree = "<group>"; };
+		754A93101E9B1E06007C8BAF /* XQDetailInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDetailInfoTableViewController.h; sourceTree = "<group>"; };
+		754A93111E9B1E06007C8BAF /* XQDetailInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDetailInfoTableViewController.m; sourceTree = "<group>"; };
+		754A93131E9B1EE4007C8BAF /* XQMailBoxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQMailBoxTableViewController.h; sourceTree = "<group>"; };
+		754A93141E9B1EE4007C8BAF /* XQMailBoxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQMailBoxTableViewController.m; sourceTree = "<group>"; };
+		754A93161E9B1F09007C8BAF /* XQArticleBoxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticleBoxTableViewController.h; sourceTree = "<group>"; };
+		754A93171E9B1F09007C8BAF /* XQArticleBoxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticleBoxTableViewController.m; sourceTree = "<group>"; };
+		756B2DE31E63C8FF007A7259 /* XQDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDataBaseManager.h; sourceTree = "<group>"; };
+		756B2DE41E63C8FF007A7259 /* XQDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDataBaseManager.m; sourceTree = "<group>"; };
 		75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSelfInfoVC.h; sourceTree = "<group>"; };
 		75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQSelfInfoVC.m; sourceTree = "<group>"; };
@@ -314,13 +337,9 @@
 		75A4C1EA1E1B97AE00B563A7 /* XQUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserInfo.m; sourceTree = "<group>"; };
 		75A4C1EB1E1B97AE00B563A7 /* XQSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQSingleton.h; sourceTree = "<group>"; };
 		75A4C2041E1BA3BA00B563A7 /* XQPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQPrefixHeader.pch; sourceTree = "<group>"; };
-		75A4C2081E1BC67D00B563A7 /* XQDatabaseCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQDatabaseCreator.h; sourceTree = "<group>"; };
-		75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQDatabaseCreator.m; sourceTree = "<group>"; };
-		75A4C2141E1BC6C400B563A7 /* XQArticleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQArticleService.m; sourceTree = "<group>"; };
-		75A4C2151E1BC6C400B563A7 /* XQArticleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQArticleService.h; sourceTree = "<group>"; };
-		75A4C2161E1BC6C400B563A7 /* XQUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUserService.m; sourceTree = "<group>"; };
-		75A4C2171E1BC6C400B563A7 /* XQUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUserService.h; sourceTree = "<group>"; };
 		75D4B6F71E46DB24004906B5 /* XQArticleBody.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = XQArticleBody.css; sourceTree = "<group>"; };
+		75DD9D921E77EA1A00514151 /* XQCollectArticleViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleViewModel.h; sourceTree = "<group>"; };
+		75DD9D931E77EA1A00514151 /* XQCollectArticleViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleViewModel.m; sourceTree = "<group>"; };
 		75EF74371E54928E008D3E2C /* XQCollectArticleTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTVC.h; sourceTree = "<group>"; };
 		75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCollectArticleTVC.m; sourceTree = "<group>"; };
 		75EF743A1E5492A3008D3E2C /* XQCollectArticleTCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XQCollectArticleTCell.h; sourceTree = "<group>"; };
@@ -625,6 +644,7 @@
 		A96F5B781CC85F6F00117F5E /* XQBoardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XQBoardView.xib; sourceTree = "<group>"; };
 		A96F5B7A1CC8CBE300117F5E /* color_board.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = color_board.plist; sourceTree = "<group>"; };
 		AFEB0B90720F3E673F124D65 /* Pods-ASByrApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASByrApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp.release.xcconfig"; sourceTree = "<group>"; };
+		F3C3C33BA689A6C610384D82 /* libPods-ASByrApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASByrApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9B2B79ECA6F5866DFDD62C8 /* Pods-ASByrApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASByrApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASByrApp/Pods-ASByrApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -634,7 +654,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75A4C1E11E1B95CA00B563A7 /* libsqlite3.0.tbd in Frameworks */,
-				40E8904E4CDA6FD512F9C5EE /* libPods-ASByrApp.a in Frameworks */,
+				90CA6A339F125E7242EA30E7 /* libPods-ASByrApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,6 +675,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		751C8C101E61675600C2E1D6 /* XQDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				751C8C151E61686200C2E1D6 /* XQTableBaseExecutor.h */,
+				751C8C161E61686200C2E1D6 /* XQTableBaseExecutor.m */,
+				751C8C1C1E6177FA00C2E1D6 /* XQDataBaseQuery.h */,
+				751C8C1D1E6177FA00C2E1D6 /* XQDataBaseQuery.m */,
+				751C8C1F1E6184E400C2E1D6 /* XQDatabaseConfigurations.h */,
+				756B2DE31E63C8FF007A7259 /* XQDataBaseManager.h */,
+				756B2DE41E63C8FF007A7259 /* XQDataBaseManager.m */,
+			);
+			name = XQDatabase;
+			sourceTree = "<group>";
+		};
+		751C8C181E61696200C2E1D6 /* XQByrPersistance */ = {
+			isa = PBXGroup;
+			children = (
+				751C8C191E61699400C2E1D6 /* XQByrUserTable.h */,
+				751C8C1A1E61699400C2E1D6 /* XQByrUserTable.m */,
+				751C8C221E62D96400C2E1D6 /* XQByrArticleTable.h */,
+				751C8C231E62D96400C2E1D6 /* XQByrArticleTable.m */,
+			);
+			name = XQByrPersistance;
+			sourceTree = "<group>";
+		};
 		751C91781E1FC3E300E6A3A5 /* DataCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -670,6 +715,12 @@
 				75A4C1E31E1B971D00B563A7 /* XQSelfInfoVC.h */,
 				75A4C1E41E1B971D00B563A7 /* XQSelfInfoVC.m */,
 				75A4C1E51E1B971D00B563A7 /* XQSelfInfoVC.storyboard */,
+				754A93101E9B1E06007C8BAF /* XQDetailInfoTableViewController.h */,
+				754A93111E9B1E06007C8BAF /* XQDetailInfoTableViewController.m */,
+				754A93131E9B1EE4007C8BAF /* XQMailBoxTableViewController.h */,
+				754A93141E9B1EE4007C8BAF /* XQMailBoxTableViewController.m */,
+				754A93161E9B1F09007C8BAF /* XQArticleBoxTableViewController.h */,
+				754A93171E9B1F09007C8BAF /* XQArticleBoxTableViewController.m */,
 			);
 			name = "Personal(设置)";
 			sourceTree = "<group>";
@@ -687,25 +738,11 @@
 		75A4C2051E1BC65600B563A7 /* Sqlite */ = {
 			isa = PBXGroup;
 			children = (
+				751C8C181E61696200C2E1D6 /* XQByrPersistance */,
+				751C8C101E61675600C2E1D6 /* XQDatabase */,
 				751C91781E1FC3E300E6A3A5 /* DataCenter */,
-				75A4C2131E1BC6B800B563A7 /* Service */,
-				751C37641E5D1E86000C5A7B /* XQDBManager.h */,
-				751C37651E5D1E86000C5A7B /* XQDBManager.m */,
 			);
 			name = Sqlite;
-			sourceTree = "<group>";
-		};
-		75A4C2131E1BC6B800B563A7 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				75A4C2081E1BC67D00B563A7 /* XQDatabaseCreator.h */,
-				75A4C2091E1BC67D00B563A7 /* XQDatabaseCreator.m */,
-				75A4C2141E1BC6C400B563A7 /* XQArticleService.m */,
-				75A4C2151E1BC6C400B563A7 /* XQArticleService.h */,
-				75A4C2161E1BC6C400B563A7 /* XQUserService.m */,
-				75A4C2171E1BC6C400B563A7 /* XQUserService.h */,
-			);
-			name = Service;
 			sourceTree = "<group>";
 		};
 		75D4B6F91E4702FA004906B5 /* webresouce */ = {
@@ -714,6 +751,15 @@
 				75D4B6F71E46DB24004906B5 /* XQArticleBody.css */,
 			);
 			name = webresouce;
+			sourceTree = "<group>";
+		};
+		75DD9D911E77E9F700514151 /* viewModel */ = {
+			isa = PBXGroup;
+			children = (
+				75DD9D921E77EA1A00514151 /* XQCollectArticleViewModel.h */,
+				75DD9D931E77EA1A00514151 /* XQCollectArticleViewModel.m */,
+			);
+			name = viewModel;
 			sourceTree = "<group>";
 		};
 		A11FBC751CD50BC50029DAC8 /* model */ = {
@@ -1245,6 +1291,7 @@
 		A95F636B1CDF0CAE0060075E /* Collection(收藏) */ = {
 			isa = PBXGroup;
 			children = (
+				75DD9D911E77E9F700514151 /* viewModel */,
 				A95F637B1CDF81570060075E /* view */,
 				75EF74371E54928E008D3E2C /* XQCollectArticleTVC.h */,
 				75EF74381E549296008D3E2C /* XQCollectArticleTVC.m */,
@@ -1298,7 +1345,7 @@
 			isa = PBXGroup;
 			children = (
 				75A4C1E01E1B95CA00B563A7 /* libsqlite3.0.tbd */,
-				442C6DE7F1DE75632B42C85E /* libPods-ASByrApp.a */,
+				F3C3C33BA689A6C610384D82 /* libPods-ASByrApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1376,7 +1423,7 @@
 				TargetAttributes = {
 					A16E1A371CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 9E9C2ZNYDA;
+						DevelopmentTeam = E8LJ49NMXA;
 					};
 					A16E1A501CAD6B9500F7C1FA = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1758,17 +1805,20 @@
 			files = (
 				751C37661E5D1E86000C5A7B /* XQDBManager.m in Sources */,
 				75EF74391E549296008D3E2C /* XQCollectArticleTVC.m in Sources */,
+				751C8C1E1E6177FA00C2E1D6 /* XQDataBaseQuery.m in Sources */,
 				75A4C20B1E1BC67D00B563A7 /* XQDatabaseCreator.m in Sources */,
 				A131471B1E70446C008CD422 /* ASAccessoryView.m in Sources */,
 				A11FBC721CD4DDC60029DAC8 /* ASTop10ManageVC.m in Sources */,
 				75A4C2181E1BC6C400B563A7 /* XQArticleService.m in Sources */,
 				A16885DF1CC0D4F900338353 /* ASThreadsBodyCell.m in Sources */,
+				756B2DE51E63C8FF007A7259 /* XQDataBaseManager.m in Sources */,
 				A92633681CCCA30400B73F58 /* XQBoardListVC.m in Sources */,
 				A16E1A431CAD6B9500F7C1FA /* ViewController.m in Sources */,
 				75A4C1E61E1B971D00B563A7 /* XQSelfInfoVC.m in Sources */,
 				75291E641E4C9B7A00DA8293 /* UIAlertController+Extension.m in Sources */,
+				75DD9D941E77EA1A00514151 /* XQCollectArticleViewModel.m in Sources */,
+				751C8C241E62D96400C2E1D6 /* XQByrArticleTable.m in Sources */,
 				A1BFB6361CC4BAB000FE5CA1 /* ASArticleListVC.m in Sources */,
-				75A4C2191E1BC6C400B563A7 /* XQUserService.m in Sources */,
 				A96462B91CC0A3CB0086DEE6 /* UIColor+Hex.m in Sources */,
 				A1310C791E4DB590002ED116 /* XQThreadsDetailViewModel.m in Sources */,
 				A92FE6FE1CD8421F000A182F /* XQNewBoardViewCell.m in Sources */,
@@ -1785,6 +1835,7 @@
 				A15AD5B91E79677E00F34360 /* ASEmotionInput.m in Sources */,
 				A16885DA1CC0D4E100338353 /* ASThreadsTitleCell.m in Sources */,
 				A16885E41CC0D51000338353 /* ASThreadsReplyCell.m in Sources */,
+				754A93181E9B1F09007C8BAF /* XQArticleBoxTableViewController.m in Sources */,
 				A1E69D291CB7F147001E9E27 /* ASLoginController.m in Sources */,
 				A13147211E72D415008CD422 /* ASInputVC.m in Sources */,
 				A16E1A7D1CB24AE600F7C1FA /* ASBasicArticleListController.m in Sources */,
@@ -1793,10 +1844,14 @@
 				A16E1A3D1CAD6B9500F7C1FA /* main.m in Sources */,
 				A91776281CC76CE500ED84B3 /* XQBoardModel.m in Sources */,
 				A1A7FFCC1CB4E84D00AD6787 /* TestViewController.m in Sources */,
+				754A93121E9B1E06007C8BAF /* XQDetailInfoTableViewController.m in Sources */,
 				A16885CF1CBF469300338353 /* ASThreadsController.m in Sources */,
 				A1310C7E1E4DB5CB002ED116 /* ASUbbParser.m in Sources */,
 				A96F5B771CC85F5400117F5E /* XQBoardView.m in Sources */,
+				754A93151E9B1EE4007C8BAF /* XQMailBoxTableViewController.m in Sources */,
 				75A4C1EC1E1B97AE00B563A7 /* XQUserInfo.m in Sources */,
+				751C8C171E61686200C2E1D6 /* XQTableBaseExecutor.m in Sources */,
+				751C8C1B1E61699400C2E1D6 /* XQByrUserTable.m in Sources */,
 				A11FBC781CD50BF40029DAC8 /* ASTop10Manager.m in Sources */,
 				A1C0032E1CEAF09E00AA6B53 /* NSAttributedString+ASUBB.m in Sources */,
 				A16E1A721CAE6A0B00F7C1FA /* ASTop10RootVC.m in Sources */,
@@ -1933,11 +1988,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9E9C2ZNYDA;
+				DEVELOPMENT_TEAM = E8LJ49NMXA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ASByrApp/XQPrefixHeader.pch";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1952,11 +2008,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9E9C2ZNYDA;
+				DEVELOPMENT_TEAM = E8LJ49NMXA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ASByrApp/XQPrefixHeader.pch";
 				INFOPLIST_FILE = ASByrApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BUPT.ASByrApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

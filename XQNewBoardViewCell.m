@@ -8,7 +8,7 @@
 
 #import "XQNewBoardViewCell.h"
 #import "UIColor+Hex.h"
-#import "UIImageView+AFNetworking.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <Masonry/Masonry.h>
 
 @implementation XQNewBoardViewCell
@@ -144,7 +144,7 @@
         self.titleLabel.text = [paramDictionary[@"title"] copy];
         self.nameLabel.text = [paramDictionary[@"user"][@"uid"] copy];
         self.replyLabel.text = [[NSString stringWithFormat:@"%@条回复",paramDictionary[@"replyCount"]] copy];
-        [self.imView setImageWithURL:[NSURL URLWithString:paramDictionary[@"user"][@"face"]]];
+        [self.imView sd_setImageWithURL:[NSURL URLWithString:paramDictionary[@"user"][@"face"]]];
     }
 }
 

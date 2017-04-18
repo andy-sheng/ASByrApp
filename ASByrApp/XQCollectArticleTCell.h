@@ -21,5 +21,5 @@
 @property (strong, nonatomic) UILabel * userNameLabel;
 @property (strong, nonatomic) UILabel * replyCount;
 
-- (void)setUpParameters:(NSDictionary *)parameters;
+- (void)setUpParameters:(id)parameters;
 @end

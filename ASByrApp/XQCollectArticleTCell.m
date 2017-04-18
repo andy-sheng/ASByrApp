@@ -9,6 +9,7 @@
 #import "XQCollectArticleTCell.h"
 #import "UIColor+Hex.h"
 #import <Masonry.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation XQCollectArticleTCell
 
@@ -129,9 +130,25 @@
     // Configure the view for the selected state
 }
 
-- (void)setUpParameters:(NSDictionary *)parameters{
-    self.titleLabel.text = [[parameters objectForKey:@"title"]copy];
-    self.userNameLabel.text = [[parameters objectForKey:@"userName"] copy];
-    self.replyCount.text = [NSString stringWithFormat:@"%@条回复",[parameters objectForKey:@"replyCount"]];
+- (void)setUpParameters:(id)parameters{
+    NSString * profileImageUrl;
+    if ([parameters isKindOfClass:[NSDictionary class]]) {
+        self.titleLabel.text = [[parameters objectForKey:@"title"]copy];
+        self.userNameLabel.text = [[parameters objectForKey:@"user_name"] copy];
+        self.replyCount.text = [NSString stringWithFormat:@"%@条回复",[parameters objectForKey:@"replyCount"]];
+        profileImageUrl = [parameters objectForKey:@"face_url"];
+    }else{
+        self.titleLabel.text = [[parameters valueForKey:@"title"]copy];
+        self.userNameLabel.text = [[parameters valueForKeyPath:@"user.user_name"] copy];
+        self.replyCount.text = [NSString stringWithFormat:@"%@条回复",[parameters valueForKey:@"replyCount"]];
+        profileImageUrl = [parameters valueForKeyPath:@"user.face_url"];
+        
+    }
+    if(profileImageUrl && ![profileImageUrl isEqual:@""]){
+        [self.userImageView sd_setImageWithURL:[NSURL URLWithString:profileImageUrl] placeholderImage:[UIImage imageNamed:XQCOLLECTION_PROFILE_IMAGE] options:SDWebImageRefreshCached];
+    }
+    
+    
+    
 }
 @end

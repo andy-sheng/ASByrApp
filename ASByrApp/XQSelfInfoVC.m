@@ -14,12 +14,16 @@
 #import <ASByrUser.h>
 #import <XQByrUser.h>
 
+#import "XQDetailInfoTableViewController.h"
+#import "XQMailBoxTableViewController.h"
+#import "XQArticleBoxTableViewController.h"
+
 @interface XQSelfInfoVC()<UITableViewDataSource, UITableViewDelegate,ASByrUserResponseDelegate,ASByrUserResponseReformer>
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userIdLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
-@property (weak, nonatomic) IBOutlet UITableViewCell *clearCacheCell;
-@property(strong, nonatomic) ASByrUser * userApi;
+
+@property (strong, nonatomic) ASByrUser * userApi;
 @end
 
 @implementation XQSelfInfoVC
@@ -28,6 +32,7 @@
     [super viewDidLoad];
     //[self loadData];
     self.tableView.delegate = self;
+    [self.navigationItem setTitle:@"我"];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -37,12 +42,23 @@
 
 #pragma mark <UITableViewDelegate>
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * staticCellQ = [self.tableView cellForRowAtIndexPath:indexPath];
-    if (staticCellQ == _clearCacheCell) {
+    if (indexPath.section == 0) {//self setting
+        XQDetailInfoTableViewController * detailInfoTVC = [[XQDetailInfoTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
+        [self.navigationController pushViewController:detailInfoTVC animated:YES];
+    }else if(indexPath.section == 1){
+        if (indexPath.row == 0) {
+            XQMailBoxTableViewController * mailBoxTVC = [[XQMailBoxTableViewController alloc]initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:mailBoxTVC animated:YES];
+        }else if(indexPath.row == 1){
+            XQArticleBoxTableViewController * articleBoxTVC = [[XQArticleBoxTableViewController alloc]initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:articleBoxTVC animated:YES];
+        }
+    }else if (indexPath.section == 2) {
         [XQUserInfo sharedXQUserInfo].loginStatus = NO;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+
 #pragma mark <ASByrUserResponseDelegate>
 -(void)fetchUserResponse:(ASByrResponse *)response{
     if (response.isSucceeded) {
