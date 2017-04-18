@@ -15,11 +15,11 @@
 #import <YYModel/YYModel.h>
 #import <XQByrArticle.h>
 @implementation XQThreadsDetailViewModel
-- (instancetype)initWithArticleDic:(NSDictionary *)articelDic{
+- (instancetype)init{
     self = [super init];
     if (self) {
-        _articleEntity = [XQByrArticle yy_modelWithJSON:articelDic];
-        _title = _articleEntity.title;
+        _articleEntity = [[XQByrArticle alloc]init];
+        _title = @"";
     }
     return self;
 }
@@ -194,5 +194,11 @@
     [brReg replaceMatchesInString:html options:0 range:NSMakeRange(0, html.length) withTemplate:@"<br/>"];
     
     return html;
+}
+
+- (void)setArticleEntity:(NSDictionary *)articleEntity replyCount:(NSInteger)replyCount{
+    self.articleEntity = [XQByrArticle yy_modelWithJSON:articleEntity];
+    self.title = _articleEntity.title;
+    self.articleEntity.reply_count = replyCount;
 }
 @end
